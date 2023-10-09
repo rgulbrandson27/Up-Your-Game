@@ -1,0 +1,44 @@
+.letter-board {
+    height: 300px;
+    width: 500px;
+    border: 3px solid blue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:8px;
+    padding: 10px;
+}
+
+button {
+    height: 46px;
+    width: 46px;
+    border-color: blue;
+    background-color: lightskyblue;
+    border-radius: 30%;
+    margin: 5px;
+    font-size: xx-large;
+}
+
+.j-button, .k-button, .q-button, .x-button, .z-button {
+    background-color: lightskyblue;
+    font-weight:bold;
+}
+
+.none-button {
+    height: 30px;
+    width: 140px;
+    font-size: small;
+    border-radius: 5px;
+    /* margin-top: -10px; */
+    padding: 4px;
+}
+
+/* .vowel-row {
+    border-bottom: solid 2px gray;
+} */
+
+.b-j-row {
+    border-top: solid 2px gray;
+    margin-top: -4px;
+    padding-top: 4px;
+}
