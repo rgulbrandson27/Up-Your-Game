@@ -1,0 +1,42 @@
+
+
+.quiz-board {
+    height: 400px;
+    width: 600px;
+    background-color: rgb(233, 233, 150);
+    border: 2px solid blue;
+    display: flex;
+    margin: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.blank { 
+    height: 100px;
+    width: 100px;
+    display: flex;
+    border: 5px solid gray;
+    justify-self: center;
+    margin: 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    border-radius: 10px;
+}
+
+.quiz-letter {
+    
+    height: 100px;
+    width: 100px;
+    display: flex;
+    border: 5px solid gray;
+    justify-self: center;
+    margin: 10px;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    border-radius: 10px;
+    /* change font style */
+}
+
+

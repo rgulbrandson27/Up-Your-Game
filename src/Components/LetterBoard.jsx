@@ -43,6 +43,10 @@ const LetterBoard = () => {
             <span>
                 <button className="none-button">No correct choices</button>
             </span>
+            {/* <span className="letterboard-settings">
+                <button className="animation-toggle">Letter Animation: OFF</button>
+                
+            </span> */}
         </div> 
         );
 }
