@@ -11,6 +11,10 @@
     align-items: center;
 }
 
+.quiz-word {
+    display: flex;
+}
+
 .blank { 
     height: 100px;
     width: 100px;

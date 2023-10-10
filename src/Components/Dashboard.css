@@ -1,3 +1,34 @@
+/* * {
+    margin: 0;
+    padding: 0;
+} */
+
+.dashboard {
+    background-color: rgb(137, 178, 167);
+    display: grid;
+    grid-template-columns: 10% 10% 60% 10% 10%;
+    grid-template-rows: 10% 10% 30% 20% 10% 1%;
+    grid-template-areas: 
+        "head head head head head head"
+        "user user user user user user"
+        "left word word word word list"
+        "left word word word word list"
+        "left blank letters letters blank right"
+        "foot foot foot foot foot foot";
+}
+
+
+.quiz-board-main {
+    grid-area: word;
+               
+    width: 100%;
+    height: 100%;
+}
+
+.letter-board-main {
+    grid-area: letters;
+}
+
 /*
 user info along top
         buttons for mastered lists, current lists, and list queue (or combine)
@@ -17,10 +48,7 @@ hint level selection area
 
 message to show when no quiz going on
 
-
-
-
 correct word list along right side-listed vertically
-
-
 */
+
+
