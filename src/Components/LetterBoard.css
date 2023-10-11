@@ -22,7 +22,7 @@ button {
 }
 
 button:hover {
-    transform: scale(1.1);
+    transform: scale(1.3);
     background-color:  rgb(97, 181, 233);
     border-color: orange;
 }
@@ -32,7 +32,7 @@ button:hover {
     font-weight:bold;
 }
 
-.none-button {
+.none-button, .not-word-button {
     height: 30px;
     width: 140px;
     font-size: small;
