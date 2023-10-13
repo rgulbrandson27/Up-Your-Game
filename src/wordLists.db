@@ -3,21 +3,23 @@ STORED WORD LISTS (Summary at Top and Data Below)
 
 ((((((((((
 taken from http://www.seattlescrabble.org/study.php#Lists 
-placed in excel to format using concat:
+then placed in excel to format using concat:
     Example  =CHAR(34)&A1&CHAR(34) - into new column b
-             then, =CONCAT(B1&","&"") - into new column c
+             then, =CONCAT(B1&","&"") - into new column c   (combine into 1 step next time:)
              then, =CONCAT(C1:C556) - into cell
 ))))))))))
+
 ---------------------------------------------------------
-THREES (1,068)
 
-THREES-TO-FOURS (4,935)
-    A (556)
-    B-C (  )
-    D-E (   )
-    F-G (  )
+[0]   THREES (1,068)
 
-All FOURS ()
+      THREES-TO-FOURS (4,935 total - combine if needed)
+[1]   A (556)
+[2]   B-C (  )
+[3]   D-E (  )
+[4]   F-G (  )
+
+[5] All FOURS ()  ---- maybe break down also
 
 BINGO STEMS (by probability)
 1-10      TISANE, SATIRE, RETINA, etc.
@@ -25,8 +27,6 @@ BINGO STEMS (by probability)
 21-30
 31-40
 41-50
-
-
 
 
 JSON Format

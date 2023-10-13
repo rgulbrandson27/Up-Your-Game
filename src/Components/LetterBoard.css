@@ -1,6 +1,6 @@
 .letter-board {
-    height: 300px;
-    width: 500px;
+    height: 290px;
+    width: 480px;
     border: 3px solid blue;
     display: flex;
     flex-direction: column;
@@ -8,23 +8,31 @@
     gap:8px;
     padding: 10px;
     position: relative;
+    border-radius: 10px;
+    /* background-color: lightgray; */
 }
 
 button {
     height: 46px;
     width: 46px;
+    border: solid 2px;
     border-color: blue;
     background-color: lightskyblue;
     border-radius: 30%;
     margin: 5px;
-    font-size: xx-large;
-   
+    font-size: xx-large;  
 }
 
 button:hover {
-    transform: scale(1.3);
+    transform: scale(1.2);
     background-color:  rgb(97, 181, 233);
-    border-color: orange;
+    border-color:rgb(233, 233, 150);
+}
+
+.letters-button-wrapper {
+    display: flex;
+    flex-direction: column;
+    /* background-color: lightgray; */
 }
 
 .j-button, .k-button, .q-button, .x-button, .z-button {
@@ -37,19 +45,17 @@ button:hover {
     width: 140px;
     font-size: small;
     border-radius: 5px;
-    /* margin-top: -10px; */
     padding: 4px;
+    margin: 12px;
 }
 
-/* .vowel-row {
-    border-bottom: solid 2px gray;
-} */
-
-.b-j-row {
-    border-top: solid 2px gray;
-    margin-top: -4px;
-    padding-top: 4px;
+.vowel-row {
+    border-bottom: solid 1px rgb(56, 28, 212);
+    margin-bottom: 4px;
+    padding-bottom: 4px;
 }
+
+
 
 /* .animation-toggle {
     border-radius: 0;
@@ -60,13 +66,3 @@ button:hover {
     
 } */
 
-/* .letterboard-settings {
-    width: 500px;
-    height: 100px;
-    background-color: lightgray;
-    border: 3px solid blue;
-    display: flex;
-
-
-    
-} */

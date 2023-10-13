@@ -13,7 +13,7 @@ function App() {
         
         {/* <QuizBoard />
         <LetterBoard /> */}
-        <User />
+        {/* <User /> */}
 
     </div>
 
