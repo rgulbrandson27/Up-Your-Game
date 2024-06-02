@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+
+/* 
+
+:root {
+    --primary: rgb(115, 84, 23);
+    --secondary: rgb(144, 85, 162);
+}
+
+
+body {
+  margin: 0;
+  padding: 20px;
+  background: var(--secondary);
+}
+
+nav {
+  background-color:rgb(43, 186, 226);
+  padding: 16px 32px;
+}
+
+nav a {
+  margin-right: 16px;
+}
+
+* {
+  color: white;
+  margin: 0;
+}
+
+p {
+  margin: 20px 0;
+}
+
+button {
+  border: 0;
+  padding: 8px;
+  color: white;
+  background-color: var(--primary);
+  border-radius: 4px;
+  cursor: pointer;
+} */

@@ -1,0 +1,25 @@
+const topicalWordLists = [
+
+{
+    id: t1
+    listName: peopleNames
+    words: [
+    mnuemonic = null
+},
+
+{
+    id: t2,
+    listName: medicinal
+    words: [
+    mnuemonic = null
+},
+
+{
+    id: t3,
+    listName: monetary
+    words: [
+    mnuemonic = null
+}
+
+
+]
