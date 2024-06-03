@@ -3,12 +3,7 @@ import sixLetterStems from '../../data/bingoStems';
 
 
 
-const Home = ({selectedWordList, setSelectedWordList, handleSelectionClick}) => {
-
-// useEffect(() => {
-//   console.log(selectedWordList);
-// }, [selectedWordList])
-
+const Home = ({handleSelectionClick}) => {
 
   return (
     <>
@@ -39,7 +34,6 @@ const Home = ({selectedWordList, setSelectedWordList, handleSelectionClick}) => 
         </div>
         ))}
         </div>
-        
       </div>
     </>
   );

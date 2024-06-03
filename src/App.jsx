@@ -1,5 +1,4 @@
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import './App.css'
+import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 import {useState, useEffect} from 'react'
 import Navbar from './components/header/Navbar';
 // import Footer from './componenets/footer';
@@ -7,31 +6,35 @@ import Home from './pages/1.home/Home';
 import UserDashboard from './pages/2.userdashboard/UserDashboard';
 import QuizPage from './pages/3.quizpage/QuizPage';
 import React from 'react';
-import sixLetterStems from './data/bingoStems';
+
+
 
 const App = () => {
 
-const [selectedWordList, setSelectedWordList] = useState({id:100, listName:"SAMPLE", 
-words:["one", "two", "three"], mnuemonic: "TUCKSHOP" });
+const [selectedWordList, setSelectedWordList] = useState({id:100, listName:"SAMPLE", words:["one", "two"], mnuemonic: "ABCDEFG" });
+// const [key, setKey] = useState(0);
 
-
+// const navigate = useNavigate();
 
 useEffect(() => {
-  console.log(selectedWordList);
-  if (selectedWordList) {
+  // console.log(selectedWordList);
+  // if (selectedWordList.listName == "SAMPLE") {
+    // setIsNewSelection(true);
     console.log(selectedWordList.id);
     console.log(selectedWordList.listName);
-  }
-  // console.log(selectedWordList + "hello");
-}, [selectedWordList]); // Add selectedWordList as a dependency
+  // setKey(prevKey=>prevKey + 1);
+  //   console.log("nothing has changed");
+  // }
+}, [selectedWordList]); 
 
 
 const handleSelectionClick = (wordListInfo) => {
-  setSelectedWordList(wordListInfo)
+  setSelectedWordList(wordListInfo);
+  Navigate('/quizpage', {state: { selectedWordList: wordListInfo } });
+  // setKey(prevKey => prevKey +1);
+  // setIsNewSelection(true);
 
-
-
-}
+};
 
   return (
     <div className="bg-blue-300 w-screen h-screen">
@@ -46,12 +49,16 @@ const handleSelectionClick = (wordListInfo) => {
                   }/>
             <Route path='/userdashboard' element={<UserDashboard/>}/>
             <Route path='/quizpage' element={<QuizPage
-            selectedWordList={selectedWordList}/>}/>
+            selectedWordList={selectedWordList}
+            // isUnchangedSample={selectedWordList.listName !== "SAMPLE"}
+            // key={key}
+            />}/>
           </Routes>
       
 {/*  
         <Footer /> */}
       </Router>
+ 
     </div>
   )
 }   

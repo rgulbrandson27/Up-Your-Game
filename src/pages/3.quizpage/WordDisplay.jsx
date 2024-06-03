@@ -1,39 +1,27 @@
 
 import React from 'react';
+import {useEffect, useState} from 'react';
 
-const WordDisplay = ({selectedWordList}) => {
+const WordDisplay = ({ selectedWordList, isNewSelection }) => {
+  const [stemWordLetters, setStemWordLetters] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const stemWord = selectedWordList.listName;
-  let stemWordLetters;
-  
-    function separateLetters() {          //puts letters into an array so they can be mapped over
-      stemWordLetters = selectedWordList.listName.split("");
-        // console.log(stemWordLetters);
+  useEffect(() => {
+    if (isNewSelection ) {
+      setStemWordLetters(selectedWordList.listName.split(""));
+      setLoading(false);
     }
-  
-  separateLetters(stemWord);
-
-  // console.log(selectedWordList.hasOwnProperty('listName'));
-
-  return (
-    
-    // <div className="wordDisplay border-2 bg-yellow-100 border-blue-700 rounded p-0.5 mt-1 md:mt-3 px-3 justify-center flex flex-grow-0 flex-shrink py-2">
-          <div className="wordDisplay border-2 bg-yellow-100 border-blue-700 p-2">
-
-          <div className="flex justify-center">
-            {stemWordLetters.map((stemWord, index) => {
-            const stemLetter = separateLetters(stemWord);
+    console.log('selectedWordList has changed on quizpage in wordDisplay component:', selectedWordList);
+    }, [selectedWordList])
             
             return (
-              // <div key={index} className="letter-box flex border-b-2 border-purple-700 w-1/7 aspect-square place-items-center place-content-center flex-shrink text-xl sm:text-4xl md:text-6xl lg:text-8xl py-1" id="letterSpace1">{stemWordLetters}</div>
-              <div key={index} className="letter-box text-4xl w-1/7 border-b-2">{stemWordLetters}</div>
-            )
-
-            })}
-          </div>
-          {console.log()}
-    </div>
-
+              <div className="wordDisplay border-2 bg-yellow-100 border-blue-700 p-2">
+                <div className="flex justify-center">
+                  {stemWordLetters.map((letter, index) => (
+                    <div key={index} className="letter-box text-4xl w-1/7 tracking-wider border-b-2">{letter}</div>
+                  ))}
+                </div>
+              </div>
   );
 };
 
