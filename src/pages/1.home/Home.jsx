@@ -1,9 +1,8 @@
 import {useState, useEffect} from 'react';
 import sixLetterStems from '../../data/bingoStems';
 
-
-
 const Home = ({handleSelectionClick}) => {
+
 
   return (
     <>

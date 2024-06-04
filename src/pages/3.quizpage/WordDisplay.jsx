@@ -2,17 +2,25 @@
 import React from 'react';
 import {useEffect, useState} from 'react';
 
-const WordDisplay = ({ selectedWordList, isNewSelection }) => {
-  const [stemWordLetters, setStemWordLetters] = useState([]);
-  const [loading, setLoading] = useState(true);
+const WordDisplay = ({ selectedWordList, stemWordLetters }) => {
 
-  useEffect(() => {
-    if (isNewSelection ) {
-      setStemWordLetters(selectedWordList.listName.split(""));
-      setLoading(false);
-    }
-    console.log('selectedWordList has changed on quizpage in wordDisplay component:', selectedWordList);
-    }, [selectedWordList])
+  // const [loading, setLoading] = useState(true);
+
+
+
+useEffect(() => {
+}, [selectedWordList]);
+
+console.log(selectedWordList);
+console.log(stemWordLetters);
+
+  // useEffect(() => {
+  //   if (isNewSelection ) {
+  //     setStemWordLetters(selectedWordList.listName.split(""));
+  //     // setLoading(false);
+  //   }
+  //   console.log('selectedWordList has changed on quizpage in wordDisplay component:', selectedWordList);
+  //   }, [selectedWordList])
             
             return (
               <div className="wordDisplay border-2 bg-yellow-100 border-blue-700 p-2">

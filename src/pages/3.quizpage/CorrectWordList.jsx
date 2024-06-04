@@ -1,18 +1,18 @@
 
 import React, { useEffect, useState } from "react";
 
-const CorrectWordList = ({selectedWordList, isNewSelection}) => {
+const CorrectWordList = ({selectedWordList, isNewSelection, stemWordLetters}) => {
 
 // const sixLetterStems_2_SATIRE = ["ARISTAE", "ASTERIA", "ATRESIA", "BAITERS", "BARITES", "REBAITS", "TERBIAS", "ATRESIC", "CRISTAE", "RACIEST", "STEARIC", "ARIDEST", "ASTRIDE", "DIASTER", "DISRATE", "STAIDER", "TARDIES", "TIRADES", "AERIEST", "SERIATE", "FAIREST", "AIGRETS", "GAITERS", "SEAGIRT", "STAGIER", "TRIAGES", "HASTIER", "AIRIEST", "REALIST", "RETAILS", "SALTIER", "SALTIRE", "SLATIER", "TAILERS", "IMARETS", "MAESTRI", "MISRATE", "SMARTIE", "ANESTRI", "ANTSIER", "NASTIER", "RATINES", "RETAINS", "RETINAS", "RETSINA", "STAINER", "STEARIN", "PARTIES", "PASTIER", "PIASTER", "PIASTRE", "PIRATES", "PRATIES", "TRAIPSE", "ARTSIER", "TARRIES", "TARSIER", "ARTSIES", "SATIRES", "ARTIEST", "ARTISTE", "ATTIRES", "IRATEST", "RATITES", "STRIATE", "TASTIER", "RAVIEST", "VASTIER", "VERITAS", "WAISTER", "WAITERS", "WARIEST", "WASTRIE"];  
 // const stemWord = "Satire"  
 
-useEffect(() => {
-  if (selectedWordList.listName !== "SAMPLE") {
-    setStemWordLetters(selectedWordList.listName.split(""));
-    setLoading(false);
-  }
-  console.log('selectedWordList has changed on quizpage in correctwordlist compoennt:', selectedWordList);
-  }, [selectedWordList, isNewSelection])
+// useEffect(() => {
+//   if (selectedWordList.listName !== "SAMPLE") {
+  
+  
+//   }
+//   console.log('selectedWordList has changed on quizpage in correctwordlist compoennt:', selectedWordList);
+//   }, [selectedWordList, isNewSelection])
 
 let prevExtraLetter = "";
 

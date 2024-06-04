@@ -12,9 +12,8 @@ import React from 'react';
 const App = () => {
 
 const [selectedWordList, setSelectedWordList] = useState({id:100, listName:"SAMPLE", words:["one", "two"], mnuemonic: "ABCDEFG" });
+const [navigateTo, setNavigateTo] = useState(null);
 // const [key, setKey] = useState(0);
-
-// const navigate = useNavigate();
 
 useEffect(() => {
   // console.log(selectedWordList);
@@ -30,7 +29,8 @@ useEffect(() => {
 
 const handleSelectionClick = (wordListInfo) => {
   setSelectedWordList(wordListInfo);
-  Navigate('/quizpage', {state: { selectedWordList: wordListInfo } });
+  setNavigateTo('quizpage');
+
   // setKey(prevKey => prevKey +1);
   // setIsNewSelection(true);
 
@@ -40,6 +40,7 @@ const handleSelectionClick = (wordListInfo) => {
     <div className="bg-blue-300 w-screen h-screen">
       <Router>
           <Navbar className="w-screen" />
+          {navigateTo && <Navigate to={navigateTo} />}
           <Routes>
             <Route exact path='/' 
                 element={<Home
