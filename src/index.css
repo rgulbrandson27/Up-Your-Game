@@ -2,7 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+.page-transition {
+  transition: opacity 0.3s ease-in-out;
+  opacity: 1;
+}
 
+.page-transition-exit {
+  opacity: 1;
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
 
 
 /* 

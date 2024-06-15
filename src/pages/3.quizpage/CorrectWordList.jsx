@@ -3,9 +3,6 @@ import React, { useEffect, useState } from "react";
 
 const CorrectWordList = ({selectedWordList, isNewSelection, stemWordLetters}) => {
 
-// const sixLetterStems_2_SATIRE = ["ARISTAE", "ASTERIA", "ATRESIA", "BAITERS", "BARITES", "REBAITS", "TERBIAS", "ATRESIC", "CRISTAE", "RACIEST", "STEARIC", "ARIDEST", "ASTRIDE", "DIASTER", "DISRATE", "STAIDER", "TARDIES", "TIRADES", "AERIEST", "SERIATE", "FAIREST", "AIGRETS", "GAITERS", "SEAGIRT", "STAGIER", "TRIAGES", "HASTIER", "AIRIEST", "REALIST", "RETAILS", "SALTIER", "SALTIRE", "SLATIER", "TAILERS", "IMARETS", "MAESTRI", "MISRATE", "SMARTIE", "ANESTRI", "ANTSIER", "NASTIER", "RATINES", "RETAINS", "RETINAS", "RETSINA", "STAINER", "STEARIN", "PARTIES", "PASTIER", "PIASTER", "PIASTRE", "PIRATES", "PRATIES", "TRAIPSE", "ARTSIER", "TARRIES", "TARSIER", "ARTSIES", "SATIRES", "ARTIEST", "ARTISTE", "ATTIRES", "IRATEST", "RATITES", "STRIATE", "TASTIER", "RAVIEST", "VASTIER", "VERITAS", "WAISTER", "WAITERS", "WARIEST", "WASTRIE"];  
-// const stemWord = "Satire"  
-
 // useEffect(() => {
 //   if (selectedWordList.listName !== "SAMPLE") {
   
@@ -28,12 +25,11 @@ function extractExtraLetter(listWord, stemWord) {
   // }
 }
 
-
   return (
     <div className="correctWordList bg-violet-200 border-2 border-black rounded-md">
       <h1 className="word-list-name text-center text-xl font-bold tracking-widest bg-black text-white">{selectedWordList.listName}</h1>
       {/* <ul className="word-list-items grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-2"> */}
-      <div className="word-list-items mt-2 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="word-list-items mt-2">
         {selectedWordList.words.map((listWord, index) => {
           const extraLetter = extractExtraLetter(listWord, selectedWordList.listName);
           const displayExtraLetter = extraLetter !== prevExtraLetter;

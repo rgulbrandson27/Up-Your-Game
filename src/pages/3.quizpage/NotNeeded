@@ -1,0 +1,340 @@
+
+import React from 'react';
+import {useEffect, useState, useRef} from 'react';
+
+const WordDisplay = ({ selectedWordList, stemWordLetters }) => {
+
+  const inputRefs = useRef([]);
+  const submitButtonRef = useRef(null);
+  const [isSubmitButtonFocused, setIsSubmitButtonFocused] = useState(false);
+  const [inputValues, setInputValues] = useState(Array(7).fill(''));
+
+  const handleInputChange = (e, index) => {
+    const value = e.target.value.toUpperCase();
+    const currentValue = inputRefs.current[index].value.toUpperCase();
+    if (value && currentValue) {
+      // If there's already a letter in the input box, just move focus to the next input box
+      if (index < inputRefs.current.length - 1) {
+        inputRefs.current[index + 1].focus();
+      }
+      return;
+    }
+
+    const updatedValues = [...inputValues];
+    updatedValues[index] = value;
+    setInputValues(updatedValues);
+    //   const updatedValues = [...prevValues];
+    //   updatedValues[index] = value;
+    //   return updatedValues;
+    // });
+
+    if (value && index < inputRefs.current.length - 1) {
+      inputRefs.current[index + 1].focus();
+    }
+
+
+    // e.target.value = value;
+
+
+    // inputRefs.current[index].value = value;
+
+  };
+
+  // const handleLastInputKeyDown = (e) => {
+  //   if (e.key === 'Tab' && inputRefs.current.length > 0) {
+  //     e.preventDefault(); // Prevent the default tab behavior
+  // };
+
+  const handleKeyDown = (e, index) => {
+    // Prevent the default tab behavior when shift + tab is pressed
+    if (e.key === 'Tab' && e.shiftKey) {
+      e.preventDefault();
+    }
+
+    // Move focus to the previous input box when shift + tab is pressed
+    if (e.key === 'Tab' && e.shiftKey && index > 0) {
+      inputRefs.current[index - 1].focus();
+    }
+
+    if (e.key === 'Tab' && index === inputRefs.current.length - 1) {
+      submitButtonRef.current.focus();
+      setIsSubmitButtonFocused(true); // Set the state to indicate submit button is focused
+    }
+
+  };
+  
+    const handleSubmit = () => {
+
+      // if (e.key === 'Enter' && e.target === submitButtonRef.current) {
+        
+        const values = inputRefs.current.map((ref) => ref.value);
+        console.log('Input values:', values);
+
+        // Reset the inputs after submission
+    inputRefs.current.forEach((ref) => {
+      ref.value = '';
+    });
+    // Optionally, you can reset the focus to the first input
+    if (inputRefs.current.length > 0) {
+      inputRefs.current[0].focus();
+    }
+
+    // Reset the submit button focus
+    setIsSubmitButtonFocused(false);
+  };
+      
+      
+            
+            return (
+              <div className="wordDisplay border-2 bg-yellow-100 border-blue-400 p-3 rounded-md">
+                  <div className="flex justify-center mx-3 gap-1 md:gap-2">
+                  {[...Array(7)].map((_, index) => (
+                  <input
+                    key={index}
+                    ref={(el) => (inputRefs.current[index] = el)}
+                    type="text"
+                    value={inputValues[index]}
+                    className="letter-box input input-bordered bg-yellow-300 text-xl md:text-4xl text-center input-secondary w-full max-w-xs aspect-square rounded-md"
+                    maxLength={1} // Limit input length to 1 character
+                    onChange={(e) => {handleInputChange(e, index)}} // Call handleInputChange when input changes
+                    onKeyDown={(e) => handleKeyDown(e, index)} // Listen for keydown event 
+                  />
+                  ))}
+                           
+
+                  </div>  
+                  <div className="flex justify-center">
+                  <button 
+                           ref={submitButtonRef}
+                           onKeyDown={handleSubmit}
+                           onClick={handleSubmit}
+                           className={`bg-blue-400 border-2 border-black  text-white text-xs px-1 h-1/4 rounded-md mt-3
+                           ${isSubmitButtonFocused ? 'h-1/2'
+                            : ''
+                           }`}
+                           onBlur={() => setIsSubmitButtonFocused(false)}
+                           >
+                           Submit
+                           </button>  
+                           </div>
+              </div>
+              );
+            };
+           
+            
+export default WordDisplay;
+
+
+import React from 'react';
+import {useEffect, useState, useRef} from 'react';
+
+const WordDisplay = ({ selectedWordList }) => {
+
+  const inputRef1 = useRef(null);
+  const inputRef2 = useRef(null);
+  const inputRef3 = useRef(null);
+  const inputRef4 = useRef(null);
+  const inputRef5 = useRef(null);
+  const inputRef6 = useRef(null);
+  const inputRef7 = useRef(null);
+
+  const [isSubmitButtonFocused, setIsSubmitButtonFocused] = useState(false);
+
+  const handleInputChange = (e, index) => {
+    const value = e.target.value.toUpperCase();
+    const currentValue = inputRefs.current[index].value.toUpperCase();
+    if (value && currentValue) {
+      // If there's already a letter in the input box, just move focus to the next input box
+      if (index < inputRefs.current.length - 1) {
+        inputRefs.current[index + 1].focus();
+      }
+      return;
+    }
+
+    const updatedValues = [...inputValues];
+    updatedValues[index] = value;
+    setInputValues(updatedValues);
+    //   const updatedValues = [...prevValues];
+    //   updatedValues[index] = value;
+    //   return updatedValues;
+    // });
+
+    // if (value && index < inputRefs.current.length - 1) {
+    //   inputRefs.current[index + 1].focus();
+    // }
+
+
+    // e.target.value = value;
+
+
+    // inputRefs.current[index].value = value;
+
+  };
+
+  // const handleLastInputKeyDown = (e) => {
+  //   if (e.key === 'Tab' && inputRefs.current.length > 0) {
+  //     e.preventDefault(); // Prevent the default tab behavior
+  // };
+
+  const handleKeyDown = (e, index) => {
+    // Prevent the default tab behavior when shift + tab is pressed
+    if (e.key === 'Tab' && e.shiftKey) {
+      e.preventDefault();
+    }
+
+    // Move focus to the previous input box when shift + tab is pressed
+    if (e.key === 'Tab' && e.shiftKey && index > 0) {
+      inputRefs.current[index - 1].focus();
+    }
+
+    if (e.key === 'Tab' && index === inputRefs.current.length - 1) {
+      submitButtonRef.current.focus();
+      setIsSubmitButtonFocused(true); // Set the state to indicate submit button is focused
+    }
+
+  };
+  
+    const handleSubmit = () => {
+
+      // if (e.key === 'Enter' && e.target === submitButtonRef.current) {
+        
+        const values = inputRefs.current.map((ref) => ref.value);
+        console.log('Input values:', values);
+
+        // Reset the inputs after submission
+    inputRefs.current.forEach((ref) => {
+      ref.value = '';
+    });
+    // Optionally, you can reset the focus to the first input
+    if (inputRefs.current.length > 0) {
+      inputRefs.current[0].focus();
+    }
+
+    // Reset the submit button focus
+    setIsSubmitButtonFocused(false);
+  };
+      
+      
+            
+            return (
+              <div className="wordDisplay border-2 bg-yellow-100 border-blue-400 p-3 rounded-md">
+                  <div className="flex justify-center mx-3 gap-1 md:gap-2">
+                  {[...Array(7)].map((_, index) => (
+                  <input
+                    key={index}
+                    ref={(el) => (inputRefs.current[index] = el)}
+                    type="text"
+                    value={inputValues[index]}
+                    className="letter-box input input-bordered bg-yellow-300 text-xl md:text-4xl text-center input-secondary w-full max-w-xs aspect-square rounded-md"
+                    maxLength={1} // Limit input length to 1 character
+                    onChange={(e) => {handleInputChange(e, index)}} // Call handleInputChange when input changes
+                    onKeyDown={(e) => handleKeyDown(e, index)} // Listen for keydown event 
+                  />
+                  ))}
+                           
+
+                  </div>  
+                  <div className="flex justify-center">
+                  <button 
+                           ref={submitButtonRef}
+                           onKeyDown={handleSubmit}
+                           onClick={handleSubmit}
+                           className={`bg-blue-400 border-2 border-black  text-white text-xs px-1 h-1/4 rounded-md mt-3
+                           ${isSubmitButtonFocused ? 'h-1/2'
+                            : ''
+                           }`}
+                           onBlur={() => setIsSubmitButtonFocused(false)}
+                           >
+                           Submit
+                           </button>  
+                           </div>
+              </div>
+              );
+            };
+           
+            
+            const WordDisplay = ({ selectedWordList }) => {
+              const [inputValues, setInputValues] = useState(Array(7).fill('')); // Initial values for the boxes
+              const inputRefs = useRef([]);
+            
+              // Rest of your component code...
+            
+              return (
+                <div className="wordDisplay border-2 bg-yellow-100 border-blue-400 p-3 rounded-md">
+                  <div className="flex justify-center mx-3 gap-1 md:gap-2">
+                    {[...Array(7)].map((_, index) => (
+                      <input
+                        key={index}
+                        ref={(el) => (inputRefs.current[index] = el)}
+                        type="text"
+                        value={inputValues[index]}
+                        className="letter-box input input-bordered bg-yellow-300 text-xl md:text-4xl text-center input-secondary w-full max-w-xs aspect-square rounded-md"
+                        maxLength={1} // Limit input length to 1 character
+                        onChange={(e) => handleInputChange(e, index)} // Call handleInputChange when input changes
+                        onKeyDown={(e) => handleKeyDown(e, index)} // Listen for keydown event
+                      />
+                    ))}
+                  </div>
+                  <div className="flex justify-center">
+                    <button
+                      ref={submitButtonRef}
+                      onKeyDown={handleSubmit}
+                      onClick={handleSubmit}
+                      className={`bg-blue-400 border-2 border-black text-white text-xs px-1 h-1/4 rounded-md mt-3
+                                 ${isSubmitButtonFocused ? 'h-1/2' : ''}
+                              `}
+                      onBlur={() => setIsSubmitButtonFocused(false)}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              );
+            };
+            
+            export default WordDisplay;
+            
+            
+            
+            const WordDisplay = ({ selectedWordList }) => {
+              // Assuming selectedWordList is an object with a property named 'wordCount'
+              const wordCount = selectedWordList.wordCount || 7; // Default to 7 if 'wordCount' is not provided
+              const [inputValues, setInputValues] = useState(Array(wordCount).fill('')); // Initial values for the boxes
+              const inputRefs = useRef([]);
+            
+              // Rest of your component code...
+            
+              return (
+                <div className="wordDisplay border-2 bg-yellow-100 border-blue-400 p-3 rounded-md">
+                  <div className="flex justify-center mx-3 gap-1 md:gap-2">
+                    {[...Array(wordCount)].map((_, index) => (
+                      <input
+                        key={index}
+                        ref={(el) => (inputRefs.current[index] = el)}
+                        type="text"
+                        value={inputValues[index]}
+                        className="letter-box input input-bordered bg-yellow-300 text-xl md:text-4xl text-center input-secondary w-full max-w-xs aspect-square rounded-md"
+                        maxLength={1} // Limit input length to 1 character
+                        onChange={(e) => handleInputChange(e, index)} // Call handleInputChange when input changes
+                        onKeyDown={(e) => handleKeyDown(e, index)} // Listen for keydown event
+                      />
+                    ))}
+                  </div>
+                  <div className="flex justify-center">
+                    <button
+                      ref={submitButtonRef}
+                      onKeyDown={handleSubmit}
+                      onClick={handleSubmit}
+                      className={`bg-blue-400 border-2 border-black text-white text-xs px-1 h-1/4 rounded-md mt-3
+                                 ${isSubmitButtonFocused ? 'h-1/2' : ''}
+                              `}
+                      onBlur={() => setIsSubmitButtonFocused(false)}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              );
+            };
+            
+            export default WordDisplay;
