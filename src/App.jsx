@@ -11,7 +11,7 @@ import React from 'react';
 
 const App = () => {
 
-const [selectedWordList, setSelectedWordList] = useState({id:100, listName:"SAMPLE", words:["one", "two"], mnuemonic: "ABCDEFG" });
+const [selectedWordList, setSelectedWordList] = useState({id:99, listName:"SAMPLE", words:["one", "two"], mnuemonic: "ABCDEFG" });
 const [navigateTo, setNavigateTo] = useState(null);
 // const [key, setKey] = useState(0);
 
@@ -37,7 +37,7 @@ const handleSelectionClick = (wordListInfo) => {
 };
 
   return (
-    <div className="bg-blue-300 w-screen h-screen">
+    <div className="bg-blue-300 w-screen h-screen opacity-90">
       <Router>
           <Navbar className="w-screen" />
           {navigateTo && <Navigate to={navigateTo} />}

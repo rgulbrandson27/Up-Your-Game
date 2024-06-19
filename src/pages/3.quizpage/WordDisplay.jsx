@@ -2,15 +2,23 @@ import React from 'react';
 import {useEffect, useState, useRef} from 'react';
 
 const WordDisplay = ({ selectedWordList }) => {
-
     const displayLength = selectedWordList.length || 7;
-
-    const [inputValues, setInputValues] = useState(Array(7).fill(''));
-    const [wordToSubmit, setWordToSubmit] = useState('');
+    const lastBox = displayLength - 1;
+    
+    const [inputValues, setInputValues] = useState(Array(displayLength).fill(''));
     const [isSubmitButtonFocused, setIsSubmitButtonFocused] = useState(false);
+    // const [wordToSubmit, setWordToSubmit] = useState('');
 
     const inputRefs = useRef(Array( displayLength ).fill(null));
-  
+    const guessWord = useRef('');
+    const priorLettersEntered = useRef(false);
+    const allLettersEntered = useRef(false);
+
+    useEffect(() => {
+      // Focus on the first input box when the component mounts
+      inputRefs.current[0].focus();
+    }, []);
+
 //functions 
     const handleInputChange = (e, index) => {
         let value = e.target.value;
@@ -23,28 +31,38 @@ const WordDisplay = ({ selectedWordList }) => {
          } else {
           value = ''; 
           }
-
+    
         //update state
         const updatedValues = [...inputValues];
         updatedValues[index] = value;
         setInputValues(updatedValues);
-        
-        if (index === displayLength -1 && value !== '') {
-          setIsSubmitButtonFocused(true);
-        }
-
-        if (index < displayLength - 1 && value !== '') {
-          inputRefs.current[index + 1].focus();
-
+    
+    if (index === lastBox && value !== '' && priorLettersEntered) {
+      setIsSubmitButtonFocused(true);
+    }
+    // Focus on the next input if value is not empty
+    if (index < lastBox && value !== '') {
+      inputRefs.current[index + 1].focus();
       }
-      };
 
-
+      priorLettersEntered.current = updatedValues.slice(0, lastBox).every(val => val !== '');
+      allLettersEntered.current = updatedValues.every(val => val !== '');
+      console.log(priorLettersEntered, allLettersEntered);
+    };
 
     const handleKeyDown = (e, index) => {
       // Prevent the default tab behavior when shift + tab is pressed
       if (e.key === 'Tab' && e.shiftKey) {
         e.preventDefault();
+
+        if (index > 0) {
+          inputRefs.current[index - 1].focus();
+          // Select the text in the input box for immediate overwrite
+          inputRefs.current[index - 1].select();
+        }
+      } else if (e.key === 'Tab' && !e.shiftKey && index === lastBox) {
+        // If 'Tab' is pressed and it's the last input box, focus on the submit button
+        setIsSubmitButtonFocused(true);
       }
   
       // Move focus to the previous input box when shift + tab is pressed
@@ -53,52 +71,23 @@ const WordDisplay = ({ selectedWordList }) => {
       }
   
       // If 'Tab' is pressed and it's the last input box, focus on the submit button
-      if (e.key === 'Tab' && index === displayLength - 1) {
+      if (e.key === 'Tab' && index === lastBox) {
         setIsSubmitButtonFocused(true);
-      }
-    };
-
-              //   const handleLastInputKeyDown = (e) => {
-    //     if (e.key === 'Tab' || (e.key.length === 1 && e.key.match(/[a-zA-Z]/))) {
-    //       e.preventDefault(); // Prevent default tab behavior
-    //       document.getElementById('submitBtn').focus();
-    //   }
-          //   if (index === combinedInputRefs.length - 1) {
-              
+      };
+    }
      
     const handleSubmit = () => {
-              // if (e.key === 'Enter' && e.target === submitButtonRef.current) {
-
-        // console.log(inputRefs)
-        // setWordToSubmit(inputRefs.join());
-        // console.log(word);
         const values = inputRefs.current.map(ref => ref.value);
         console.log('Input values:', values);
 
-        const word = values.join('');
-        setWordToSubmit(word);
-        console.log("Submission Word:", word);
-        // Reset the inputs after submission
-        inputRefs.current.forEach((ref) => {
-        ref.value = '';
-        });
-        // Reset input values and focus on the first input
-        inputRefs.current.forEach((ref) => {
-          ref.value = '';
-        });
-        if (inputRefs.current.length > 0) {
-          inputRefs.current[0].focus();
-        }
-    
+        guessWord.current = values.join('');
+        console.log(guessWord);
+
+        setInputValues(Array(displayLength).fill(''));
         setIsSubmitButtonFocused(false);
-      };
-
-    // if (e.key === 'Tab' && index === inputRefs.current.length - 1) {
-    //   submitButtonRef.current.focus();
-// Set the state to indicate submit button is focused
-
-
-          
+        inputRefs.current[0].focus();
+      }
+ 
     return (
         <div className="wordDisplay border-2 bg-yellow-100 border-blue-400 p-3 rounded-md">
             <div className="flex justify-center mx-3 gap-1 md:gap-2">
@@ -128,8 +117,8 @@ const WordDisplay = ({ selectedWordList }) => {
                   </button>  
             </div>
               </div>
-    )
-                }
+    );
+};
                         
 export default WordDisplay;
 
@@ -143,5 +132,3 @@ export default WordDisplay;
     //   useEffect(() => {
     //     preFillBoxes();
     //   }, []);
-
-

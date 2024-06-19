@@ -37,13 +37,13 @@ function extractExtraLetter(listWord, stemWord) {
 
           return (
     
-            <div key={index} className="word-list-item grid grid-cols-4">
+            <div key={index} className="word-list-item grid grid-cols-4 md:grid-cols-3">
          
               {displayExtraLetter ? 
               <div className="extra-letter col-span-1 ml-5 text-xl font-medium text-center">{extraLetter}</div>
               : <div></div>
               }
-              <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-6">{listWord}</div>
+              <div className="stem-word col-span-2 md:me-10 lg:me-4 lg:text-left text-center text-xl font-medium tracking-widest ml-6">{listWord}</div>
             </div>
            
           );
