@@ -1,12 +1,13 @@
 import React from 'react';
 import {useEffect, useState, useRef} from 'react';
 
-const WordDisplay = ({ selectedWordList }) => {
+const WordDisplay = ({ selectedWordList, hintRequested }) => {
     const displayLength = selectedWordList.length || 7;
     const lastBox = displayLength - 1;
     
     const [inputValues, setInputValues] = useState(Array(displayLength).fill(''));
     const [isSubmitButtonFocused, setIsSubmitButtonFocused] = useState(false);
+    const [hintArrowsDisplayed, setHintArrowsDisplayed] = useState(false);
     // const [wordToSubmit, setWordToSubmit] = useState('');
 
     const inputRefs = useRef(Array( displayLength ).fill(null));
@@ -18,6 +19,10 @@ const WordDisplay = ({ selectedWordList }) => {
       // Focus on the first input box when the component mounts
       inputRefs.current[0].focus();
     }, []);
+
+    useEffect(() => {
+      hintRequested && setHintArrowsDisplayed(true);
+    }, [hintRequested]);
 
 //functions 
     const handleInputChange = (e, index) => {
@@ -92,19 +97,24 @@ const WordDisplay = ({ selectedWordList }) => {
         <div className="wordDisplay border-2 bg-yellow-100 border-blue-400 p-3 rounded-md">
             <div className="flex justify-center mx-3 gap-1 md:gap-2">
                 {[...Array(displayLength)].map((_, index) => (
-                  <input
-                    key={index}
-                    ref={(el) => (inputRefs.current[index] = el)}
-                    type="text"
-                    value={inputValues[index]}
-                    className="letter-box input input-bordered bg-yellow-300 text-xl md:text-4xl text-center input-secondary w-full max-w-xs aspect-square rounded-md"
-                    maxLength={1} // Limit input length to 1 character
-                    onChange={(e) => {handleInputChange(e, index)}} // Call handleInputChange when input changes
-                    onKeyDown={(e) => handleKeyDown(e, index)} // Listen for keydown event 
-                  />
+               <div key={index} className="relative flex items-center flex-col">   
+                    <div className="absolute bottom-8 md:bottom-7 lg:bottom-6 p-1">
+                      <svg className={`w-8 h-8 ${hintArrowsDisplayed ? '' : 'invisible'} text-gray-800 dark:text-white hover:text-green-500`} aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M18.425 10.271C19.499 8.967 18.57 7 16.88 7H7.12c-1.69 0-2.618 1.967-1.544 3.271l4.881 5.927a2 2 0 0 0 3.088 0l4.88-5.927Z" clip-rule="evenodd"/>
+                      </svg>
+                    </div>
+                    <input
+                      ref={(el) => (inputRefs.current[index] = el)}
+                      type="text"
+                      value={inputValues[index]}
+                      className="letter-box input input-bordered bg-yellow-300 text-xl md:text-4xl text-center input-secondary w-full max-w-xs aspect-square rounded-md"
+                      maxLength={1} // Limit input length to 1 character
+                      onChange={(e) => {handleInputChange(e, index)}} // Call handleInputChange when input changes
+                      onKeyDown={(e) => handleKeyDown(e, index)} // Listen for keydown event 
+                    />
+                </div>
                   ))}            
-
-                  </div>  
+            </div>  
             <div className="flex justify-center">
                 <button 
                   onKeyDown={handleSubmit}
@@ -116,7 +126,7 @@ const WordDisplay = ({ selectedWordList }) => {
                   >Submit
                   </button>  
             </div>
-              </div>
+        </div>
     );
 };
                         

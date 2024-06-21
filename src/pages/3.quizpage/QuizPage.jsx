@@ -11,17 +11,23 @@ const QuizPage = ({selectedWordList}) => {
 
 const [stemWordLetters, setStemWordLetters] = useState([]);
 const [hintsRemaining, setHintsRemaining] = useState([10]);
-
-
-const showHintChoices = 
-
-
+const [hintRequested, setHintRequested] = useState(false);
 
 useEffect(() => {
   console.log("selectedWordList has passed to quizpage:", selectedWordList);
   setStemWordLetters(selectedWordList.listName.split(""));
   console.log(stemWordLetters);
 }, [selectedWordList]);
+
+useEffect(() => {
+  if (hintRequested)
+  console.log("A hint has been requested");
+
+}, [hintRequested]);
+
+const handleHintClick = () => {
+  setHintRequested(true);
+}
 
   return (
     <div>
@@ -35,7 +41,7 @@ useEffect(() => {
     
             lg:col-start-3 lg:col-span-5
                 mt-4">
-            <WordDisplay selectedWordList={selectedWordList} stemWordLetters={stemWordLetters}/>
+            <WordDisplay selectedWordList={selectedWordList} stemWordLetters={stemWordLetters} hintRequested={hintRequested}/>
         </div>
 
         <div className="correct-word-list grid col-span-6 col-start-4 row-span-8 row-start-5 mt-3 overflow-scroll
@@ -51,7 +57,9 @@ useEffect(() => {
           lg:col-start-3 lg:row-start-7">
             
           < Hints
-              onClick={() => showHintChoices()} />
+              hintRequested = {hintRequested}
+              setHintRequested = {setHintRequested}
+              onClick={handleHintClick} />
           </div>
           </div>
         </div>
