@@ -16,6 +16,8 @@ FORMAT {
 ------------------------------------------------------------
 */
 
+import { TbHandTwoFingers } from "react-icons/tb";
+
 
 
 const sixLetterStems = [
@@ -68,111 +70,132 @@ const sixLetterStems = [
 },{
     id: 7,
     listName: "TONIES",
-    words: [],    
-    mnuemonic: "IS TO MARCH WITH PLAIN BOOT WAX"
+    words: ["ATONIES", "BONIEST", "NOTICES", "SECTION", "ETHIONS", "HISTONE", "INOSITE", "ENTOILS", "ONLIEST", "MESTINO", "MOISTEN", "MONTIES", "SENTIMO", "INTONES", "TENSION", "ISOTONE", "TOONIES", "PINTOES", "POINTES", "NORITES", "OESTRIN", "ORIENTS", "STONIER", "NOSIEST", "TONIEST", "TOWNIES", "TOXINES"],    
+    mnuemonic: "IS TO MARCH WITH PLAIN BOOT WAX",
+    length: 7
 },
 {
     id: 8,
     listName: "ORATES",
-    words: [],    
-    mnuemonic: "ADAMENT PREACHERS CALLED BRAGGARTS"
+    words: ["AEROSAT", "BOASTER", "BOATERS", "BORATES", "REBATOS", "SORBATE", "COASTER", "COATERS", "RECOATS", "ROASTED", "TORRSADE", "ROSEATE", "GAROTES", "ORGEATS", "STORAGE", "TOERAGS", "EARSHOT", "OLESTRA", "MAESTRO", "OVERTAS", "ATONERS", "SANTERO", "SENATOR", "TREASON", "ESPARTO", "PROTEAS", "SEAPORT", "ROASTER", "OSETRAS", "OSSETRA", "ROTATES", "TOASTER"],    
+    mnuemonic: "ADAMENT PREACHERS CALLED BRAGGARTS", 
+    length: 7
 },{
     id: 9,
     listName: "REASON",
-    words: [],    
-    mnuemonic: "BIG LECTURES TRIUMPH"
+    words: ["BORANES", "CANOERS", "COARSEN", "CORNEAS", "NARCOSE", "ARENOSE", "ONAGERS", "ORANGES", "HOARSEN", "SENHORA", "ERASION", "LOANERS", "RELOANS", "ENAMORS", "MOANERS", "OARSMEN", "PERSONA", "SERRANO", "REASONS", "SENORAS", "ATONERS", "SANTERO", "SENATOR", "TREASON", "ARENOUS"],    
+    mnuemonic: "BIG LECTURES TRIUMPH", 
+    length: 7
 },{
     id: 10,
     listName: "INSERT",
-    words: [],    
-    mnuemonic: "WOMAN SHOVED STUCK FLAGPOLE"
+    words: ["ANESTRI", "ANTSIER", "NASTIER", "RATINES", "RETAINS", "RETINAS", "RETSINA", "STAINER", "STEARIN", "CISTERN", "CRETINS", "TINDERS", "ENTIRES", "ENTRIES", "RETINES", "TRIENES", "SNIFTER", "RESTING", "STINGER", "HINTERS", "REKNITS", "STINKER", "TINKERS", "LINTERS", "MINSTER", "MINTERS", "REMINTS", "INTERNS", "TINNERS", "NORITES", "OESTRIN", "ORIENTS", "STONIER", "PTERINS", "ESTRINS", "INSERTS", "SINTERS", "STRINES", "RETINTS", "STINTER", "TINTERS", "NUTSIER", "TRIUNES", "UNITERS", "INVERTS", "STRIVEN", "TWINERS", "WINTERS"],   
+    mnuemonic: "WOMAN SHOVED STUCK FLAGPOLE",
+    length: 7
 },{
     id: 11,
     listName: "TONERS",
-    words: [],    
-    mnuemonic: "HARD PECKS OF BIG TOUGHMAN"
+    words: ["ATONERS", "SANTERO", "SENATOR", "TREASON", "SORBENT", "CORNETS", "CRETONS", "RODENTS", "SNORTED", "ESTRONE", "FRONTES", "TONGERS", "HORNETS", "SHORTEN", "THRONES", "NORITES", "OESTRIN", "ORIENTS", "STONIER", "REKNOTS", "STONKER", "LORNEST", "MENTORS", "MONSTER", "TONNERS", "ENROOTS", "POSTERN", "PRONEST", "SNORTER", "NESTORS", "STONERS", "TENSORS", "STENTOR", "TENOURS", "TONSURE"],    
+    mnuemonic: "HARD PECKS OF BIG TOUGHMAN", 
+    length: 7
 },
 {
     id: 12,
     listName: "EASTER",
-    words: [],    
-    mnuemonic: "CHRIST BACK UP; GOD WILL FIX MAN"
-},{
+    words: ["AERATES", "BEATERS", "BERATES", "REBATES", "CERATES", "CREATES", "ECARTES", "DEAREST", "DERATES", "REDATES", "SEDATOR", "AFREETS", "FEASTER", "ERGATES", "RESTAGE", "AETHERS", "HEATERS", "REHEATS", "AERIEST", "SERIATE", "RETAKES", "ELATERS", "REALIST", "RELATES", "RESLATE", "STEALER", "REMATES", "RETEAMS", "STEAMER", "EARNEST", "EASTERN", "NEAREST", "STERANE", "ROSEATE", "EPATERS", "REPEATS", "RETAPES", "RETEARS", "SERRATE", "TEARERS", "EASTERS", "RESEATS", "SEAREST", "SEATERS", "TEASERS", "TESSERA", "ESTREAT", "RESTATE", "RETASTE", "AUSTERE", "SWEATER", "RETAXES"],    
+    mnuemonic: "CHRIST BACK UP; GOD WILL FIX MAN", 
+    length: 7
+},
+{
     id: 13,
-    listName: "AIDERS",
-    words: [],    
-    mnuemonic: "HELP FIX TRUCK BOMB? NEVER!"
-},{
+    listName: "RAISED",
+    words: ["ABIDERS", "BRAISED", "DARBIES", "SEABIRD", "SIDEBAR", "RADICES", "SIDECAR", "DEARIES", "READIES", "FARSIDE", "AIRSHED", "DASHIER", "DEHAIRS", "HARDIES", "SHADIER", "AIRSIDE", "DAIRIES", "DIARIES", "DAIKERS", "DARKIES", "DERAILS", "DIALERS", "REDIALS", "ADMIRES", "MISREAD", "SEDARIM", "SIDEARM", "RANDIES", "SANDIER", "SARDINE", "RADIOES", "ROADIES", "ASPIRED", "DESPAIR", "DIAPERS", "PRAISED", "RAIDERS", "ARIDEST", "ASTRIDE", "DIASTER", "DISRATE", "STAIDER", "TARDIES", "TIRADES", "RESIDUA", "ADVISER", "RADIXES"],    
+    mnuemonic: "HELP FIX TRUCK BOMB? NEVER!",
+    length: 7
+},
+{
     id: 14,
     listName: "RAINED",
-    words: [],    
-    mnuemonic: "DAMP RAINS BROUGHT HAVOC"
+    words: [],
+    mnuemonic: "DAMP RAINS BROUGHT HAVOC",
+    length: 7
 },{
     id: 15,
     listName: "LESION",
     words: [],    
-    mnuemonic: "TUMOR? PAGE SKILLFUL DOCTOR"
+    mnuemonic: "TUMOR? PAGE SKILLFUL DOCTOR",
+    length: 7
 },
 {
     id: 16,
     listName: "TORIES",
     words: [],
-    mnuemonic: "BUNCH OF OLD GRUMPS"
+    mnuemonic: "BUNCH OF OLD GRUMPS",
+    length: 7
 },
 {
     id: 17,
     listName: "TOILES",
     words: [],    
-    mnuemonic: "PREZ GOT CAUGHT HAVING MONICA"
+    mnuemonic: "PREZ GOT CAUGHT HAVING MONICA",
+    length: 7
 },
 
 {
     id: 18,
     listName: "SERIAL",
     words: ["AERIALS", "BAILERS", "CLARIES", "ECLAIRS", "SCALIER", "DERAILS", "DIALERS", "REDIALS", "REALISE", "GLAIRES", "HAILERS", "HALIERS", "SHALIER", "JAILERS", "RALLIES", "SALLIER", "MAILERS", "REALISM", "REMAILS", "ALINERS", "NAILERS", "RENAILS", "PALSIER", "RAILERS", "AIRLESS", "RESAILS", "SAILERS", "SERAILS", "SERIALS", "REALIST", "RETAILS", "SALTIER", "SALTIRE", "SLATIER", "TAILERS", "REVISAL", "WAILERS"],
-    mnuemonic: "A CHANGEABLE TV DRAMA (JAWS?)"
+    mnuemonic: "A CHANGEABLE TV DRAMA (JAWS?)",
+    length: 7
 },
 {
     id: 19,
     listName: "NAILER",
     words: [],    
-    mnuemonic: "VEXES SPOCK MIGHTILY"
+    mnuemonic: "VEXES SPOCK MIGHTILY",
+    length: 7
 },
 {
     id: 20,
     listName: "ALIENS",
     words: [],    
-    mnuemonic: "SPOCK'S VW BUG HOLD TO FORM"
+    mnuemonic: "SPOCK'S VW BUG HOLD TO FORM",
+    length: 7
 },
 {
     id: 21,
     listName: "IONSEA",
     words: [],    
-    mnuemonic: "MIMIC ATOP GRAVEL"
+    mnuemonic: "MIMIC ATOP GRAVEL",
+    length: 7
 },
 {
     id: 22,
     listName: "SALTIE",
     words: [],    
-    mnuemonic: "FIZZ BLOCKS DRIVING SHIP"
+    mnuemonic: "FIZZ BLOCKS DRIVING SHIP",
+    length: 7
 },
 {
     id: 23,
     listName: "RETAIL",
     words: [],    
-    mnuemonic: "CHUMPY LENDER TURNS BUCKS"
+    mnuemonic: "CHUMPY LENDER TURNS BUCKS",
+    length: 7
 },
 {
     id: 24,
     listName: "RETIES",
     words: [],    
-    mnuemonic: "SHCACKLED MAZE PREVENTS ESCAPE"
+    mnuemonic: "SHCACKLED MAZE PREVENTS ESCAPE",
+    length: 7
 },
 {
     id: 25,
     listName: "ENTIRE",
     words: [],    
-    mnuemonic: "IN GREAT CHUNKS"
+    mnuemonic: "IN GREAT CHUNKS",
+    length: 7
 }
 ];
 

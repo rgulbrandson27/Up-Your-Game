@@ -5,6 +5,7 @@ import CorrectWordList from './CorrectWordList';
 import Keyboard from './Keyboard';
 import WordDisplay from './WordDisplay';
 import Hints from './Hints';
+import Mneumonic from './Mneumonic';
 import PropTypes from 'prop-types';
 
 const QuizPage = ({selectedWordList}) => {
@@ -22,7 +23,6 @@ useEffect(() => {
 useEffect(() => {
   if (hintRequested)
   console.log("A hint has been requested");
-
 }, [hintRequested]);
 
 const handleHintClick = () => {
@@ -30,21 +30,26 @@ const handleHintClick = () => {
 }
 
   return (
-    <div>
+    <div className="flex justify-center mt-4">
+{/* DON'T DELETE */}
+    {/* <div className="relative">
+      <div className="bg-[purple] h-[300px] w-[300px] absolute overflow-hidden">
+        <div className="absolute conic-background h-[500px] w-[500px] animate-spin top-[-35%] right-[-35%]" style={{ animationDuration: '4s' }}></div>
+        </div>
+      <div className="bg-blue-300 h-[280px] w-[280px] ml-[10px] mt-[10px] relative"></div>
+    </div> */}
+
       {/* <h2>Quiz Page</h2> */}
-      {/* <p>Selected Word List: {selectedWordList ? selectedWordList.id : 'Unknown'}</p> */}
       <div className="grid grid-cols-12 grid-rows-12 w-screen h-screen flex-grow-0">
-        <h1 className="col-span-12 row-span-1 text-center text-2xl lg:text-3xl pt-2 lg:pt-3">{selectedWordList.listName} ({selectedWordList.id})</h1>
+        <h1 className="col-span-12 row-span-1 row-start-0 text-center text-2xl lg:text-3xl -mt-2 lg:pt-3">{selectedWordList.listName} ({selectedWordList.id})</h1>
         <div 
-            className="grid row-start-2 row-span-2 col-start-3 col-span-8 
-            md:row-start-4 md:row-span-2 md:col-start-2 md:col-span-6   
-    
-            lg:col-start-3 lg:col-span-5
-                mt-4">
+            className="grid row-start-2 row-span-2 mb-10 col-start-2 col-span-10 mt-10
+            md:row-start-4 md:row-span-1 md:col-start-2 md:col-span-6   
+            lg:col-start-3 lg:col-span-5">
             <WordDisplay selectedWordList={selectedWordList} stemWordLetters={stemWordLetters} hintRequested={hintRequested}/>
         </div>
 
-        <div className="correct-word-list grid col-span-6 col-start-4 row-span-8 row-start-5 mt-3 overflow-scroll
+        <div className="correct-word-list grid col-span-6 col-start-4 row-span-8 row-start-5 mt-5 overflow-scroll
           md:row-start-2 md:row-span-9 md:col-start-9 md:col-span-3
   
           lg:row-start-2 lg:rows-span-8 lg:col-start-9 lg:col-span-3 lg:mr-10">
@@ -52,15 +57,23 @@ const handleHintClick = () => {
         </div>
 
  
-          <div className="grid row-start-4 row-span-1 col-start-6 col-span-2 border-2 border-black m-3
+          <div className="grid row-start-2 row-span-1 col-start-4 col-span-1 -mt-4 mb-14 ml-2
           md:row-start-6 md:col-start-4 md:mx-4
-          lg:col-start-3 lg:row-start-7">
-            
+          lg:col-start-3 lg:row-start-7 lg:col-span-1">
           < Hints
               hintRequested = {hintRequested}
               setHintRequested = {setHintRequested}
               onClick={handleHintClick} />
           </div>
+
+          <div className="grid row-start-2 row-span-1 col-start-6 col-span-4 -mt-4 mb-14 p-0 text-sm ml-4
+          md:row-start-6 md:col-start-4 md:mx-4
+          lg:col-start-3 lg:row-start-7 lg:col-span-1">
+              < Mneumonic />
+         
+          </div>
+
+
           </div>
         </div>
      

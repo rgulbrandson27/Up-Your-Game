@@ -5,7 +5,18 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        'border-spin': {
+          '100%': {
+            transform: 'rotate(-360)',
+          },
+        },
+      },
+    animation: {
+      'border-spin': 'border-spin 7s linear infinite',
+    },
   },
+},
   plugins: [],
 }
