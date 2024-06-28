@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from "react";
 
-const CorrectWordList = ({selectedWordList, isNewSelection, stemWordLetters}) => {
+const CorrectWordList = ({selectedWordList, isNewSelection, wordDisplayLetters}) => {
 
 // useEffect(() => {
 //   if (selectedWordList.listName !== "SAMPLE") {
@@ -13,16 +13,12 @@ const CorrectWordList = ({selectedWordList, isNewSelection, stemWordLetters}) =>
 
 let prevExtraLetter = "";
 
-
 function extractExtraLetter(listWord, stemWord) {
   for(let i = 0; i < stemWord.length; i++) {
   let letterToRemove = stemWord.charAt(i);
   listWord = listWord.replace(letterToRemove, "");
   }
   return listWord.charAt(0);
-  // let extraLetter = listWord;
-  // console.log(extraLetter);
-  // }
 }
 
   return (
@@ -36,16 +32,14 @@ function extractExtraLetter(listWord, stemWord) {
           prevExtraLetter = extraLetter;
 
           return (
-    
-            <div key={index} className="word-list-item grid grid-cols-4 md:grid-cols-3">
-         
+            <div key={index} className="word-list-item grid grid-cols-5 md:grid-cols-4">
               {displayExtraLetter ? 
-              <div className="extra-letter col-span-1 ml-5 text-xl font-medium text-center">{extraLetter}</div>
+              <div className="extra-letter col-span-1 ml-10 text-xl font-medium text-center md:ml-0">{extraLetter}</div>
               : <div></div>
               }
-              <div className="stem-word col-span-2 md:me-10 lg:me-4 lg:text-left text-center text-xl font-medium tracking-widest ml-6">{listWord}</div>
+              <div className="item-number text-sm col-span-1 text-center mt-1 md:-ml-10 md:mt-1.5 lg:-ml-16 lg:mt-1">{index + 1}</div>
+              <div className="stem-word col-span-2 md:me-10 lg:me-4 lg:text-left text-center text-xl font-medium tracking-[.1em] ml-2 md:-ml-14 lg:-ml-8">{listWord}</div>
             </div>
-           
           );
         })}
       </div>

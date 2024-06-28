@@ -114,7 +114,7 @@ const WordDisplay = ({ selectedWordList, hintRequested }) => {
                   type="text"
                   value={inputValues[index]}
                   className="letter-box input
-                     bg-yellow-300 text-4xl md:text-4xl text-center input-secondary 
+                     bg-yellow-300 text-3xl md:text-4xl text-center input-secondary 
                      max-w-xs aspect-square rounded-md z-10 overflow-hidden
                     w-[calc(100%-2px)] h-[calc(100%-2px)] top-[1px] left-[1px] border-2 border-purple-400"
                   maxLength={1}
@@ -127,7 +127,10 @@ const WordDisplay = ({ selectedWordList, hintRequested }) => {
               <button
                 onKeyDown={handleSubmit}
                 onClick={handleSubmit}
-                className={`bg-blue-400 border-2 border-black hover:bg-blue-700 text-white text-md px-1 h-1/2 rounded-md
+                className={`bg-blue-400 border-2 border-black hover:bg-blue-700 text-white text-md px-1 h-1/2 rounded-md mt-0
+                sm:mt-6
+                md:mb-0 md:mt-0
+                lg:mt-8
                   ${isSubmitButtonFocused ? 'focus:bg-blue-700' : ''}
                 `}
                 onBlur={() => setIsSubmitButtonFocused(false)}

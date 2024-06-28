@@ -37,7 +37,11 @@ const handleSelectionClick = (wordListInfo) => {
 };
 
   return (
-    <div className="bg-blue-300 w-screen h-screen opacity-90">
+    <div className="bg-blue-300 w-screen h-screen opacity-90
+    sm:bg-cyan-400
+    md:bg-green-400
+    lg:bg-pink-500
+    xl:bg-yellow-500">
       <Router>
           <Navbar className="w-screen" />
           {navigateTo && <Navigate to={navigateTo} />}
