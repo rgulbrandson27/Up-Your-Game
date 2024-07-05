@@ -1,12 +1,13 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
-const CorrectWordList = ({selectedWordList, isNewSelection, wordDisplayLetters}) => {
+const CorrectWordList = ({selectedWordList, correctlyGuessedList, isNewSelection, wordDisplayLetters}) => {
 
 // useEffect(() => {
 //   if (selectedWordList.listName !== "SAMPLE") {
   
-  
+
+
 //   }
 //   console.log('selectedWordList has changed on quizpage in correctwordlist compoennt:', selectedWordList);
 //   }, [selectedWordList, isNewSelection])
@@ -30,6 +31,7 @@ function extractExtraLetter(listWord, stemWord) {
           const extraLetter = extractExtraLetter(listWord, selectedWordList.listName);
           const displayExtraLetter = extraLetter !== prevExtraLetter;
           prevExtraLetter = extraLetter;
+         const displayListWord = correctlyGuessedList.current.includes(listWord); 
 
           return (
             <div key={index} className="word-list-item grid grid-cols-5 md:grid-cols-4">
@@ -38,7 +40,13 @@ function extractExtraLetter(listWord, stemWord) {
               : <div></div>
               }
               <div className="item-number text-sm col-span-1 text-center mt-1 md:-ml-10 md:mt-1.5 lg:-ml-16 lg:mt-1">{index + 1}</div>
+              
+              {displayListWord ?
               <div className="stem-word col-span-2 md:me-10 lg:me-4 lg:text-left text-center text-xl font-medium tracking-[.1em] ml-2 md:-ml-14 lg:-ml-8">{listWord}</div>
+              :
+              <div className="stem-word col-span-2 md:me-10 lg:me-4 lg:text-left text-center text-xl font-medium tracking-[.1em] ml-2 md:-ml-14 lg:-ml-8 invisible">{listWord}</div>
+              }
+            
             </div>
           );
         })}

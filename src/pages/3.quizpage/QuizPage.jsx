@@ -14,6 +14,13 @@ const [wordDisplayLetters, setWordDisplayLetters] = useState([]);
 const [hintsRemaining, setHintsRemaining] = useState([10]);
 const [hintRequested, setHintRequested] = useState(false);
 
+// const currentGuess = useRef('');
+const correctlyGuessedList = useRef(["BANTIES", "ACETINS"]);
+
+useEffect(() => {
+  
+})
+
 useEffect(() => {
   console.log("selectedWordList has passed to quizpage:", selectedWordList);
   setWordDisplayLetters(selectedWordList.listName.split(""));
@@ -25,9 +32,26 @@ useEffect(() => {
   console.log("A hint has been requested");
 }, [hintRequested]);
 
+// const updateGuessedList = (newItem) => {
+//   correctlyGuessedList.current.push(newItem);
+// }
+
+// const handleGuessSubmit = (guessWord) => {
+//     correctlyGuessedList = (prevList => [...prevList, guessWord]);
+// }
 const handleHintClick = () => {
   setHintRequested(true);
 }
+
+
+/*
+function
+displayListWord((listWord)
+
+)
+*/
+
+
 
   return (
     <div className="flex justify-center mt-4">
@@ -45,22 +69,22 @@ const handleHintClick = () => {
             className="grid row-start-2 row-span-2 mb-10 col-start-2 col-span-10 mt-10
             sm:mt-16
             md:row-start-2 md:col-start-2 md:col-span-6 md:mb-10
-            lg:col-start-3 lg:col-span-5 lg:row-start-3">
+            lg:col-start-3 lg:col-span-5 lg:row-start-2 lg:mt-116">
             <WordDisplay selectedWordList={selectedWordList} wordDisplayLetters={wordDisplayLetters} hintRequested={hintRequested}/>
+            {/* onGuessSubmit={handleGuessSubmit} */}
         </div>
         <div className="correct-word-list grid col-span-6 col-start-4 row-span-7 row-start-5 mt-2 overflow-scroll
           sm:row-start-6
           md:row-start-2 md:mt-4 md:row-span-9 md:col-start-9 md:col-span-4 md:-ml-2 md:mr-4
   
-          lg:row-start-3 lg:rows-span-8 lg:col-start-9 lg:col-span-3 lg:mr-4 lg:ml-4">
-            < CorrectWordList selectedWordList={selectedWordList} wordDisplayLetters={wordDisplayLetters}/>
+          lg:row-start-2 lg:rows-span-8 lg:col-start-9 lg:col-span-3 lg:mr-4 lg:ml-4">
+            < CorrectWordList selectedWordList={selectedWordList} wordDisplayLetters={wordDisplayLetters} correctlyGuessedList={correctlyGuessedList}/>
         </div>
 
- 
           <div className="grid row-start-2 row-span-1 col-start-3 col-span-4 -mt-4 mb-14 ml-2 p-0 text-sm
            sm:mt-1
           md:row-start-6 md:col-start-2 md:col-span-3 md:mr-2 md:-mt-4
-          lg:col-start-3 lg:row-start-7 lg:col-span-2 lg:ml-8 lg:mt-5">
+          lg:col-start-3 lg:row-start-5 lg:col-span-2 lg:ml-2 lg:mr-0 lg:mt-10">
           < Hints
               hintRequested = {hintRequested}
               setHintRequested = {setHintRequested}
@@ -70,15 +94,11 @@ const handleHintClick = () => {
           <div className="grid row-start-2 row-span-1 col-start-7 col-span-4 -mt-4 mb-14 p-0 text-sm ml-4
           sm:mt-1
           md:row-start-6 md:col-start-5 md:col-span-3 md:-mt-4
-          lg:col-start-6 lg:row-start-7 lg:col-span-2 lg:mr-2 lg:ml-4 lg:mt-5">
+          lg:col-start-6 lg:row-start-5 lg:col-span-2 lg:mr-2 lg:ml-0 lg:mt-10">
               < Mneumonic />
           </div>
-
-
           </div>
         </div>
-     
-      
     );
   };
   

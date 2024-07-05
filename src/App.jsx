@@ -13,6 +13,7 @@ const App = () => {
 
 const [selectedWordList, setSelectedWordList] = useState({id:99, listName:"SAMPLE", words:["one", "two"], mnuemonic: "ABCDEFG" });
 const [navigateTo, setNavigateTo] = useState(null);
+const [currentUser, setCurrentUser] = useState(null);
 // const [key, setKey] = useState(0);
 
 useEffect(() => {
@@ -50,18 +51,14 @@ const handleSelectionClick = (wordListInfo) => {
                 element={<Home
                   selectedWordList={selectedWordList}
                   setSelectedWordList={setSelectedWordList}
-                  handleSelectionClick={handleSelectionClick}/>
+                  handleSelectionClick={handleSelectionClick}
+                  currentUser={currentUser}/>
                   }/>
-            <Route path='/userdashboard' element={<UserDashboard/>}/>
+            <Route path='/userdashboard' element={<UserDashboard currentUser={currentUser}/>}/>
             <Route path='/quizpage' element={<QuizPage
-            selectedWordList={selectedWordList}
-            // isUnchangedSample={selectedWordList.listName !== "SAMPLE"}
-            // key={key}
+            selectedWordList={selectedWordList} currentUser={currentUser}
             />}/>
           </Routes>
-      
-{/*  
-        <Footer /> */}
       </Router>
  
     </div>

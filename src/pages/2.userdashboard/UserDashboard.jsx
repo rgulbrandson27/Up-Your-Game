@@ -1,17 +1,18 @@
 import React from "react"
-import StatusCard from "./StatusCard"
+import ProgressList from "./ProgressList"
+import MasteredList from "./MasteredList"
+import DateIcon from "./DateIcon"
 
 
 const UserDashboard = () => {
   return (
-    <div className="flex gap-2 justify-around p-10">
-      <StatusCard />
-      <StatusCard />
-      <StatusCard />
-
-     
+    <div className="flex flex-col place-items-center">
+      <h1 className="text-4xl tracking-wider p-4 pb-8">RAINZ</h1>
  
-
+      <div className="flex flex-row gap-4">
+          <MasteredList className=""/>
+          <MasteredList className=""/>
+      </div>
     </div>
   )
 }
