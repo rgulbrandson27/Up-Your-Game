@@ -1,7 +1,7 @@
 import React from 'react';
 import {useEffect, useState, useRef} from 'react';
 
-const WordDisplay = ({ selectedWordList, hintRequested, onGuessSubmit }) => {
+const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord }) => {
 
     const displayLength = selectedWordList.length || 7;
     const lastBox = displayLength - 1;
@@ -15,6 +15,7 @@ const WordDisplay = ({ selectedWordList, hintRequested, onGuessSubmit }) => {
     const inputRefs = useRef(Array( displayLength ).fill(null));
     const priorLettersEntered = useRef(false);
     const allLettersEntered = useRef(false);
+    const currentGuess = useRef('');
 
 
     
@@ -24,9 +25,9 @@ const WordDisplay = ({ selectedWordList, hintRequested, onGuessSubmit }) => {
       inputRefs.current[0].focus();
     }, []);
 
-    useEffect(() => {
-      hintRequested && setHintBordersDisplayed(true);
-    }, [hintRequested]);
+    // useEffect(() => {
+    //   hintRequested && setHintBordersDisplayed(true);
+    // }, [hintRequested]);
 
 //functions 
 
@@ -91,23 +92,28 @@ const WordDisplay = ({ selectedWordList, hintRequested, onGuessSubmit }) => {
       };
     }
      
-    const handleSubmit = () => {
+    const handleSubmitGuess = () => {
+
+      if (!allLettersEntered.current) {
+        window.alert("All letters must be entered.");
+      } else {
+
         const values = inputRefs.current.map(ref => ref.value);
         console.log('Input values:', values);
 
         currentGuess.current = values.join('');
-        console.log(currentGuess);
+        console.log(currentGuess.current);
 
-        onGuessSubmit(guessWord);
+        evaluateGuessWord(currentGuess.current);
 
-        setGuessCount(guessCount + 1);
+        setGuessCount((prevCount) => prevCount + 1);
         console.log(guessCount);
 
         setInputValues(Array(displayLength).fill(''));
         setIsSubmitButtonFocused(false);
         inputRefs.current[0].focus();
       }
- 
+    };
       return (
         <div className="wordDisplay border-2 bg-yellow-100 border-blue-500 p-3 rounded-md relative">
           <div className="flex justify-center gap-1 md:gap-2 overflow-hidden">
@@ -139,8 +145,8 @@ const WordDisplay = ({ selectedWordList, hintRequested, onGuessSubmit }) => {
             ))}
             <div className="absolute mt-[82px]">
               <button
-                onKeyDown={handleSubmit}
-                onClick={handleSubmit}
+                onKeyDown={handleSubmitGuess}
+                onClick={handleSubmitGuess}
                 className={`bg-blue-400 border-2 border-black hover:bg-blue-700 text-white text-md px-1 h-1/2 rounded-md mt-0
                 sm:mt-6
                 md:mb-0 md:mt-0

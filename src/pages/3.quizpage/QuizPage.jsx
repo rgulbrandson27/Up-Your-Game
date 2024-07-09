@@ -1,30 +1,24 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import DifficultyLevels from './DifficultyLevels';
 import CorrectWordList from './CorrectWordList';
 import Keyboard from './Keyboard';
 import WordDisplay from './WordDisplay';
 import Hints from './Hints';
 import Mneumonic from './Mneumonic';
-import PropTypes from 'prop-types';
+import IncorrectGuessNotice from './IncorrectGuessNotice';
 
-const QuizPage = ({selectedWordList}) => {
+const QuizPage = ({ selectedWordList }) => {
 
-const [wordDisplayLetters, setWordDisplayLetters] = useState([]);
+const [letterInputBoxes, setLetterInputBoxes] = useState([]);
 const [hintsRemaining, setHintsRemaining] = useState([10]);
 const [hintRequested, setHintRequested] = useState(false);
-
-// const currentGuess = useRef('');
-const correctlyGuessedList = useRef(["BANTIES", "ACETINS"]);
-
-useEffect(() => {
-  
-})
+const [incorrectGuessCount, setIncorrectGuessCount] = useState(0);
+const [correctlyGuessedWords, setCorrectlyGuessedWords] = useState([]);
 
 useEffect(() => {
   console.log("selectedWordList has passed to quizpage:", selectedWordList);
-  setWordDisplayLetters(selectedWordList.listName.split(""));
-  console.log(wordDisplayLetters);
+  setLetterInputBoxes(selectedWordList.listName.split(""));
+  console.log(letterInputBoxes);
 }, [selectedWordList]);
 
 useEffect(() => {
@@ -32,13 +26,34 @@ useEffect(() => {
   console.log("A hint has been requested");
 }, [hintRequested]);
 
-// const updateGuessedList = (newItem) => {
-//   correctlyGuessedList.current.push(newItem);
-// }
+useEffect(() => {
+  console.log(correctlyGuessedWords)
+}, [correctlyGuessedWords]);
 
-// const handleGuessSubmit = (guessWord) => {
-//     correctlyGuessedList = (prevList => [...prevList, guessWord]);
-// }
+const displayIncorrectNotice = () => {
+  setIncorrectGuessCount(prevCount => prevCount + 1);
+  console.log("incorrect", incorrectGuessCount);
+}
+
+const evaluateGuessWord = (guessWord) => {
+  switch(true) {
+    //Word already guessed.
+    case correctlyGuessedWords.includes(guessWord):
+      console.log(`"${guessWord}" has already been guessed correctly.`);
+      break;
+    //Correct guess.
+    case selectedWordList.words.includes(guessWord):
+      setCorrectlyGuessedWords(prev => [...prev, guessWord]);
+      console.log("Correct guess");
+      break;
+    //Incorrect guess.
+      default:
+        console.log("Incorrect guess");
+      displayIncorrectNotice();
+      break;
+  }
+}
+
 const handleHintClick = () => {
   setHintRequested(true);
 }
@@ -70,15 +85,14 @@ displayListWord((listWord)
             sm:mt-16
             md:row-start-2 md:col-start-2 md:col-span-6 md:mb-10
             lg:col-start-3 lg:col-span-5 lg:row-start-2 lg:mt-116">
-            <WordDisplay selectedWordList={selectedWordList} wordDisplayLetters={wordDisplayLetters} hintRequested={hintRequested}/>
-            {/* onGuessSubmit={handleGuessSubmit} */}
+            <WordDisplay selectedWordList={selectedWordList} letterInputBoxes={letterInputBoxes} hintRequested={hintRequested} correctlyGuessedWords={correctlyGuessedWords} evaluateGuessWord={evaluateGuessWord}/>
         </div>
         <div className="correct-word-list grid col-span-6 col-start-4 row-span-7 row-start-5 mt-2 overflow-scroll
           sm:row-start-6
           md:row-start-2 md:mt-4 md:row-span-9 md:col-start-9 md:col-span-4 md:-ml-2 md:mr-4
   
           lg:row-start-2 lg:rows-span-8 lg:col-start-9 lg:col-span-3 lg:mr-4 lg:ml-4">
-            < CorrectWordList selectedWordList={selectedWordList} wordDisplayLetters={wordDisplayLetters} correctlyGuessedList={correctlyGuessedList}/>
+            < CorrectWordList selectedWordList={selectedWordList} letterInputBoxes={letterInputBoxes} correctlyGuessedWords={correctlyGuessedWords}/>
         </div>
 
           <div className="grid row-start-2 row-span-1 col-start-3 col-span-4 -mt-4 mb-14 ml-2 p-0 text-sm
@@ -97,8 +111,12 @@ displayListWord((listWord)
           lg:col-start-6 lg:row-start-5 lg:col-span-2 lg:mr-2 lg:ml-0 lg:mt-10">
               < Mneumonic />
           </div>
+          <div className="z-10 col-span-12 -mt-24 md:-mt-96">
+            {/* temporary quick fix for vertical alignment for medium and above screens  */}
+          <IncorrectGuessNotice incorrectGuessCount={incorrectGuessCount}/>
           </div>
         </div>
+      </div>
     );
   };
   
