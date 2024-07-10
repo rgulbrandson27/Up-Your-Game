@@ -7,11 +7,12 @@ import Hints from './Hints';
 import Mneumonic from './Mneumonic';
 import IncorrectGuessNotice from './IncorrectGuessNotice';
 
-const QuizPage = ({ selectedWordList }) => {
+const QuizPage = ({ selectedWordList, user }) => {
 
 const [letterInputBoxes, setLetterInputBoxes] = useState([]);
 const [hintsRemaining, setHintsRemaining] = useState([10]);
 const [hintRequested, setHintRequested] = useState(false);
+const [hintRequestCancelled, setHintRequestCancelled] = useState(true);
 const [incorrectGuessCount, setIncorrectGuessCount] = useState(0);
 const [correctlyGuessedWords, setCorrectlyGuessedWords] = useState([]);
 
@@ -21,10 +22,10 @@ useEffect(() => {
   console.log(letterInputBoxes);
 }, [selectedWordList]);
 
-useEffect(() => {
-  if (hintRequested)
-  console.log("A hint has been requested");
-}, [hintRequested]);
+// useEffect(() => {
+//   if (hintRequested)
+//   console.log("A hint has been requested");
+// }, [hintRequested]);
 
 useEffect(() => {
   console.log(correctlyGuessedWords)
@@ -33,6 +34,11 @@ useEffect(() => {
 const displayIncorrectNotice = () => {
   setIncorrectGuessCount(prevCount => prevCount + 1);
   console.log("incorrect", incorrectGuessCount);
+}
+
+const handleHintRequest = () => {
+  setHintRequested(true);
+  console.log("hint requested");
 }
 
 const evaluateGuessWord = (guessWord) => {
@@ -54,19 +60,8 @@ const evaluateGuessWord = (guessWord) => {
   }
 }
 
-const handleHintClick = () => {
-  setHintRequested(true);
-}
-
-
-/*
-function
-displayListWord((listWord)
-
-)
-*/
-
-
+  const declareListAsMastered = () => {
+  }
 
   return (
     <div className="flex justify-center mt-4">
@@ -102,7 +97,10 @@ displayListWord((listWord)
           < Hints
               hintRequested = {hintRequested}
               setHintRequested = {setHintRequested}
-              onClick={handleHintClick} />
+              hintRequestCancelled = {hintRequestCancelled}
+              setHintRequestCancelled = {setHintRequestCancelled}
+              onClick={handleHintRequest}
+               />
           </div>
 
           <div className="grid row-start-2 row-span-1 col-start-7 col-span-4 -mt-4 mb-14 p-0 text-sm ml-4

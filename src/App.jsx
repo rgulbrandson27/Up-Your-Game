@@ -13,8 +13,32 @@ const App = () => {
 
 const [selectedWordList, setSelectedWordList] = useState({id:99, listName:"SAMPLE", words:["one", "two"], mnuemonic: "ABCDEFG" });
 const [navigateTo, setNavigateTo] = useState(null);
-const [currentUser, setCurrentUser] = useState(null);
+// const [currentUser, setCurrentUser] = useState(null);
 // const [key, setKey] = useState(0);
+
+
+const [user, setUser] = useState("user");
+
+const url = "https://66232cb33e17a3ac846eba2b.mockapi.io/user/1";
+
+useEffect(() => {
+  const fetchUser = async () => {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Network did not respond');
+      }
+      const data = await response.json();
+      setUser(data);
+    } catch (error) {
+      console.log("error");
+  }
+};
+
+  
+
+fetchUser();
+}, []);
 
 useEffect(() => {
   console.log("hello, testing");
@@ -53,11 +77,11 @@ const handleSelectionClick = (wordListInfo) => {
                   selectedWordList={selectedWordList}
                   setSelectedWordList={setSelectedWordList}
                   handleSelectionClick={handleSelectionClick}
-                  currentUser={currentUser}/>
+                  user={user}/>
                   }/>
-            <Route path='/userdashboard' element={<UserDashboard currentUser={currentUser}/>}/>
+            <Route path='/userdashboard' element={<UserDashboard user={user}/>}/>
             <Route path='/quizpage' element={<QuizPage
-            selectedWordList={selectedWordList} currentUser={currentUser}
+            selectedWordList={selectedWordList} user={user}
             />}/>
           </Routes>
       </Router>

@@ -4,36 +4,9 @@ import ProgressList from "./ProgressList"
 import MasteredList from "./MasteredList"
 import DateIcon from "./DateIcon"
 
-
-const UserDashboard = () => {
-
-
-  const [user, setUser] = useState("user");
-
-  const url = "https://66232cb33e17a3ac846eba2b.mockapi.io/user/1";
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error('Network did not respond');
-        }
-        const data = await response.json();
-        setUser(data);
-      } catch (error) {
-        console.log("error");
-    }
-  };
-
-  fetchUser();
-}, []);
-
-
-
+const UserDashboard = ({user}) => {
 
   return (
- 
     <div className="grid grid-cols-12 grid-rows-12 h-screen overflow-scroll">
       <h1 className="text-4xl tracking-wider col-span-12 row-start-1 row-span-1 text-center py-2">{user.name}</h1>
  
