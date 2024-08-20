@@ -1,6 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+
+
 /* 
 @layer utilities {
   .wrapper {
@@ -27,11 +32,11 @@
 .conic-background {
   background: conic-gradient(
     rgba(244, 114, 182, 0.4) 0deg,
-    yellow 0deg,
+    orange 0deg,
     rgba(244, 114, 182, 0.4) 180deg,
-    yellow 180deg,
+    blue 180deg,
     rgba(244, 114, 182, 0.4) 270deg,
-    yellow 270deg,
+    orange 270deg,
     transparent 30deg
   )
 }

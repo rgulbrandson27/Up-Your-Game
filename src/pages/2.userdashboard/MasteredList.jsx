@@ -25,14 +25,26 @@ return (
             <ul>
             {user.mastered.map((item, index) => (
                 <li key={index} 
-                className="p-2 grid my-2 border-2 border-black grid-cols-5 place-items-center font-bold text-gray-900 rounded-lg bg-gray-200 hover:bg-gray-100 group dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white word-list-group">
-                    <div className="bg-black text-pink-300 z-10 col-start-0 col-span-1 flex justify-center items-center text-sm rounded-full w-6 h-6">{item.hints}</div>
-                    <div className="w-full -ml-10 col-start-0 col-span-3 text-xl tracking-wider border-2 hover:border-3 border-blue-800 flex place-content-center transition-shadow duration-300 ease-in-out 
+                className="p-1 grid my-2 h-12 place-items-center border border-black grid-cols-5 font-bold text-gray-900 rounded-lg bg-gray-200 hover:bg-gray-100 group dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white word-list-group">
+                    
+                    <div className="col-start-1 col-span-1 border-1 border-black bg-green-200 h-full">
+                        <div className="bg-black text-pink-300 z-10 flex justify-center items-center text-sm rounded-full w-6 h-6">{item.hints}
+                        </div>
+                    </div>
+                    
+                    <div className="bg-pink-200 col-start-2 col-span-3 border-1 border-black h-full">
+                    </div> 
+                        
+                    <div className="bg-blue-400 col-start-5 col-span-1 border-1 border-black h-full">
+                    <DateIcon date={item.date} />
+                    </div>
+
+                        {/* 
+                    <div className="w-full -ml-10 col-start-1 col-span-3 text-xl tracking-wider border-2 hover:border-3 border-blue-800 flex place-content-center transition-shadow duration-300 ease-in-out 
                         hover:shadow-md hover:shadow-black-300 hover:bg-pink-300 hover:cursor-pointer
                         bg-gradient-to-r from-pink-300 via-pink-100 to-pink-300 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 rounded-lg">
-                        {item.word}
-                    </div>
-                    <div className="col-start-5"><DateIcon date={item.date} /> </div>
+                        {item.word} */}
+               
                 </li>
             ))}
             </ul>

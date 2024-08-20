@@ -5,16 +5,19 @@ import Keyboard from './Keyboard';
 import WordDisplay from './WordDisplay';
 import Hints from './Hints';
 import Mneumonic from './Mneumonic';
-import IncorrectGuessNotice from './IncorrectGuessNotice';
+import IncorrectGuessAlert from './IncorrectGuessAlert';
 
-const QuizPage = ({ selectedWordList, user }) => {
+const QuizPage = ({ selectedWordList, user, addToMastered }) => {
 
 const [letterInputBoxes, setLetterInputBoxes] = useState([]);
 const [hintsRemaining, setHintsRemaining] = useState([10]);
 const [hintRequested, setHintRequested] = useState(false);
-const [hintRequestCancelled, setHintRequestCancelled] = useState(true);
+const [cancelHintRequest, setCancelHintRequest] = useState(false);
 const [incorrectGuessCount, setIncorrectGuessCount] = useState(0);
 const [correctlyGuessedWords, setCorrectlyGuessedWords] = useState([]);
+const [displayMasteredModal, setDisplayMasteredModal] = useState(false);
+// const [displayMasteredForm, setDisplayMasteredForm] = useState(false);
+
 
 useEffect(() => {
   console.log("selectedWordList has passed to quizpage:", selectedWordList);
@@ -31,15 +34,21 @@ useEffect(() => {
   console.log(correctlyGuessedWords)
 }, [correctlyGuessedWords]);
 
-const displayIncorrectNotice = () => {
+useEffect(() => {
+  console.log(correctlyGuessedWords);
+  if (checkIfMastered()) {
+    setDisplayMasteredModal(true);
+  }
+}, [correctlyGuessedWords]);
+
+const displayIncorrectAlert = () => {
   setIncorrectGuessCount(prevCount => prevCount + 1);
   console.log("incorrect", incorrectGuessCount);
 }
 
-const handleHintRequest = () => {
-  setHintRequested(true);
-  console.log("hint requested");
-}
+// const handleHintRequest = () => {
+//   console.log("hint requested");
+// }
 
 const evaluateGuessWord = (guessWord) => {
   switch(true) {
@@ -55,20 +64,43 @@ const evaluateGuessWord = (guessWord) => {
     //Incorrect guess.
       default:
         console.log("Incorrect guess");
-      displayIncorrectNotice();
+      displayIncorrectAlert();
       break;
   }
 }
 
-  const declareListAsMastered = () => {
-  }
+const checkIfMastered = () => {
+  console.log("cgw:" + correctlyGuessedWords.length);
+  console.log(selectedWordList.words.length);
+  console.log("list is mastered");
+  return (correctlyGuessedWords.length === selectedWordList.words.length);
+  }; 
+
+
+
+const handleRestart = () => {
+  setHintsRemaining([10]); // Reset to initial hints
+  setHintRequested(false); // Reset hint requested state
+  setCancelHintRequest(true); // Reset hint request cancelled state
+  setIncorrectGuessCount(0); // Reset incorrect guess count
+  setCorrectlyGuessedWords([]); // Reset correctly guessed words
+  setDisplayMasteredModal(false); // Reset mastered modal display
+    console.log("restart game");
+}
+
+// const declareAsMastered = () => {
+//   if (checkIfMastered(true))  {
+//   setDisplayMasteredModal(true);
+//   }}
+
+// declareAsMastered();
 
   return (
     <div className="flex justify-center mt-4">
 {/* DON'T DELETE */}
     {/* <div className="relative">
       <div className="bg-[purple] h-[300px] w-[300px] absolute overflow-hidden">
-        <div className="absolute conic-background h-[500px] w-[500px] animate-spin top-[-35%] right-[-35%]" style={{ animationDuration: '4s' }}></div>
+        <div className="absolute conic-background h-[500px] w-[500px] animate-spin top-[-35%] right-[-35%]" style={{ animationDuration: '8s' }}></div>
         </div>
       <div className="bg-blue-300 h-[280px] w-[280px] ml-[10px] mt-[10px] relative"></div>
     </div> */}
@@ -80,7 +112,7 @@ const evaluateGuessWord = (guessWord) => {
             sm:mt-16
             md:row-start-2 md:col-start-2 md:col-span-6 md:mb-10
             lg:col-start-3 lg:col-span-5 lg:row-start-2 lg:mt-116">
-            <WordDisplay selectedWordList={selectedWordList} letterInputBoxes={letterInputBoxes} hintRequested={hintRequested} correctlyGuessedWords={correctlyGuessedWords} evaluateGuessWord={evaluateGuessWord}/>
+            <WordDisplay selectedWordList={selectedWordList} letterInputBoxes={letterInputBoxes} hintRequested={hintRequested} setHintRequested={setHintRequested} correctlyGuessedWords={correctlyGuessedWords} evaluateGuessWord={evaluateGuessWord}/>
         </div>
         <div className="correct-word-list grid col-span-6 col-start-4 row-span-7 row-start-5 mt-2 overflow-scroll
           sm:row-start-6
@@ -94,12 +126,11 @@ const evaluateGuessWord = (guessWord) => {
            sm:mt-1
           md:row-start-6 md:col-start-2 md:col-span-3 md:mr-2 md:-mt-4
           lg:col-start-3 lg:row-start-5 lg:col-span-2 lg:ml-2 lg:mr-0 lg:mt-10">
-          < Hints
+          < Hints 
               hintRequested = {hintRequested}
               setHintRequested = {setHintRequested}
-              hintRequestCancelled = {hintRequestCancelled}
-              setHintRequestCancelled = {setHintRequestCancelled}
-              onClick={handleHintRequest}
+              cancelHintRequest = {cancelHintRequest}
+              setCancelHintRequest = {setCancelHintRequest}
                />
           </div>
 
@@ -107,14 +138,30 @@ const evaluateGuessWord = (guessWord) => {
           sm:mt-1
           md:row-start-6 md:col-start-5 md:col-span-3 md:-mt-4
           lg:col-start-6 lg:row-start-5 lg:col-span-2 lg:mr-2 lg:ml-0 lg:mt-10">
-              < Mneumonic />
+            <p className="text-md">Hints Remaining = 10 </p>
+              {/* < Mneumonic /> */}
           </div>
+
           <div className="z-10 col-span-12 -mt-24 md:-mt-96">
             {/* temporary quick fix for vertical alignment for medium and above screens  */}
-          <IncorrectGuessNotice incorrectGuessCount={incorrectGuessCount}/>
+          <IncorrectGuessAlert incorrectGuessCount={incorrectGuessCount} handleRestart={handleRestart}/>
+          </div>
+
+          <div className="z-10 place-self-center col-span-12 -mt-[800px]">
+          {displayMasteredModal && (
+          <div className="w-96 h-64 bg-white border-black border-2 flex flex-col rounded-lg p-6 space-y-4">
+            <h3 className="font-bold text-xl mb-4">You did it!  You have mastered this Bingo Stem!</h3>
+            <button className="btn bg-green-400 hover:bg-green-600 border-2 border-green-800 rounded-lg p-2"
+              onClick={() => addToMastered}
+              >Add to Mastered List</button>
+            <button className="btn bg-pink-400 hover:bg-pink-600 border-2 border-pink-800 rounded-lg p-2"
+            onClick={() => handleRestart()}
+              >Not feeling confident enough, I'd like to try again first.</button>
+          </div>
+          )}
+    </div>
           </div>
         </div>
-      </div>
     );
   };
   

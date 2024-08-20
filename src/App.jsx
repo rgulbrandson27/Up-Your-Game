@@ -33,12 +33,22 @@ useEffect(() => {
     } catch (error) {
       console.log("error");
   }
+
 };
 
-  
+ 
+// useEffect(() => {
+//   updateUserInfo()
+// }, []);
+//dependency array will include, changes in all user lists
 
 fetchUser();
+console.log(user);
 }, []);
+
+const updateUserInfo = () => {
+  console.log("this is where the PUT/Patch operation will go")
+}
 
 useEffect(() => {
   console.log("hello, testing");
@@ -52,6 +62,9 @@ useEffect(() => {
   // }
 }, [selectedWordList]); 
 
+const addToMastered = () => {
+  selectedWordList.listName
+}
 
 const handleSelectionClick = (wordListInfo) => {
   setSelectedWordList(wordListInfo);
@@ -63,7 +76,7 @@ const handleSelectionClick = (wordListInfo) => {
 };
 
   return (
-    <div className="bg-blue-300 min-h-screen opacity-90
+    <div className="bg-blue-300 min-h-screen pt-12 opacity-90
     sm:bg-cyan-400
     md:bg-green-400
     lg:bg-pink-500

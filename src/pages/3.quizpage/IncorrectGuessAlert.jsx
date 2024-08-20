@@ -1,12 +1,8 @@
 import React from 'react';
 import {useEffect, useState, useRef} from 'react';
 
-const IncorrectGuessNotice = ({ incorrectGuessCount }) => {
+const IncorrectGuessAlert = ({ incorrectGuessCount, handleRestart }) => {
 
-
-    const handleRestart = () => {
-        console.log("restart game");
-    }
 
     return (
 <div className="flex justify-center items-center">
@@ -26,4 +22,4 @@ const IncorrectGuessNotice = ({ incorrectGuessCount }) => {
     </div>
       );
 }
-export default IncorrectGuessNotice;
+export default IncorrectGuessAlert;

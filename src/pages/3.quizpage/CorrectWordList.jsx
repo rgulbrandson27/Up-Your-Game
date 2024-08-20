@@ -68,9 +68,6 @@ function extractExtraLetter(listWord, stemWord) {
           // ? refers to "optional chaining"
           const isGuessed = correctlyGuessedWords?.includes(listWord);
 
-
-
-
           return (
             <div 
               key={index} 
