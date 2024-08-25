@@ -5,7 +5,7 @@ import DateIcon from './DateIcon';
 import medal from './images/medal.svg';
 import prizeIcon from './images/prize-icon.png'
 
-const MasteredList = ({ user }) => {
+const MasteredList = ({ currentUser }) => {
 
 return (
     <div className="px-5 w-full border-4 pb-4 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -21,21 +21,22 @@ return (
 
         {/* WORD LIST */}
         <div className="w-full overflow-y-scroll"> 
-        {user.mastered && user.mastered.length > 0 ? (
+        {currentUser.mastered && currentUser.mastered.length > 0 ? (
             <ul>
-            {user.mastered.map((item, index) => (
+            {currentUser.mastered.map((item, index) => (
                 <li key={index} 
                 className="p-1 grid my-2 h-12 place-items-center border border-black grid-cols-5 font-bold text-gray-900 rounded-lg bg-gray-200 hover:bg-gray-100 group dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white word-list-group">
                     
-                    <div className="col-start-1 col-span-1 border-1 border-black bg-green-200 h-full">
+                    <div className="col-start-1 col-span-1 border-1 border-black bg-green-200 h-full flex items-center justify-center">
                         <div className="bg-black text-pink-300 z-10 flex justify-center items-center text-sm rounded-full w-6 h-6">{item.hints}
                         </div>
                     </div>
                     
-                    <div className="bg-pink-200 col-start-2 col-span-3 border-1 border-black h-full">
+                    <div className="bg-pink-200 col-start-2 col-span-3 border-1 border-black h-full flex items-center justify-center w-full">
+                        <div className="text-2xl">{item.word}</div>
                     </div> 
                         
-                    <div className="bg-blue-400 col-start-5 col-span-1 border-1 border-black h-full">
+                    <div className="bg-blue-400 col-start-5 col-span-1 border-1 border-black h-full flex items-center justify-center">
                     <DateIcon date={item.date} />
                     </div>
 

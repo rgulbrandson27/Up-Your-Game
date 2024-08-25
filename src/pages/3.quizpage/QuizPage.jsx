@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CorrectWordList from './CorrectWordList';
 import Keyboard from './Keyboard';
 import WordDisplay from './WordDisplay';
@@ -7,7 +8,7 @@ import Hints from './Hints';
 import Mneumonic from './Mneumonic';
 import IncorrectGuessAlert from './IncorrectGuessAlert';
 
-const QuizPage = ({ selectedWordList, user, addToMastered }) => {
+const QuizPage = ({ selectedWordList, currentUser, addToMastered, setNavigateTo, updateDateToToday }) => {
 
 const [letterInputBoxes, setLetterInputBoxes] = useState([]);
 const [hintsRemaining, setHintsRemaining] = useState([10]);
@@ -16,8 +17,7 @@ const [cancelHintRequest, setCancelHintRequest] = useState(false);
 const [incorrectGuessCount, setIncorrectGuessCount] = useState(0);
 const [correctlyGuessedWords, setCorrectlyGuessedWords] = useState([]);
 const [displayMasteredModal, setDisplayMasteredModal] = useState(false);
-// const [displayMasteredForm, setDisplayMasteredForm] = useState(false);
-
+const [displayAlreadyMasteredModal, setDisplayAlreadyMasteredModal] = useState(false);
 
 useEffect(() => {
   console.log("selectedWordList has passed to quizpage:", selectedWordList);
@@ -31,20 +31,20 @@ useEffect(() => {
 // }, [hintRequested]);
 
 useEffect(() => {
-  console.log(correctlyGuessedWords)
-}, [correctlyGuessedWords]);
+  checkIfMastered();
+}, [correctlyGuessedWords])
 
-useEffect(() => {
-  console.log(correctlyGuessedWords);
-  if (checkIfMastered()) {
-    setDisplayMasteredModal(true);
-  }
-}, [correctlyGuessedWords]);
+
+// useEffect(() => {
+//   if (addToMastered()) {
+//     setDisplayMasteredModal(false);
+//   }
+// }, [addToMastered]);
 
 const displayIncorrectAlert = () => {
   setIncorrectGuessCount(prevCount => prevCount + 1);
   console.log("incorrect", incorrectGuessCount);
-}
+};
 
 // const handleHintRequest = () => {
 //   console.log("hint requested");
@@ -67,16 +67,58 @@ const evaluateGuessWord = (guessWord) => {
       displayIncorrectAlert();
       break;
   }
-}
+};
 
 const checkIfMastered = () => {
-  console.log("cgw:" + correctlyGuessedWords.length);
-  console.log(selectedWordList.words.length);
-  console.log("list is mastered");
-  return (correctlyGuessedWords.length === selectedWordList.words.length);
-  }; 
+  if (correctlyGuessedWords.length === selectedWordList.words.length) {
+    
+    const isDuplicateMasteredWord = currentUser.mastered.some(
+      masteredItem => masteredItem.word === selectedWordList.listName
+      );
+      if (isDuplicateMasteredWord) {
+        setDisplayAlreadyMasteredModal(true);
+      } else
+
+    setDisplayMasteredModal(true);
+  }
+}; 
+
+const handleAddToMastered = async () => {
+  const masteredListUpdate = [...currentUser.mastered, {
+    number: currentUser.mastered.length + 1,
+    word: selectedWordList.listName, // Example: listName as the mastered word
+    hints: 0,
+    date: new Date().toLocaleDateString()
+  }];
+
+  await addToMastered(masteredListUpdate);
+  setDisplayMasteredModal(false);
+  setNavigateTo('/userdashboard');
+
+}
+const getPreviousDate = () => {
+  const masteredItem = currentUser.mastered.find(
+    item => item.word === selectedWordList.listName
+  );
+  return masteredItem ? masteredItem.date : 'Date not available';
+};
 
 
+const handleChangeDate = async () => {
+  const updatedMasteredList = currentUser.mastered.map((item) =>
+    item.word === selectedWordList.listName
+      ? { ...item, date: new Date().toLocaleDateString() }
+      : item
+  );
+  try {
+    await addToMastered(updatedMasteredList);
+    await updateDateToToday(); // Ensure the date update is processed
+    setDisplayAlreadyMasteredModal(false);
+    setNavigateTo('/userdashboard');
+  } catch (error) {
+    console.error("Error updating mastered list date:", error);
+  }
+};
 
 const handleRestart = () => {
   setHintsRemaining([10]); // Reset to initial hints
@@ -88,6 +130,10 @@ const handleRestart = () => {
     console.log("restart game");
 }
 
+// const handleNavigateToUserDashboard = () => {
+//   setNavigateTo('/userdashboard');
+// }
+
 // const declareAsMastered = () => {
 //   if (checkIfMastered(true))  {
 //   setDisplayMasteredModal(true);
@@ -96,7 +142,7 @@ const handleRestart = () => {
 // declareAsMastered();
 
   return (
-    <div className="flex justify-center mt-4">
+    <div className="flex justify-center mt-4 relative">
 {/* DON'T DELETE */}
     {/* <div className="relative">
       <div className="bg-[purple] h-[300px] w-[300px] absolute overflow-hidden">
@@ -147,18 +193,36 @@ const handleRestart = () => {
           <IncorrectGuessAlert incorrectGuessCount={incorrectGuessCount} handleRestart={handleRestart}/>
           </div>
 
-          <div className="z-10 place-self-center col-span-12 -mt-[800px]">
-          {displayMasteredModal && (
-          <div className="w-96 h-64 bg-white border-black border-2 flex flex-col rounded-lg p-6 space-y-4">
-            <h3 className="font-bold text-xl mb-4">You did it!  You have mastered this Bingo Stem!</h3>
-            <button className="btn bg-green-400 hover:bg-green-600 border-2 border-green-800 rounded-lg p-2"
-              onClick={() => addToMastered}
-              >Add to Mastered List</button>
-            <button className="btn bg-pink-400 hover:bg-pink-600 border-2 border-pink-800 rounded-lg p-2"
-            onClick={() => handleRestart()}
-              >Not feeling confident enough, I'd like to try again first.</button>
-          </div>
-          )}
+          <div className="z-10 absolute mt-20 flex justify-self-center">
+          {displayMasteredModal && 
+            (
+            <div className="w-96 h-[40%] bg-white border-black border-2 flex flex-col rounded-lg p-6 space-y-4">
+              <h3 className="font-bold text-xl mb-4">Congratulations!  You have mastered this Bingo Stem!</h3>
+              <button className="btn bg-green-400 hover:bg-green-600 border-2 border-green-800 rounded-lg p-2"
+                onClick={() => handleAddToMastered()}
+                >Add to Mastered List</button>
+              <button className="btn bg-pink-400 hover:bg-pink-600 border-2 border-pink-800 rounded-lg p-2"
+              onClick={() => handleRestart()}
+                >Not feeling confident enough, I'd like to try again first.</button>
+            </div>
+            )}
+
+            {displayAlreadyMasteredModal && 
+            (
+               <div className="w-96 h-[40%] bg-white border-black border-2 flex flex-col rounded-lg p-6 space-y-4">
+                 <h3 className="font-bold text-xl mb-4">Congratulations!  You have once again mastered this stem word.</h3>
+                  <h4 className="font-bold text-lg text-center">Previously mastered on: {getPreviousDate()}</h4>
+                 <button className="btn bg-green-400 hover:bg-green-600 border-2 border-green-800 rounded-lg p-2"
+                   onClick={() => handleChangeDate()}
+                   >Change to Today's Date</button>
+                 <button className="btn bg-pink-400 hover:bg-pink-600 border-2 border-pink-800 rounded-lg p-2"
+                 onClick={() => handleNavigateToUserDashboard()}
+                   >No, I'll keep the original date.</button>
+               </div>
+               )}
+
+
+          
     </div>
           </div>
         </div>
