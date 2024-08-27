@@ -18,8 +18,7 @@ const [incorrectGuessCount, setIncorrectGuessCount] = useState(0);
 const [correctlyGuessedWords, setCorrectlyGuessedWords] = useState([]);
 const [displayMasteredModal, setDisplayMasteredModal] = useState(false);
 const [displayAlreadyMasteredModal, setDisplayAlreadyMasteredModal] = useState(false);
-
-useEffect(() => {
+ useEffect(() => {
   console.log("selectedWordList has passed to quizpage:", selectedWordList);
   setLetterInputBoxes(selectedWordList.listName.split(""));
   console.log(letterInputBoxes);
@@ -130,9 +129,10 @@ const handleRestart = () => {
     console.log("restart game");
 }
 
-// const handleNavigateToUserDashboard = () => {
-//   setNavigateTo('/userdashboard');
-// }
+const handleNavigateToUserDashboard = () => {
+  setDisplayAlreadyMasteredModal(false);
+    setNavigateTo('/userdashboard');
+}
 
 // const declareAsMastered = () => {
 //   if (checkIfMastered(true))  {

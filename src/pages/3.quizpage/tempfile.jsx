@@ -21,9 +21,9 @@ const handleCancel = () => {
         onClick={hintRequested ? handleCancel : handleHintRequest}
       >
         {hintRequested ? 
-          <p className="block box-border h-full w-full text-sm hover:bg-green-600">Cancel</p>
+          <p className="text-sm hover:bg-green-600">Cancel</p>
           :
-          <p className="block box-border h-full w-full mr-2 -mb-[1px] text-sm ml-1">Request a Hint</p>
+          <p className="mr-2 -mb-[1px] text-sm ml-1">Request a Hint</p>
         }
       </button>
       </div>

@@ -13,11 +13,10 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
     const [animatedBorders, setAnimatedBorders] = useState(false);
     const [guessCount, setGuessCount] = useState(1);
     
-    const inputRefs = useRef(Array( displayLength ).fill(null));
-    const priorLettersEntered = useRef(false);
+    const inputRefs = useRef(Array( displayLength ).fill(null));   // or null
+    const priorLettersEntered = useRef(false);  
     const allLettersEntered = useRef(false);
     const currentGuess = useRef('');
-
 
     // useEffect(() => {
       // const displayHintAnimation = () => {
@@ -33,15 +32,21 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
       inputRefs.current[0].focus();
     }, []);
 
-    // const checkIfMastered = () => {
-    //   console.log("cgw:" + correctlyGuessedWords.length);
-    //   console.log(selectedWordList.words.length);
-    //   if (correctlyGuessedWords.length > 0) {
-    //     (correctlyGuessedWords.length === selectedWordList.words.length)
-    //     console.log("list is mastered")
-    //     return true;
-    //   }
-    // }
+    // useEffect(() => {
+    //   console.log('inputValues updated:', inputValues);
+    // }, [inputValues]);
+    
+    // console.log('Rendering WordDisplay');
+
+    const checkIfMastered = () => {
+      console.log("cgw:" + correctlyGuessedWords.length);
+      console.log(selectedWordList.words.length);
+      if (correctlyGuessedWords.length > 0) {
+        (correctlyGuessedWords.length === selectedWordList.words.length)
+        console.log("list is mastered")
+        return true;
+      }
+    }
 
 
     // const cancelHintRequest = () => {
@@ -49,6 +54,12 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
     //   setHintRequested(false);
     // }
     
+    // const handleInputClick = (index) => {
+    //   if (inputRefs.current[index]) {
+    //     inputRefs.current[index].focus();
+    // }
+    // }
+
     const handleInputChange = (e, index) => {
         let value = e.target.value;
 
@@ -135,7 +146,7 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
             //but will either have double border or be underlined so the user knows it was a hint
             //any cursor function for that letter will be disabled
             //any cursor for the letter that was confirmed to be true during hint request will also be disabled
-            //if a letter was marked with a red x, the entered letter and x disappear
+            //if a letter was marked with a red x, the enter letter and x disappear
 
           
      
@@ -170,8 +181,24 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
             <div key={index} className="flex items-center">
               <input
                 ref={(el) => (inputRefs.current[index] = el)}
+
+            // ref={(el) => {
+            //   inputRefs.current[index] = el;
+            //   console.log(`Ref assigned to index ${index}:`, el);
+            // }}
+
+            // ref={(el) => {
+            //   if (el) {
+            //     console.log(`Ref assigned to index ${index}:`, el);
+            //     inputRefs.current[index] = el;
+            //   }
+            // }}
+            
                 type="text"
                 value={inputValues[index]}
+                // className={`letter-box input text-center aspect-square rounded-md z-10 overflow-hidden input-secondary 
+                // w-full 
+
                 className={`letter-box input text-center aspect-square rounded-md z-10 overflow-hidden input-secondary 
                 max-w-xs 
                 w-[calc(100%-2px)] h-[calc(100%-2px)] top-[1px] left-[1px] border-2
@@ -184,6 +211,8 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
               }
                 `}
                 maxLength={1}
+                // onChange={(e) => handleInputChange(e, index)}
+                // onKeyDown={(e) => handleKeyDown(e, index)}
                 onChange={hintRequested ? undefined : (e) => handleInputChange(e, index)}
                 onKeyDown={hintRequested ? undefined : (e) => handleKeyDown(e, index)}
                 onClick={hintRequested ? () => handleHintClick(index) : undefined} 
@@ -212,7 +241,7 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
 export default WordDisplay;
 
 
-
+// w-[calc(100%-2px)] h-[calc(100%-2px)] 
 
  
   {/* //           ref={(el) => (inputRefs.current[index] = el)}
