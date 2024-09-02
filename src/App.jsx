@@ -1,5 +1,5 @@
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import Navbar from './components/header/Navbar';
 // import Footer from './componenets/footer';
 import Home from './pages/1.home/Home';
@@ -14,6 +14,8 @@ function App() {
 const [selectedWordList, setSelectedWordList] = useState({id:99, listName:"SAMPLE", words:["one", "two"], mnuemonic: "ABCDEFG" });
 const [navigateTo, setNavigateTo] = useState(null);
 const [currentUser, setCurrentUser] = useState(null);
+
+const firstUnguessedWordRef = useRef(null);
 
 const currentDate = new Date().toLocaleDateString();
 
@@ -124,8 +126,13 @@ const updateDateToToday = async () => {
 //   }
 // };
 
+// const firstUnguessedWord = selectedWordList.words.find(word => !correctlyGuessedWords.includes(word));
+
+
 const handleSelectionClick = (wordListInfo) => {
   setSelectedWordList(wordListInfo);
+  firstUnguessedWordRef.current = selectedWordList.words[0];
+  // console.log(firstUnguessedWordRef);
   setNavigateTo('quizpage');
   // setKey(prevKey => prevKey +1);
   // setIsNewSelection(true);
@@ -146,6 +153,7 @@ const handleSelectionClick = (wordListInfo) => {
                   selectedWordList={selectedWordList}
                   setSelectedWordList={setSelectedWordList}
                   handleSelectionClick={handleSelectionClick}
+                  firstUnguessedWord
                   currentUser={currentUser}/>
                   }/>
             <Route path='/userdashboard' element={<UserDashboard currentUser={currentUser} 
@@ -154,6 +162,7 @@ const handleSelectionClick = (wordListInfo) => {
             <Route path='/quizpage' element={<QuizPage
             selectedWordList={selectedWordList} currentUser={currentUser} 
             addToMastered={addToMastered} setNavigateTo={setNavigateTo} updateDateToToday={updateDateToToday}
+            firstUnguessedWordRef={firstUnguessedWordRef}
             />}/>
           </Routes>
       </Router>

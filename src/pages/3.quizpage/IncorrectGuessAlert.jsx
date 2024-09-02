@@ -6,7 +6,7 @@ const IncorrectGuessAlert = ({ incorrectGuessCount, handleRestart }) => {
 
 
     return (
-<div className="flex justify-center items-center">
+<div className="flex justify-center items-center md:-mt-28 ">
       {incorrectGuessCount === 1 && (
         <p className="animate-fade-in-out animate-fade-out text-9xl text-red-700 font-bold">X</p>
       )}
@@ -15,7 +15,7 @@ const IncorrectGuessAlert = ({ incorrectGuessCount, handleRestart }) => {
       )}
       {incorrectGuessCount >= 3 && (
         <div className="flex flex-col items-center">
-        <p className="animate-fade-in-out text-9xl text-red-700 font-bold">X X X</p>
+        <p className="animate-fade-in text-9xl text-red-700 font-bold">X X X</p>
         <button className="border-4 rounded-lg border-red-800 text-red-800 text-4xl tracking-wide font-bold bg-white hover:bg-red-800 hover:text-white py-1 px-3 mt-6"
         onClick={handleRestart}>RESTART</button>
         </div>

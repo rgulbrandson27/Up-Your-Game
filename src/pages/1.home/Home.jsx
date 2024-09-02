@@ -7,10 +7,10 @@ const Home = ({handleSelectionClick}) => {
   return (
     <>
     <div className="p-3">
-      <p className="text-center text-4xl p-3 pb-0 m-0">Choose Your Challenge</p>
+      <p className="text-center text-4xl p-6 pb-2  m-0">Choose Your Challenge</p>
     </div>
 
-    <div className="word-list-container w-5/6 sm:w-3/5 mx-auto mt-2">
+    <div className="word-list-container w-5/6 sm:w-3/5 mx-auto">
         <p className="text-center text-2xl m-1">
           Top 25 Six-Letter-Stems
         </p>

@@ -8,7 +8,7 @@ import Hints from './Hints';
 import Mneumonic from './Mneumonic';
 import IncorrectGuessAlert from './IncorrectGuessAlert';
 
-const QuizPage = ({ selectedWordList, currentUser, addToMastered, setNavigateTo, updateDateToToday }) => {
+const QuizPage = ({ selectedWordList, currentUser, addToMastered, setNavigateTo, updateDateToToday, firstUnguessedWordRef }) => {
 
 const [letterInputBoxes, setLetterInputBoxes] = useState([]);
 const [hintsRemaining, setHintsRemaining] = useState([10]);
@@ -18,20 +18,25 @@ const [incorrectGuessCount, setIncorrectGuessCount] = useState(0);
 const [correctlyGuessedWords, setCorrectlyGuessedWords] = useState([]);
 const [displayMasteredModal, setDisplayMasteredModal] = useState(false);
 const [displayAlreadyMasteredModal, setDisplayAlreadyMasteredModal] = useState(false);
+
+
+
  useEffect(() => {
   console.log("selectedWordList has passed to quizpage:", selectedWordList);
-  setLetterInputBoxes(selectedWordList.listName.split(""));
-  console.log(letterInputBoxes);
+  // console.log(firstUnguessedWordRef.current);
+  // setLetterInputBoxes(selectedWordList.listName.split(""));
+  // console.log(letterInputBoxes);
 }, [selectedWordList]);
-
-// useEffect(() => {
-//   if (hintRequested)
-//   console.log("A hint has been requested");
-// }, [hintRequested]);
 
 useEffect(() => {
   checkIfMastered();
 }, [correctlyGuessedWords])
+
+useEffect(() => {
+  firstUnguessedWordRef.current =  selectedWordList.words.find(word => !correctlyGuessedWords.includes(word));
+  console.log(firstUnguessedWordRef.current);
+  // console.log(correctlyGuessedWords)
+}, [hintRequested])
 
 
 // useEffect(() => {
@@ -67,6 +72,10 @@ const evaluateGuessWord = (guessWord) => {
       break;
   }
 };
+
+
+
+
 
 const checkIfMastered = () => {
   if (correctlyGuessedWords.length === selectedWordList.words.length) {
@@ -158,7 +167,11 @@ const handleNavigateToUserDashboard = () => {
             sm:mt-16
             md:row-start-2 md:col-start-2 md:col-span-6 md:mb-10
             lg:col-start-3 lg:col-span-5 lg:row-start-2 lg:mt-116">
-            <WordDisplay selectedWordList={selectedWordList} letterInputBoxes={letterInputBoxes} hintRequested={hintRequested} setHintRequested={setHintRequested} correctlyGuessedWords={correctlyGuessedWords} evaluateGuessWord={evaluateGuessWord}/>
+            <WordDisplay selectedWordList={selectedWordList} letterInputBoxes={letterInputBoxes} hintRequested={hintRequested} setHintRequested={setHintRequested} correctlyGuessedWords={correctlyGuessedWords} 
+            firstUnguessedWordRef={firstUnguessedWordRef}
+            evaluateGuessWord={evaluateGuessWord} 
+            // evaluateGuessedLetters={evaluateGuessedLetters} 
+            />
         </div>
         <div className="correct-word-list grid col-span-6 col-start-4 row-span-7 row-start-5 mt-2 overflow-scroll
           sm:row-start-6
@@ -203,26 +216,23 @@ const handleNavigateToUserDashboard = () => {
                 >Add to Mastered List</button>
               <button className="btn bg-pink-400 hover:bg-pink-600 border-2 border-pink-800 rounded-lg p-2"
               onClick={() => handleRestart()}
-                >Not feeling confident enough, I'd like to try again first.</button>
+                >Not yet, I want to practice again, I'd like to try again first.</button>
             </div>
             )}
 
             {displayAlreadyMasteredModal && 
             (
                <div className="w-96 h-[40%] bg-white border-black border-2 flex flex-col rounded-lg p-6 space-y-4">
-                 <h3 className="font-bold text-xl mb-4">Congratulations!  You have once again mastered this stem word.</h3>
+                 <h3 className="font-bold rounded-lg border-2 border-pink-400 text-center text-xl">Congratulations!  You have once again mastered this stem word.</h3>
                   <h4 className="font-bold text-lg text-center">Previously mastered on: {getPreviousDate()}</h4>
                  <button className="btn bg-green-400 hover:bg-green-600 border-2 border-green-800 rounded-lg p-2"
                    onClick={() => handleChangeDate()}
-                   >Change to Today's Date</button>
+                   >Use Today's Date</button>
                  <button className="btn bg-pink-400 hover:bg-pink-600 border-2 border-pink-800 rounded-lg p-2"
                  onClick={() => handleNavigateToUserDashboard()}
-                   >No, I'll keep the original date.</button>
+                   >Keep the original date.</button>
                </div>
                )}
-
-
-          
     </div>
           </div>
         </div>

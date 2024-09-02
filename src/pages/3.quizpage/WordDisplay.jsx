@@ -3,7 +3,7 @@ import {useEffect, useState, useRef} from 'react';
 import { TbInfoCircleFilled } from 'react-icons/tb';
 import 'tailwindcss/tailwind.css';
 
-const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHintRequested, cancelHintRequest, correctlyGuessedWords }) => {
+const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHintRequested, cancelHintRequest, correctlyGuessedWords, firstUnguessedWordRef }) => {
 
     const displayLength = selectedWordList.length || 7;
     const lastBox = displayLength - 1;
@@ -12,8 +12,9 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
     const [isSubmitButtonFocused, setIsSubmitButtonFocused] = useState(false);
     const [animatedBorders, setAnimatedBorders] = useState(false);
     const [guessCount, setGuessCount] = useState(1);
+    const [guessLetters, setGuessLetters] = useState(Array(displayLength).fill('')); 
     
-    const inputRefs = useRef(Array( displayLength ).fill(null));   // or null
+    const inputRefs = useRef(Array( displayLength ).fill(null));   
     const priorLettersEntered = useRef(false);  
     const allLettersEntered = useRef(false);
     const currentGuess = useRef('');
@@ -28,15 +29,14 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
     // }, [hintRequested]);
     
     useEffect(() => {
-      // Focus on the first input box when the component mounts
+      // Focus on the first input box when the component renders
       inputRefs.current[0].focus();
     }, []);
 
-    // useEffect(() => {
-    //   console.log('inputValues updated:', inputValues);
-    // }, [inputValues]);
-    
-    // console.log('Rendering WordDisplay');
+    useEffect(() => {
+      console.log(firstUnguessedWordRef.current);
+      displayHintRequestedMode();
+    }, [hintRequested]);
 
     const checkIfMastered = () => {
       console.log("cgw:" + correctlyGuessedWords.length);
@@ -48,7 +48,9 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
       }
     }
 
-
+    const displayHintRequestedMode = () => {
+      console.log()
+    }
     // const cancelHintRequest = () => {
       // setAnimatedBorders(false);
     //   setHintRequested(false);
@@ -115,8 +117,10 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
       };
     }
 
-    const handleHintClick = () => {
-    }
+ 
+    // const handleHintClick = () => {
+    //   evaluateLetterGuesses();
+    // }
 
       //first display message (upon hover only) "once you request a hint, you must commit to finish word"  do you still want to request?
 
@@ -126,14 +130,27 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
           //using the stemWordList, go to the first word that is not appearing as already correctly entered, 
           //stop at that word
           //make a function to compare the letters in that word to any letters that may already be entered...
+                    // if value is not equal to '', checkLetterCorrectness
 
-          //function checkForCorrectLetters = () =>
-              // for each one that is correct, change to green, 
+    // const checkLetterCorrectness = () => {
+      //  maybe don't have to first see if it is null
+      // just go through each one and compare
+      // if letter == letter (change letter green)
+      // if blank, do nothing
+      // if incorrect, turn box gray and add question makr to it? over top of letter?
+    // }
+
+
+          //evaluateGuessedLetters = () =>
+              // for each one that is correct, change text to green, 
               //and 
               // make it so that it cannot be clicked on to request a hint
               //for each one that is not correct, change to a red x over it
               //apply any that is not green correct, to be able to handle a click.
+      //check for correct letter
 
+
+      ///  if (hint requested && letter is correct...)
         //using new cursor type, have a new hover function
         //user selects hint
         //function selectLetterToReveal = () => {
@@ -148,8 +165,18 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
             //any cursor for the letter that was confirmed to be true during hint request will also be disabled
             //if a letter was marked with a red x, the enter letter and x disappear
 
-          
-     
+    // const checkLetterGuesses = (firstUnguessedWordRef) => {
+    //   const unguessedWordLetters = firstUnguessedWordRef.current.split('')
+    //   console.log(unguessedWordLetters);
+    //   const guessedLetters = inputRefs.current.map(ref => ref.value);
+    //   console.log('Input values:', values);
+    // }
+
+
+      // for (let i = 0; i < firstUnguessedWord.length; i++) {
+      //   if ()
+      // }
+    
     const handleSubmitGuess = async () => {
 
       if (!allLettersEntered.current) {
@@ -215,7 +242,7 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
                 // onKeyDown={(e) => handleKeyDown(e, index)}
                 onChange={hintRequested ? undefined : (e) => handleInputChange(e, index)}
                 onKeyDown={hintRequested ? undefined : (e) => handleKeyDown(e, index)}
-                onClick={hintRequested ? () => handleHintClick(index) : undefined} 
+                // onClick={hintRequested ? () => handleHintClick(index) : undefined} 
               />
             </div>
           ))}
