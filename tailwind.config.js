@@ -22,7 +22,6 @@ export default {
         fadeOut: {
           '0%': { opacity: '0', transform: 'scale(1.0)' }, // Start invisible and scaled down
           '100%': { opacity: '1', transform: 'scale(1.3)' }, // Fully visible and normal scale
-
         },
       },
       animation: {
@@ -34,4 +33,9 @@ export default {
   },
 },
   plugins: [],
+  safeList: [
+    'cursor-pointer',
+    'cursor-not-allowed',
+    'cursor-default',
+  ],
 }

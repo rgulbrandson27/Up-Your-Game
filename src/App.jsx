@@ -15,10 +15,9 @@ const [selectedWordList, setSelectedWordList] = useState({id:99, listName:"SAMPL
 const [navigateTo, setNavigateTo] = useState(null);
 const [currentUser, setCurrentUser] = useState(null);
 
-const firstUnguessedWordRef = useRef(null);
+// const firstUnguessedWordRef = useRef(null);
 
 const currentDate = new Date().toLocaleDateString();
-
 
 //if you want to run async code in a side effect, you have to put within another function ("double bag")
 useEffect(() => {
@@ -131,7 +130,7 @@ const updateDateToToday = async () => {
 
 const handleSelectionClick = (wordListInfo) => {
   setSelectedWordList(wordListInfo);
-  firstUnguessedWordRef.current = selectedWordList.words[0];
+  // firstUnguessedWordRef.current = selectedWordList.words[0];
   // console.log(firstUnguessedWordRef);
   setNavigateTo('quizpage');
   // setKey(prevKey => prevKey +1);
@@ -162,7 +161,7 @@ const handleSelectionClick = (wordListInfo) => {
             <Route path='/quizpage' element={<QuizPage
             selectedWordList={selectedWordList} currentUser={currentUser} 
             addToMastered={addToMastered} setNavigateTo={setNavigateTo} updateDateToToday={updateDateToToday}
-            firstUnguessedWordRef={firstUnguessedWordRef}
+            // firstUnguessedWordRef={firstUnguessedWordRef}
             />}/>
           </Routes>
       </Router>

@@ -1,11 +1,90 @@
 
 import React, { useEffect, useState, useRef } from "react";
 
-const CorrectWordList = ({selectedWordList, correctlyGuessedWords, isNewSelection, wordDisplayLetters}) => {
+const CorrectWordList = ({selectedWordList, correctlyGuessedWords, isNewSelection, wordDisplayLetters, currentCorrectGuess}) => {
 
-  const scrollRef = useRef(null);
+const scrollRef = useRef(null);
 
- 
+ console.log(currentCorrectGuess);
+
+//  const hasMounted = useRef(false);
+
+ useEffect(() => {
+  //  if (!hasMounted.current) {
+  //    hasMounted.current = true;
+  //    return;
+  //  }
+  //  console.log('Component updated');
+  // }, [currentCorrectGuess]); 
+
+
+//  useEffect(() => {
+  // if (scrollRef.current && currentCorrectGuess) {
+      if (scrollRef.current && selectedWordList.words.length > 0) {
+    const newWordIndex = selectedWordList.words.length - 1;
+    const newWordElement = scrollRef.current.children[newWordIndex];
+    // const list = scrollRef.current;
+    // const items = Array.from(list.children);
+    // const currentItem = items.find(item => item.textContent === currentCorrectGuess);
+
+    if (newWordElement) {
+      newWordElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+
+      });
+    }
+  }
+  }, [currentCorrectGuess]);
+      // Calculate the scroll position
+      // const listHeight = list.clientHeight;
+      // const itemTop = currentItem.offsetTop;
+      // const itemHeight = currentItem.clientHeight;
+      
+      // Scroll the list such that the currentItem is approximately 1/4 from the top
+      // list.scrollTop = itemTop - (listHeight / 4) + (itemHeight / 2);
+
+//  currentCorrectGuess.scrollIntoView();
+  // scrollIntoView()
+  // scrollIntoView(alignToTop)
+  // scrollIntoView(scrollIntoViewOptions)
+
+  // true
+  // scrollIntoViewOptions: {block: "start", inline: "nearest"}. 
+  // scrollIntoViewOptions: {block: "end", inline: "nearest"}
+  
+
+  // const element = document.getElementById("box");
+
+  // element.scrollIntoView();
+  // element.scrollIntoView(false);
+  // element.scrollIntoView({ block: "end" });
+  // element.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+
+  // use scroll-margin-top or scroll-margin-bottom. 
+
+  // #go-to-bottom {
+  //   position: absolute;
+  //   top: 10px;
+    /* Without this, the button will be aligned to the top of the page
+    instead of bottom of navbar when scrolled */
+  //   scroll-margin-top: 60px;
+  // }
+
+  // #go-to-top {
+  //   position: absolute;
+  //   bottom: 10px;
+  //   scroll-margin-bottom: 0;
+  // }
+
+//   const goToTop = document.getElementById("go-to-top");
+// const goToBottom = document.getElementById("go-to-bottom");
+// goToBottom.addEventListener("click", () => {
+//   goToTop.scrollIntoView({ behavior: "instant", block: "end" });
+// });
+// goToTop.addEventListener("click", () => {
+//   goToBottom.scrollIntoView({ behavior: "instant", block: "start" });
+// });
 
 // useEffect(() => {
 //   const timeout = setTimeout(() => {
@@ -53,11 +132,12 @@ function extractExtraLetter(listWord, stemWord) {
 }
 
   return (
-    <div className="correctWordList bg-violet-200 border-2 border-black rounded-md">
-      <h1 className="word-list-name text-center text-xl font-bold tracking-widest bg-black text-white">
+    <div className="correctWordList bg-violet-200 border-2 border-black rounded-md relative">
+      <h1 className="word-list-name text-center text-xl font-bold tracking-widest bg-black text-white sticky">
         {selectedWordList.listName}
-        </h1>
-      <div className="word-list-items mt-2" ref={scrollRef}>
+      </h1>
+
+      <div className="word-list-items overflow-y-auto mt-2 ref={scrollRef} " >
         {selectedWordList.words.map((listWord, index) => {
           const extraLetter = extractExtraLetter(
             listWord, 
@@ -68,9 +148,19 @@ function extractExtraLetter(listWord, stemWord) {
           // ? refers to "optional chaining"
           const isGuessed = correctlyGuessedWords?.includes(listWord);
 
+          // return (
+          //   <div ref={scrollRef} className="max-h-[500px] overflow-y-auto p-4 bg-white border border-gray-300 rounded-lg shadow-md">
+          //     {selectedWordList.words.map((word, index) => (
+          //       <div key={index} className="py-2 px-4 hover:bg-gray-100">
+          //         {word}
+          //       </div>
+          //     ))}
+          //   </div>
+
           return (
             <div 
-              key={index} 
+        
+              key={index}   
               className="word-list-item grid grid-cols-5 md:grid-cols-4"
             >
               {displayExtraLetter ? (
@@ -80,22 +170,22 @@ function extractExtraLetter(listWord, stemWord) {
               ) : (
               <div></div>
               )}
-              <div className="item-number text-sm col-span-1 text-center mt-1 md:-ml-10 md:mt-1.5 lg:-ml-16 lg:mt-1">
-                {index + 1}
+              <div  className="item-number text-sm col-span-1 text-center mt-1 md:-ml-10 md:mt-1.5 lg:-ml-16 lg:mt-1">
+                {index + 1} 
               </div>
             
-              <div 
+              <div  
                 className={`stem-word col-span-2 md:me-10 lg:me-4 lg:text-left text-center text-xl text-black bold tracking-[.1em] ml-2 md:-ml-14 lg:-ml-8 ${
                   isGuessed ? '' : 'invisible'
                   }`}
                   >
                     {listWord}
-                    </div>
-                  </div>
-                );
-        })}
-      </div>
-    </div>
+                      </div>
+                        </div>
+                        );
+                    })}
+              </div>
+            </div>
 );
 };
           

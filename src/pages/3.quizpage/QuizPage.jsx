@@ -8,7 +8,7 @@ import Hints from './Hints';
 import Mneumonic from './Mneumonic';
 import IncorrectGuessAlert from './IncorrectGuessAlert';
 
-const QuizPage = ({ selectedWordList, currentUser, addToMastered, setNavigateTo, updateDateToToday, firstUnguessedWordRef }) => {
+const QuizPage = ({ selectedWordList, currentUser, addToMastered, setNavigateTo, updateDateToToday }) => {
 
 const [letterInputBoxes, setLetterInputBoxes] = useState([]);
 const [hintsRemaining, setHintsRemaining] = useState([10]);
@@ -18,8 +18,9 @@ const [incorrectGuessCount, setIncorrectGuessCount] = useState(0);
 const [correctlyGuessedWords, setCorrectlyGuessedWords] = useState([]);
 const [displayMasteredModal, setDisplayMasteredModal] = useState(false);
 const [displayAlreadyMasteredModal, setDisplayAlreadyMasteredModal] = useState(false);
+const [currentCorrectGuess, setCurrentCorrectGuess] = useState('');
 
-
+const firstUnguessedWordRef = useRef(null);
 
  useEffect(() => {
   console.log("selectedWordList has passed to quizpage:", selectedWordList);
@@ -32,11 +33,6 @@ useEffect(() => {
   checkIfMastered();
 }, [correctlyGuessedWords])
 
-useEffect(() => {
-  firstUnguessedWordRef.current =  selectedWordList.words.find(word => !correctlyGuessedWords.includes(word));
-  console.log(firstUnguessedWordRef.current);
-  // console.log(correctlyGuessedWords)
-}, [hintRequested])
 
 
 // useEffect(() => {
@@ -54,6 +50,7 @@ const displayIncorrectAlert = () => {
 //   console.log("hint requested");
 // }
 
+
 const evaluateGuessWord = (guessWord) => {
   switch(true) {
     //Word already guessed.
@@ -63,6 +60,7 @@ const evaluateGuessWord = (guessWord) => {
     //Correct guess.
     case selectedWordList.words.includes(guessWord):
       setCorrectlyGuessedWords(prev => [...prev, guessWord]);
+      setCurrentCorrectGuess(guessWord);
       console.log("Correct guess");
       break;
     //Incorrect guess.
@@ -151,7 +149,7 @@ const handleNavigateToUserDashboard = () => {
 // declareAsMastered();
 
   return (
-    <div className="flex justify-center mt-4 relative">
+    <div className="flex justify-center relative">
 {/* DON'T DELETE */}
     {/* <div className="relative">
       <div className="bg-[purple] h-[300px] w-[300px] absolute overflow-hidden">
@@ -161,10 +159,9 @@ const handleNavigateToUserDashboard = () => {
     </div> */}
 
       <div className="grid grid-cols-12 grid-rows-12 w-screen h-screen flex-grow-0">
-        <h1 className="col-span-12 row-span-1 row-start-0 text-center text-2xl lg:text-3xl -mt-2 sm:mt-1 lg:pt-3">{selectedWordList.listName} ({selectedWordList.id})</h1>
+        <h1 className="col-span-12 text-center text-2xl lg:text-3xl">{selectedWordList.listName} ({selectedWordList.id})</h1>
         <div 
             className="grid row-start-2 row-span-2 mb-10 col-start-2 col-span-10 mt-10
-            sm:mt-16
             md:row-start-2 md:col-start-2 md:col-span-6 md:mb-10
             lg:col-start-3 lg:col-span-5 lg:row-start-2 lg:mt-116">
             <WordDisplay selectedWordList={selectedWordList} letterInputBoxes={letterInputBoxes} hintRequested={hintRequested} setHintRequested={setHintRequested} correctlyGuessedWords={correctlyGuessedWords} 
@@ -173,12 +170,13 @@ const handleNavigateToUserDashboard = () => {
             // evaluateGuessedLetters={evaluateGuessedLetters} 
             />
         </div>
-        <div className="correct-word-list grid col-span-6 col-start-4 row-span-7 row-start-5 mt-2 overflow-scroll
-          sm:row-start-6
+        <div className="correct-word-list grid col-span-6 col-start-4 row-span-7 overflow-scroll
+          row-start-4 mt-8
           md:row-start-2 md:mt-4 md:row-span-9 md:col-start-9 md:col-span-4 md:-ml-2 md:mr-4
   
           lg:row-start-2 lg:rows-span-8 lg:col-start-9 lg:col-span-3 lg:mr-4 lg:ml-4">
-            < CorrectWordList selectedWordList={selectedWordList} letterInputBoxes={letterInputBoxes} correctlyGuessedWords={correctlyGuessedWords}/>
+            < CorrectWordList selectedWordList={selectedWordList} letterInputBoxes={letterInputBoxes} correctlyGuessedWords={correctlyGuessedWords}
+            currentCorrectGuess={currentCorrectGuess}/>
         </div>
 
           <div className="grid row-start-2 row-span-1 col-start-3 col-span-4 -mt-4 mb-14 ml-2 p-0 text-sm

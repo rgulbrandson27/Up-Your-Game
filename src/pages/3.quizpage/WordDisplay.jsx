@@ -1,9 +1,8 @@
 import React from 'react';
 import {useEffect, useState, useRef} from 'react';
-import { TbInfoCircleFilled } from 'react-icons/tb';
 import 'tailwindcss/tailwind.css';
 
-const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHintRequested, cancelHintRequest, correctlyGuessedWords, firstUnguessedWordRef }) => {
+const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHintRequested, cancelHintRequest, correctlyGuessedWords }) => {
 
     const displayLength = selectedWordList.length || 7;
     const lastBox = displayLength - 1;
@@ -12,12 +11,30 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
     const [isSubmitButtonFocused, setIsSubmitButtonFocused] = useState(false);
     const [animatedBorders, setAnimatedBorders] = useState(false);
     const [guessCount, setGuessCount] = useState(1);
-    const [guessLetters, setGuessLetters] = useState(Array(displayLength).fill('')); 
     
     const inputRefs = useRef(Array( displayLength ).fill(null));   
     const priorLettersEntered = useRef(false);  
     const allLettersEntered = useRef(false);
     const currentGuess = useRef('');
+    const firstUnguessedWordRef = useRef(null);
+    const unguessedWordLettersArrayRef = useRef([]);
+
+    
+
+    // let cursorClass; 
+    //   if (hintRequested && (inputValues[index] === '')) {
+    //     cursorClass = 'cursor-pointer';
+    //   } else if {
+    //     (hintRequested && (inputValues[index] === unguessedWordLettersArrayRef.current[index])) {
+    //       cursorClass = 'cursor-pointer';
+    //   } else if {
+    //     (hintRequested && (inputValues[index] === 'correct')) {
+    //     cursorClass = 'cursor-not-allowed';
+    //     } else {
+    //       cursorClass='cursor-text';
+    //   }
+    //   }
+    
 
     // useEffect(() => {
       // const displayHintAnimation = () => {
@@ -28,15 +45,64 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
       // }
     // }, [hintRequested]);
     
+    firstUnguessedWordRef.current =  (selectedWordList.words.find(word => !correctlyGuessedWords.includes(word)));
+
+
     useEffect(() => {
-      // Focus on the first input box when the component renders
+      // Cursor defaults to first input box.
       inputRefs.current[0].focus();
     }, []);
 
+    
     useEffect(() => {
-      console.log(firstUnguessedWordRef.current);
-      displayHintRequestedMode();
+      evaluateGuessedLetters(firstUnguessedWordRef, inputRefs);
     }, [hintRequested]);
+  
+    function evaluateGuessedLetters(firstUnguessedWordRef, inputRefs) {
+      if (firstUnguessedWordRef.current) {
+        console.log("word:", firstUnguessedWordRef.current);
+        //turn the next unguessed word into an array of letters
+        unguessedWordLettersArrayRef.current = firstUnguessedWordRef.current.split('');
+        console.log("correct letters array:", unguessedWordLettersArrayRef.current);
+        } else {
+          console.log("UnguessedWord is Not Yet Set.");
+        }
+
+      //turn any inputs into an array of letters
+      const inputValues = inputRefs.current.map(ref => ref?.value || '');   //question mark refers to "chaining."
+      console.log("guessed letters array:", inputValues);
+
+      //compare both arrays
+
+      for (let index = 0; index < inputValues.length; index++) {
+        const correctLetter = unguessedWordLettersArrayRef.current[index];
+        const guessedLetter = inputValues[index];
+        const inputRef = inputRefs.current[index];
+
+      if (inputRef)  {
+
+      
+
+      if (guessedLetter === "") {
+        console.log("blank");
+        // inputRef.classList.remove('cursor');
+
+        // inputRef.classList.add('show-question-mark');
+        //show question mark for clicking on
+        // inputRef.innerHTML = "?";
+        // inputRef.classList.add(bg-blue-300);
+        //substitute for animated borders later.
+     
+      } else if (guessedLetter === correctLetter) {
+          console.log("correct");
+          // inputRef.classList.add('cursor-not-allowed');
+      } else {
+        console.log("wrong");
+      }
+    }
+  }
+}
+   
 
     const checkIfMastered = () => {
       console.log("cgw:" + correctlyGuessedWords.length);
@@ -48,20 +114,11 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
       }
     }
 
-    const displayHintRequestedMode = () => {
-      console.log()
+    const handleInputClick = (index) => {
+      if (inputRefs.current[index]) {
+        inputRefs.current[index].focus();
+      }
     }
-    // const cancelHintRequest = () => {
-      // setAnimatedBorders(false);
-    //   setHintRequested(false);
-    // }
-    
-    // const handleInputClick = (index) => {
-    //   if (inputRefs.current[index]) {
-    //     inputRefs.current[index].focus();
-    // }
-    // }
-
     const handleInputChange = (e, index) => {
         let value = e.target.value;
 
@@ -103,8 +160,8 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
         }
       } else if (e.key === 'Tab' && !e.shiftKey && index === lastBox) {
         // If 'Tab' is pressed and it's the last input box, focus on the submit button
-        setIsSubmitButtonFocused(true);
       }
+      setIsSubmitButtonFocused(true);
   
       // Move focus to the previous input box when shift + tab is pressed
       if (e.key === 'Tab' && e.shiftKey && index > 0) {
@@ -117,37 +174,8 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
       };
     }
 
- 
-    // const handleHintClick = () => {
-    //   evaluateLetterGuesses();
-    // }
 
       //first display message (upon hover only) "once you request a hint, you must commit to finish word"  do you still want to request?
-
-      //next - if any letters are entered, check to see if they are correct or not
-
-        //check to see if correct or not:
-          //using the stemWordList, go to the first word that is not appearing as already correctly entered, 
-          //stop at that word
-          //make a function to compare the letters in that word to any letters that may already be entered...
-                    // if value is not equal to '', checkLetterCorrectness
-
-    // const checkLetterCorrectness = () => {
-      //  maybe don't have to first see if it is null
-      // just go through each one and compare
-      // if letter == letter (change letter green)
-      // if blank, do nothing
-      // if incorrect, turn box gray and add question makr to it? over top of letter?
-    // }
-
-
-          //evaluateGuessedLetters = () =>
-              // for each one that is correct, change text to green, 
-              //and 
-              // make it so that it cannot be clicked on to request a hint
-              //for each one that is not correct, change to a red x over it
-              //apply any that is not green correct, to be able to handle a click.
-      //check for correct letter
 
 
       ///  if (hint requested && letter is correct...)
@@ -165,17 +193,7 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
             //any cursor for the letter that was confirmed to be true during hint request will also be disabled
             //if a letter was marked with a red x, the enter letter and x disappear
 
-    // const checkLetterGuesses = (firstUnguessedWordRef) => {
-    //   const unguessedWordLetters = firstUnguessedWordRef.current.split('')
-    //   console.log(unguessedWordLetters);
-    //   const guessedLetters = inputRefs.current.map(ref => ref.value);
-    //   console.log('Input values:', values);
-    // }
-
-
-      // for (let i = 0; i < firstUnguessedWord.length; i++) {
-      //   if ()
-      // }
+  
     
     const handleSubmitGuess = async () => {
 
@@ -208,8 +226,75 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
             <div key={index} className="flex items-center">
               <input
                 ref={(el) => (inputRefs.current[index] = el)}
+              
+                type="text"
+                value={inputValues[index]}
+                className={`letter-box input text-center aspect-square rounded-md z-10 
+                          overflow-hidden input-secondary max-w-xs w-[calc(100%-2px)] 
+                          h-[calc(100%-2px)] top-[1px] left-[1px] border-2 text-4xl md:text-5xl border-gray-600 cursor-text
+                          ${hintRequested 
+                            ? 
+                              (inputValues[index] === '' 
+                                ? 'cursor-pointer bg-yellow-300' 
+                                : inputValues[index] === unguessedWordLettersArrayRef.current[index] 
+                                  ? 'cursor-not-allowed bg-green-600' 
+                                  : 'cursor-pointer bg-red-400')
+                          : 'bg-yellow-300 cursor-text'}    
+                          `}
+                maxLength={1}
+                // onChange={(e) => handleInputChange(e, index)}
+                // onKeyDown={(e) => handleKeyDown(e, index)}
+                placeholder={hintRequested && inputValues[index] === '' ? '?' : ''}
+                onChange={hintRequested ? undefined : (e) => handleInputChange(e, index)}
+                onKeyDown={hintRequested ? undefined : (e) => handleKeyDown(e, index)}
+                // cursor={hintRequested ? cursor-pointer : cursor-default}
+                onClick={hintRequested ? () => handleInputClick(index) : undefined} 
+              />
+            </div>
+          ))}
+        </div>
+        <div className="absolute mt-[82px]">
+          <button
+            onKeyDown={handleSubmitGuess}
+            onClick={handleSubmitGuess} 
+            className={`bg-blue-400 border-2 border-black hover:bg-blue-700 text-white text-md px-1 h-1/2 rounded-md mt-0
+              sm:mt-6
+              md:mb-0 md:mt-0
+              lg:mt-0
+              ${isSubmitButtonFocused ? 'focus:bg-blue-700' : ''}
+              ${hintRequested ? 'cursor-not-allowed opacity-50' : ''}
+            `}
+            onBlur={() => setIsSubmitButtonFocused(false)}
+            disabled={hintRequested}
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    );
+}
+export default WordDisplay;
 
-            // ref={(el) => {
+
+
+ 
+  {/* //           ref={(el) => (inputRefs.current[index] = el)}
+  //           className="letter-box input bg-purple-500 w-20 h-20 aspect-square rounded-md relative overflow-hidden"
+  //         >
+  //           <div className={`absolute inset-0 overflow-hidden ${animatedBorders ? 'animate-spin' : ''}`}>
+  //             <div className="absolute inset-0 bg-transparent conic-background" style={{ animationDuration: '4s' }}></div>
+  //           </div>
+  //           <input */}
+
+
+
+        // DON'T DELETE
+        // <div className="relative">
+        // <div className="bg-[purple] h-[300px] w-[300px] absolute overflow-hidden">
+        // <div className="absolute conic-background h-[500px] w-[500px] animate-spin top-[-35%] right-[-35%]" style={{ animationDuration: '4s' }}></div>
+        // </div>
+
+              // ref={(el) => {
             //   inputRefs.current[index] = el;
             //   console.log(`Ref assigned to index ${index}:`, el);
             // }}
@@ -220,77 +305,28 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
             //     inputRefs.current[index] = el;
             //   }
             // }}
+
+
+
+
+
+
+            // function MyComponent() {
+            //   const [isClickable, setIsClickable] = React.useState(true);
             
-                type="text"
-                value={inputValues[index]}
-                // className={`letter-box input text-center aspect-square rounded-md z-10 overflow-hidden input-secondary 
-                // w-full 
-
-                className={`letter-box input text-center aspect-square rounded-md z-10 overflow-hidden input-secondary 
-                max-w-xs 
-                w-[calc(100%-2px)] h-[calc(100%-2px)] top-[1px] left-[1px] border-2
-                ${hintRequested
-                  //letter box style when hint requested
-                  ? 'bg-green-300 text-4xl md:text-5xl  border-green-800'
-                :  
-                  //default letter box style
-                'bg-yellow-300 text-3xl md:text-4xl  border-purple-400'
-              }
-                `}
-                maxLength={1}
-                // onChange={(e) => handleInputChange(e, index)}
-                // onKeyDown={(e) => handleKeyDown(e, index)}
-                onChange={hintRequested ? undefined : (e) => handleInputChange(e, index)}
-                onKeyDown={hintRequested ? undefined : (e) => handleKeyDown(e, index)}
-                // onClick={hintRequested ? () => handleHintClick(index) : undefined} 
-              />
-            </div>
-          ))}
-        </div>
-        <div className="absolute mt-[82px]">
-          <button
-            onKeyDown={handleSubmitGuess}
-            onClick={handleSubmitGuess}
-            className={`bg-blue-400 border-2 border-black hover:bg-blue-700 text-white text-md px-1 h-1/2 rounded-md mt-0
-              sm:mt-6
-              md:mb-0 md:mt-0
-              lg:mt-0
-              ${isSubmitButtonFocused ? 'focus:bg-blue-700' : ''}
-            `}
-            onBlur={() => setIsSubmitButtonFocused(false)}
-          >
-            Submit
-          </button>
-        </div>
-      </div>
-    );
-}     
-export default WordDisplay;
-
-
-// w-[calc(100%-2px)] h-[calc(100%-2px)] 
-
- 
-  {/* //           ref={(el) => (inputRefs.current[index] = el)}
-  //           className="letter-box input bg-purple-500 w-20 h-20 aspect-square rounded-md relative overflow-hidden"
-  //         >
-  //           <div className={`absolute inset-0 overflow-hidden ${animatedBorders ? 'animate-spin' : ''}`}>
-  //             <div className="absolute inset-0 bg-transparent conic-background" style={{ animationDuration: '4s' }}></div>
-  //           </div>
-  //           <input */}
-  {/* //             type="text"
-  //             value={inputValues[index]}
-  //             className="w-full h-full text-3xl md:text-4xl text-center bg-transparent border-none"
-  //             maxLength={1}
-  //             onChange={(e) => handleInputChange(e, index)}
-  //             onKeyDown={(e) => handleKeyDown(e, index)}
-  //           />
-  //         </div> */}
-
-
-        // DON'T DELETE
-        // <div className="relative">
-        // <div className="bg-[purple] h-[300px] w-[300px] absolute overflow-hidden">
-        // <div className="absolute conic-background h-[500px] w-[500px] animate-spin top-[-35%] right-[-35%]" style={{ animationDuration: '4s' }}></div>
-        // </div>
-      
+            //   return (
+            //     <div className="p-4">
+            //       <button
+            //         onClick={() => alert('Button clicked!')}
+            //         className={`bg-blue-500 text-white py-2 px-4 rounded ${
+            //           isClickable ? 'cursor-pointer' : 'cursor-not-allowed'
+            //         }`}
+            //         disabled={!isClickable}
+            //       >
+            //         {isClickable ? 'Click Me' : 'Disabled'}
+            //       </button>
+            //       <button onClick={() => setIsClickable(!isClickable)}>
+            //         Toggle Button State
+            //       </button>
+            //     </div>
+            //   );
