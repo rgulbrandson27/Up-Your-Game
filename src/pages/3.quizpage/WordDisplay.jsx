@@ -19,6 +19,7 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
     const firstUnguessedWordRef = useRef(null);
     const unguessedWordLettersArrayRef = useRef([]);
 
+
     
 
     // let cursorClass; 
