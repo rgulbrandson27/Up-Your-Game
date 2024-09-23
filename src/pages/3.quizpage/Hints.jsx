@@ -14,19 +14,19 @@ const handleCancel = () => {
 };
 
   return (
-    <div className="flex">
-   <button 
-        className='hover:bg-green-600 bg-green-300 h-full w-full flex justify-center p-[5px] border-black border-2 rounded-md'
+    
+    <button 
+        className='hover:bg-green-600 bg-green-300 h-3/4 flex justify-center items-center p-[5px] border-black border-2 rounded-md'
         aria-label="Hint"
         onClick={hintRequested ? handleCancel : handleHintRequest}
       >
         {hintRequested ? 
-          <p className="block box-border h-full w-full text-sm hover:bg-green-600">Cancel</p>
+          <p className="block box-border text-sm hover:bg-green-600">Cancel</p>
           :
-          <p className="block box-border h-full w-full mr-2 -mb-[1px] text-sm ml-1">Request a Hint</p>
+          <p className="block box-border mr-2 -mb-[1px] text-sm ml-1">Request a Hint</p>
         }
       </button>
-      </div>
+    
   )
 }
 export default Hints;

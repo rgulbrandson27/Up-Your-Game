@@ -11,6 +11,7 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
     const [isSubmitButtonFocused, setIsSubmitButtonFocused] = useState(false);
     const [animatedBorders, setAnimatedBorders] = useState(false);
     const [guessCount, setGuessCount] = useState(1);
+    const [cursorStyle, setCursorStyle] = useState('cursor-text');
     
     const inputRefs = useRef(Array( displayLength ).fill(null));   
     const priorLettersEntered = useRef(false);  
@@ -20,21 +21,40 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
     const unguessedWordLettersArrayRef = useRef([]);
 
 
-    
+  //   const cursorClass = hintRequested 
+  // ? (inputValues[index] === '' 
+  //     ? 'cursor-pointer' 
+  //     : inputValues[index] === unguessedWordLettersArrayRef.current[index] 
+  //       ? 'cursor-not-allowed' 
+  //       : 'cursor-pointer')
+  // : 'bg-yellow-300 cursor-text';
+
 
     // let cursorClass; 
-    //   if (hintRequested && (inputValues[index] === '')) {
+    // if (hintRequested) {
+    //    if (inputValues[index] === '') {
     //     cursorClass = 'cursor-pointer';
-    //   } else if {
-    //     (hintRequested && (inputValues[index] === unguessedWordLettersArrayRef.current[index])) {
+    //     } else if (inputValues[index] === unguessedWordLettersArrayRef.current[index]) {
     //       cursorClass = 'cursor-pointer';
-    //   } else if {
-    //     (hintRequested && (inputValues[index] === 'correct')) {
+    //     } else if (inputValues[index] === 'correct') {
     //     cursorClass = 'cursor-not-allowed';
-    //     } else {
-    //       cursorClass='cursor-text';
-    //   }
-    //   }
+    // }  else {
+    //   cursorClass='cursor-text';
+    // }
+    // }
+      
+      // && (inputValues[index] === '')) {
+      //   cursorClass = 'cursor-pointer';
+      // } else if {
+      //   (hintRequested && (inputValues[index] === unguessedWordLettersArrayRef.current[index])) {
+      //     cursorClass = 'cursor-pointer';
+      // } else if {
+      //   (hintRequested && (inputValues[index] === 'correct')) {
+      //   cursorClass = 'cursor-not-allowed';
+      //   } else {
+      //     cursorClass='cursor-text';
+      // }
+      // }
     
 
     // useEffect(() => {
@@ -57,6 +77,7 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
     
     useEffect(() => {
       evaluateGuessedLetters(firstUnguessedWordRef, inputRefs);
+      
     }, [hintRequested]);
   
     function evaluateGuessedLetters(firstUnguessedWordRef, inputRefs) {
@@ -120,6 +141,7 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
         inputRefs.current[index].focus();
       }
     }
+
     const handleInputChange = (e, index) => {
         let value = e.target.value;
 
@@ -194,8 +216,23 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
             //any cursor for the letter that was confirmed to be true during hint request will also be disabled
             //if a letter was marked with a red x, the enter letter and x disappear
 
-  
+
     
+    const updateCursorClass = (values, index) => {
+      if (hintRequested) {
+        if (values[index] === '') {
+          setCursorClass('cursor-pointer bg-yellow-300');
+        } else if (values[index] === selectedWordList[index]) {
+          setCursorClass('cursor-not-allowed bg-green-600');
+        } else {
+          setCursorClass('cursor-pointer bg-red-400');
+        }
+      } else {
+        setCursorClass('cursor-text bg-yellow-300');
+      }
+    };
+
+
     const handleSubmitGuess = async () => {
 
       if (!allLettersEntered.current) {
@@ -221,26 +258,27 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
 
     ////////////////////////
     return (
-      <div className="wordDisplay border-2 bg-yellow-100 border-blue-500 p-3 rounded-md relative">
-        <div className="flex justify-center gap-1 md:gap-2">
+      <div>
+        <div className="wordDisplay border-2 bg-yellow-100 border-blue-500 p-3 rounded-md relative">
+          <div className="flex justify-center gap-1 md:gap-2">
           {[...Array(displayLength)].map((_, index) => (
             <div key={index} className="flex items-center">
               <input
                 ref={(el) => (inputRefs.current[index] = el)}
-              
                 type="text"
                 value={inputValues[index]}
-                className={`letter-box input text-center aspect-square rounded-md z-10 
+                className={`letter-box input text-center aspect-square rounded-md 
                           overflow-hidden input-secondary max-w-xs w-[calc(100%-2px)] 
                           h-[calc(100%-2px)] top-[1px] left-[1px] border-2 text-4xl md:text-5xl border-gray-600 cursor-text
                           ${hintRequested 
                             ? 
                               (inputValues[index] === '' 
-                                ? 'cursor-pointer bg-yellow-300' 
+                                ? ' bg-yellow-300' 
                                 : inputValues[index] === unguessedWordLettersArrayRef.current[index] 
-                                  ? 'cursor-not-allowed bg-green-600' 
-                                  : 'cursor-pointer bg-red-400')
-                          : 'bg-yellow-300 cursor-text'}    
+                                  ? ' bg-green-600' 
+                                  : ' bg-red-400')
+                            : 
+                              'bg-yellow-300 '}    
                           `}
                 maxLength={1}
                 // onChange={(e) => handleInputChange(e, index)}
@@ -254,24 +292,23 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
             </div>
           ))}
         </div>
-        <div className="absolute mt-[82px]">
+      </div>
+        <div className="flex justify-center mt-2">
           <button
             onKeyDown={handleSubmitGuess}
             onClick={handleSubmitGuess} 
-            className={`bg-blue-400 border-2 border-black hover:bg-blue-700 text-white text-md px-1 h-1/2 rounded-md mt-0
-              sm:mt-6
-              md:mb-0 md:mt-0
-              lg:mt-0
+            className={`bg-blue-400 border-2 border-black hover:bg-blue-700 text-white text-md px-1 h-1/2 rounded-md
+             sm:mt-2 md:w-20
+           
               ${isSubmitButtonFocused ? 'focus:bg-blue-700' : ''}
               ${hintRequested ? 'cursor-not-allowed opacity-50' : ''}
             `}
             onBlur={() => setIsSubmitButtonFocused(false)}
-            disabled={hintRequested}
-          >
-            Submit
+            disabled={hintRequested}>Submit
           </button>
+          </div>
         </div>
-      </div>
+      
     );
 }
 export default WordDisplay;

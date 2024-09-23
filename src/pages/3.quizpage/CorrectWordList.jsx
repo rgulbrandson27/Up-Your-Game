@@ -83,7 +83,7 @@ function extractExtraLetter(listWord, stemWord) {
 }
 
   return (
-    <div className="correctWordList bg-violet-200 border-2 border-black rounded-md relative">
+    <div className="correctWordList bg-violet-200 border-2 border-black rounded-md relative lg:mt-6">
       <h1 className="word-list-name text-center text-xl font-bold tracking-widest bg-black text-white sticky">
         {selectedWordList.listName}
       </h1>
@@ -112,21 +112,21 @@ function extractExtraLetter(listWord, stemWord) {
             <div 
             ref={(el) => (wordRefs.current[index] = el)} 
               key={index}   
-              className="word-list-item grid grid-cols-5 md:grid-cols-4"
+              className="word-list-item grid grid-cols-5 md:grid-cols-6"
             >
               {displayExtraLetter ? (
-              <div className="extra-letter col-span-1 ml-10 text-xl font-medium text-center md:ml-0">
+              <div className="extra-letter col-span-1 ml-10 text-xl font-medium text-center md:col-span-1">
                 {extraLetter}
               </div>
               ) : (
               <div></div>
               )}
-              <div  className="item-number text-sm col-span-1 text-center mt-1 md:-ml-10 md:mt-1.5 lg:-ml-16 lg:mt-1">
+              <div  className="item-number text-sm col-span-1 text-center mt-1 md:-ml-0 md:mt-1.5 lg:-ml-16 lg:mt-1">
                 {index + 1} 
               </div>
             
               <div  
-                className={`stem-word col-span-2 md:me-10 lg:me-4 lg:text-left text-center text-xl text-black bold tracking-[.1em] ml-2 md:-ml-14 lg:-ml-8 ${
+                className={`stem-word col-span-2 lg:me-4 lg:text-left text-center text-xl text-black bold tracking-[.1em] ml-2 lg:-ml-8 ${
                   isGuessed ? '' : 'invisible'
                   }`}
                   >

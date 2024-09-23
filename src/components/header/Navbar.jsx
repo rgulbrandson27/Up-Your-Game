@@ -4,9 +4,9 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 // import ScrabbleHome from './images/ScrabbleHome.png';
 
 const navigation = [
-  { name: 'Home', href: '/', current: true },
-  { name: 'UserDashboard', href: '/userdashboard', current: false },
-  { name: 'QuizPage', href: '/quizpage', current: false },
+  { name: 'My Lists', href: '/userdashboard', current: false },
+  { name: 'Challenges', href: '/', current: true },
+  { name: 'Practice', href: '/quizpage', current: false },
 ]
 
 function classNames(...classes) {

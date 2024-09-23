@@ -9,6 +9,9 @@ import React from 'react';
 
 const url = "https://66232cb33e17a3ac846eba2b.mockapi.io/users";
 
+
+
+
 function App() {
 
 const [selectedWordList, setSelectedWordList] = useState({id:99, listName:"SAMPLE", words:["one", "two"], mnuemonic: "ABCDEFG" });
@@ -137,6 +140,8 @@ const handleSelectionClick = (wordListInfo) => {
   // setIsNewSelection(true);
 };
 
+
+
   return (
     <div className="bg-blue-300 min-h-screen pt-12 opacity-90
     sm:bg-cyan-400
@@ -144,7 +149,7 @@ const handleSelectionClick = (wordListInfo) => {
     lg:bg-pink-500
     xl:bg-yellow-500">
       <Router>
-          <Navbar className="" />
+          <Navbar className="e" />
           {navigateTo && <Navigate to={navigateTo} />}
           <Routes>
             <Route exact path='/' 
