@@ -38,40 +38,6 @@ useEffect(() => {
   //  console.log('Component updated');
   // }, [currentCorrectGuess]); 
 
-
-
-  
-  
-
-      // Calculate the scroll position
-      // const listHeight = list.clientHeight;
-      // const itemTop = currentItem.offsetTop;
-      // const itemHeight = currentItem.clientHeight;
-      
-      // Scroll the list such that the currentItem is approximately 1/4 from the top
-      // list.scrollTop = itemTop - (listHeight / 4) + (itemHeight / 2);
-
-
-  // scrollIntoViewOptions: {block: "start", inline: "nearest"}. 
-  // scrollIntoViewOptions: {block: "end", inline: "nearest"}
- 
-
-  // use scroll-margin-top or scroll-margin-bottom. 
-
-
-
-// useEffect(() => {
-//   const timeout = setTimeout(() => {
-//   // Scroll to approximately one quarter down the list
-//   if (scrollRef.current) {
-//     const listHeight = scrollRef.current.clientHeight;
-//     scrollRef.current.scrollTop = listHeight / 2;
-//   }
-// }, 100); 
-//   return () => clearTimeout(timeout);
-// }, [selectedWordList]);
-
-
 let prevExtraLetter = "";
 
 function extractExtraLetter(listWord, stemWord) {
@@ -98,15 +64,6 @@ function extractExtraLetter(listWord, stemWord) {
           prevExtraLetter = extraLetter;
           // ? refers to "optional chaining"
           const isGuessed = correctlyGuessedWords?.includes(listWord);
-
-          // return (
-          //   <div ref={scrollRef} className="max-h-[500px] overflow-y-auto p-4 bg-white border border-gray-300 rounded-lg shadow-md">
-          //     {selectedWordList.words.map((word, index) => (
-          //       <div key={index} className="py-2 px-4 hover:bg-gray-100">
-          //         {word}
-          //       </div>
-          //     ))}
-          //   </div>
 
           return (
             <div 
@@ -142,84 +99,5 @@ function extractExtraLetter(listWord, stemWord) {
 };
 export default CorrectWordList;
 
-{/* 
-  // return (
-  //   <div className="correctWordList bg-violet-200 ml-5">
-  //     <h1 className="word-list-name text-center text-2xl my-2 font-bold tracking-widest">SATIRE</h1>
-  //     <ul className="word-list-items">
-  //         <li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">A</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">ARISTAE</div>
-  //         </li>
-  //         <li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">A</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">ASTERIA</div>
-  //         </li>
-  //         <li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">A</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">ATRESIA</div>
-  //         </li>
-  //         <li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">A</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">BAITERS</div>
-  //         </li>
-  //         <li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">A</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">BARITES</div>
-  //         </li>
-  //         <li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">A</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">BAITERS</div>
-  //         </li>
-  //         <li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">A</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">TERBIAS</div>
-  //         </li>
-  //         <li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">C</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">ATRESIC</div>
-  //         </li>
-  //         <li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">C</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">CRISTAE</div>
-  //         </li>
-  //         <li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">C</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">RACIEST</div>
-  //         </li>
-  //         <li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">D</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">STEARIC</div>
-  //         </li>
-  //         <li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">D</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">ARIDEST</div>
-  //         </li><li className="word-list-item grid grid-cols-4"></li>
-  //         <li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">D</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">ASTRIDE</div>
-  //         </li><li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">D</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">DIASTER</div>
-  //         </li>
-  //         <li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">D</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">DISRATE</div>
-  //         </li><li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">D</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">STAIDER</div>
-  //         </li><li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">D</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">TARDIES</div>
-  //         </li>
-  //         <li className="word-list-item grid grid-cols-4">
-  //           <div className="extra-letter col-span-1 ml-4 text-xl font-medium text-center">D</div>
-  //           <div className="stem-word col-span-3 text-xl font-medium tracking-widest ml-3">TIRADES</div>
-  //         </li><li className="word-list-item grid grid-cols-4"></li>
-      
-       
-    //   </ul>
-    // </div>
-//   );
-// }; */}
+
 

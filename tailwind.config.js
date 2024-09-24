@@ -37,5 +37,5 @@ export default {
     'cursor-pointer',
     'cursor-not-allowed',
     'cursor-default',
-  ],
+  ]
 }

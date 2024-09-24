@@ -262,23 +262,23 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
         <div className="wordDisplay border-2 bg-yellow-100 border-blue-500 p-3 rounded-md relative">
           <div className="flex justify-center gap-1 md:gap-2">
           {[...Array(displayLength)].map((_, index) => (
-            <div key={index} className="flex items-center">
+            <div key={index} className="flex items-center">     
               <input
                 ref={(el) => (inputRefs.current[index] = el)}
                 type="text"
                 value={inputValues[index]}
                 className={`letter-box input text-center aspect-square rounded-md 
                           overflow-hidden input-secondary max-w-xs w-[calc(100%-2px)] 
-                          h-[calc(100%-2px)] top-[1px] left-[1px] border-2 text-4xl md:text-5xl border-gray-600 cursor-text
+                          h-[calc(100%-2px)] top-[1px] left-[1px] border-2 text-4xl md:text-5xl border-gray-600
                           ${hintRequested 
                             ? 
                               (inputValues[index] === '' 
                                 ? ' bg-yellow-300' 
                                 : inputValues[index] === unguessedWordLettersArrayRef.current[index] 
-                                  ? ' bg-green-600' 
-                                  : ' bg-red-400')
+                                  ? '!cursor-not-allowed bg-green-600 ' 
+                                  : ' bg-red-400 ')
                             : 
-                              'bg-yellow-300 '}    
+                              'bg-yellow-300 cursor-text'}    
                           `}
                 maxLength={1}
                 // onChange={(e) => handleInputChange(e, index)}
@@ -352,19 +352,4 @@ export default WordDisplay;
             // function MyComponent() {
             //   const [isClickable, setIsClickable] = React.useState(true);
             
-            //   return (
-            //     <div className="p-4">
-            //       <button
-            //         onClick={() => alert('Button clicked!')}
-            //         className={`bg-blue-500 text-white py-2 px-4 rounded ${
-            //           isClickable ? 'cursor-pointer' : 'cursor-not-allowed'
-            //         }`}
-            //         disabled={!isClickable}
-            //       >
-            //         {isClickable ? 'Click Me' : 'Disabled'}
-            //       </button>
-            //       <button onClick={() => setIsClickable(!isClickable)}>
-            //         Toggle Button State
-            //       </button>
-            //     </div>
-            //   );
+    

@@ -169,7 +169,8 @@ const handleNavigateToUserDashboard = () => {
       <div className="grid grid-cols-12 grid-rows-12 w-screen h-screen flex-grow-0"> */}
         <h1 className="col-span-12 text-center text-2xl lg:text-3xl mt-3">{selectedWordList.listName} ({selectedWordList.id})
         </h1>
-        <div className="grid col-span-4 col-start-5 row-start-2 row-span-1 py-1">
+        <div className="grid col-span-4 col-start-5 row-start-2 row-span-1 py-1
+        lg:col-span-2 lg:col-start-3 lg:row-start-7 lg:row-span-1">
           < Hints 
               hintRequested = {hintRequested}
               setHintRequested = {setHintRequested}
@@ -178,20 +179,23 @@ const handleNavigateToUserDashboard = () => {
               className=""
             />
         </div>
-        <div className="grid col-span-12 items-start row-start-3 -m-2 text-sm text-center">
+        <div className="grid col-span-12 items-start row-start-3 -m-2 text-sm text-center
+        lg:row-start-7 lg:row-span-1 lg:col-start-5 lg:col-span-2 lg:text-lg lg:-mt-0">
           <p className=""> Hints Remaining --- 10</p>
         </div>
         
-        <div className="grid row-start-4 row-span-1 col-start-2 col-span-10 -mt-8 sm:mb-10  md:col-start-3 md:col-span-8">
+        <div className="grid row-start-4 row-span-1 col-start-2 col-span-10 -mt-8 sm:mb-10  md:col-start-3 md:col-span-8
+        lg:row-start-4 lg:row-span-1 lg:col-start-2 lg:col-span-6">
             <WordDisplay selectedWordList={selectedWordList} letterInputBoxes={letterInputBoxes} hintRequested={hintRequested} setHintRequested={setHintRequested} correctlyGuessedWords={correctlyGuessedWords} 
             firstUnguessedWordRef={firstUnguessedWordRef}
             evaluateGuessWord={evaluateGuessWord} 
             />
         </div>
 
-        <div className="grid col-span-12 row-start-6 row-span-7 justify-items-center mb-4">
-            <div className="correct-word-list w-1/2 grid row-start-6 row-span-7 overflow-scroll -mt-2 sm:mt-4 
-             justify-items-center">
+        <div className="grid col-span-12 row-start-6 lg:row-start-2 row-span-7 lg:row-span-11 justify-items-center mb-4 lg:col-span-12 lg:col-start-8">
+            <div className="correct-word-list w-1/2 md:-mx-8 md:mt-6 grid row-start-6 row-span-7 overflow-scroll -mt-2 sm:mt-4 
+             justify-items-center
+             lg:row-start-2 lg:row-span-10 lg:col-start-7 lg:col-span-4">
             < CorrectWordList selectedWordList={selectedWordList} letterInputBoxes={letterInputBoxes} correctlyGuessedWords={correctlyGuessedWords}
               currentCorrectGuess={currentCorrectGuess}/>
         </div>
