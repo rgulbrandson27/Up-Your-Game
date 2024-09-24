@@ -275,7 +275,7 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
                               (inputValues[index] === '' 
                                 ? ' bg-yellow-300' 
                                 : inputValues[index] === unguessedWordLettersArrayRef.current[index] 
-                                  ? '!cursor-not-allowed bg-green-600 ' 
+                                  ? ' bg-green-600 ' 
                                   : ' bg-red-400 ')
                             : 
                               'bg-yellow-300 cursor-text'}    
