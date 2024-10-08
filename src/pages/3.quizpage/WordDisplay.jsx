@@ -2,7 +2,7 @@ import React from 'react';
 import {useEffect, useState, useRef} from 'react';
 import 'tailwindcss/tailwind.css';
 
-const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHintRequested, cancelHintRequest, correctlyGuessedWords }) => {
+const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHintRequested, cancelHintRequest, setCancelHintRequest, correctlyGuessedWords }) => {
 
     const displayLength = selectedWordList.length || 7;
     const lastBox = displayLength - 1;
@@ -11,7 +11,8 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
     const [isSubmitButtonFocused, setIsSubmitButtonFocused] = useState(false);
     const [animatedBorders, setAnimatedBorders] = useState(false);
     const [guessCount, setGuessCount] = useState(1);
-    const [cursorStyle, setCursorStyle] = useState('cursor-text');
+    const [cursorStyle, setCursorStyle] = useState(Array(displayLength).fill('cursor-text'));
+    const [backgroundColor, setBackgroundColor] = useState(Array(displayLength).fill('bg-yellow-300'));
     
     const inputRefs = useRef(Array( displayLength ).fill(null));   
     const priorLettersEntered = useRef(false);  
@@ -21,38 +22,8 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
     const unguessedWordLettersArrayRef = useRef([]);
 
 
-  //   const cursorClass = hintRequested 
-  // ? (inputValues[index] === '' 
-  //     ? 'cursor-pointer' 
-  //     : inputValues[index] === unguessedWordLettersArrayRef.current[index] 
-  //       ? 'cursor-not-allowed' 
-  //       : 'cursor-pointer')
-  // : 'bg-yellow-300 cursor-text';
+ 
 
-
-    // let cursorClass; 
-    // if (hintRequested) {
-    //    if (inputValues[index] === '') {
-    //     cursorClass = 'cursor-pointer';
-    //     } else if (inputValues[index] === unguessedWordLettersArrayRef.current[index]) {
-    //       cursorClass = 'cursor-pointer';
-    //     } else if (inputValues[index] === 'correct') {
-    //     cursorClass = 'cursor-not-allowed';
-    // }  else {
-    //   cursorClass='cursor-text';
-    // }
-    // }
-      
-      // && (inputValues[index] === '')) {
-      //   cursorClass = 'cursor-pointer';
-      // } else if {
-      //   (hintRequested && (inputValues[index] === unguessedWordLettersArrayRef.current[index])) {
-      //     cursorClass = 'cursor-pointer';
-      // } else if {
-      //   (hintRequested && (inputValues[index] === 'correct')) {
-      //   cursorClass = 'cursor-not-allowed';
-      //   } else {
-      //     cursorClass='cursor-text';
       // }
       // }
     
@@ -71,15 +42,24 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
 
     useEffect(() => {
       // Cursor defaults to first input box.
-      inputRefs.current[0].focus();
+      inputRefs.current[0]?.focus();
     }, []);
+
+    // useEffect(() => {
+    //   resetAfterCancel();
+    // }, [cancelHintRequest])
 
     
     useEffect(() => {
+      if (hintRequested) {
       evaluateGuessedLetters(firstUnguessedWordRef, inputRefs);
-      
-    }, [hintRequested]);
+    } else {
+      setCursorStyle(Array(displayLength).fill('cursor-text'));
+      setBackgroundColor(Array(displayLength).fill('bg-yellow-300'));
+    }
+  }, [hintRequested]);
   
+
     function evaluateGuessedLetters(firstUnguessedWordRef, inputRefs) {
       if (firstUnguessedWordRef.current) {
         console.log("word:", firstUnguessedWordRef.current);
@@ -89,42 +69,41 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
         } else {
           console.log("UnguessedWord is Not Yet Set.");
         }
+      
+        // Prepare arrays to hold the new styles
+      const newCursorStyles = Array(displayLength).fill('cursor-text');
+      const newBackgroundColors = Array(displayLength).fill('bg-yellow-300');
 
-      //turn any inputs into an array of letters
+      //turn any inputs into an array of letters or spaces
       const inputValues = inputRefs.current.map(ref => ref?.value || '');   //question mark refers to "chaining."
       console.log("guessed letters array:", inputValues);
+
 
       //compare both arrays
 
       for (let index = 0; index < inputValues.length; index++) {
         const correctLetter = unguessedWordLettersArrayRef.current[index];
         const guessedLetter = inputValues[index];
-        const inputRef = inputRefs.current[index];
 
-      if (inputRef)  {
 
-      
-
-      if (guessedLetter === "") {
-        console.log("blank");
-        // inputRef.classList.remove('cursor');
-
-        // inputRef.classList.add('show-question-mark');
-        //show question mark for clicking on
-        // inputRef.innerHTML = "?";
-        // inputRef.classList.add(bg-blue-300);
-        //substitute for animated borders later.
-     
-      } else if (guessedLetter === correctLetter) {
-          console.log("correct");
-          // inputRef.classList.add('cursor-not-allowed');
-      } else {
-        console.log("wrong");
-      }
+    if (guessedLetter === "") {
+      newCursorStyles[index] = 'cursor-pointer';
+      newBackgroundColors[index] = 'bg-yellow-300';
+    } else if (guessedLetter === correctLetter) {
+      newCursorStyles[index] = 'cursor-not-allowed';
+      newBackgroundColors[index] = 'bg-green-600';
+    } else {
+      newCursorStyles[index] = 'cursor-pointer';
+      newBackgroundColors[index] = 'bg-red-400';
     }
-  }
-}
-   
+  }   
+  // Update state with new styles
+  setCursorStyle(newCursorStyles);
+  setBackgroundColor(newBackgroundColors);
+    }  
+
+
+
 
     const checkIfMastered = () => {
       console.log("cgw:" + correctlyGuessedWords.length);
@@ -217,21 +196,6 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
             //if a letter was marked with a red x, the enter letter and x disappear
 
 
-    
-    const updateCursorClass = (values, index) => {
-      if (hintRequested) {
-        if (values[index] === '') {
-          setCursorClass('cursor-pointer bg-yellow-300');
-        } else if (values[index] === selectedWordList[index]) {
-          setCursorClass('cursor-not-allowed bg-green-600');
-        } else {
-          setCursorClass('cursor-pointer bg-red-400');
-        }
-      } else {
-        setCursorClass('cursor-text bg-yellow-300');
-      }
-    };
-
 
     const handleSubmitGuess = async () => {
 
@@ -256,6 +220,8 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
       }
     };
 
+
+
     ////////////////////////
     return (
       <div>
@@ -270,16 +236,8 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
                 className={`letter-box input text-center aspect-square rounded-md 
                           overflow-hidden input-secondary max-w-xs w-[calc(100%-2px)] 
                           h-[calc(100%-2px)] top-[1px] left-[1px] border-2 text-4xl md:text-5xl border-gray-600
-                          ${hintRequested 
-                            ? 
-                              (inputValues[index] === '' 
-                                ? ' bg-yellow-300' 
-                                : inputValues[index] === unguessedWordLettersArrayRef.current[index] 
-                                  ? ' bg-green-600 ' 
-                                  : ' bg-red-400 ')
-                            : 
-                              'bg-yellow-300 cursor-text'}    
-                          `}
+                          ${backgroundColor[index]} ${cursorStyle[index]}`}
+               
                 maxLength={1}
                 // onChange={(e) => handleInputChange(e, index)}
                 // onKeyDown={(e) => handleKeyDown(e, index)}
@@ -288,6 +246,7 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
                 onKeyDown={hintRequested ? undefined : (e) => handleKeyDown(e, index)}
                 // cursor={hintRequested ? cursor-pointer : cursor-default}
                 onClick={hintRequested ? () => handleInputClick(index) : undefined} 
+                disabled={hintRequested}
               />
             </div>
           ))}
@@ -346,10 +305,41 @@ export default WordDisplay;
 
 
 
-
-
-
             // function MyComponent() {
             //   const [isClickable, setIsClickable] = React.useState(true);
             
     
+
+//             You can directly call setCursorStyle and setBackgroundColor inside the loop, but it’s generally not recommended for a couple of reasons:
+
+// Batching State Updates: React batches state updates for performance reasons. If you call setCursorStyle and setBackgroundColor multiple times in a loop, React might not properly batch those updates together. Instead, it will treat each call as a separate render, leading to inefficient rendering and possibly unexpected results.
+
+// State Overwrites: If you directly call setCursorStyle in each iteration of the loop, the state will only reflect the last value set in that loop, effectively overwriting all previous values. By constructing a new array (newCursorStyles), you ensure that all index values are preserved and updated correctly before setting the state once.
+
+// Here's a quick example to illustrate the problem:
+
+// for (let index = 0; index < inputValues.length; index++) {
+//   if (condition) {
+//     setCursorStyle('some-style'); // This will overwrite the previous state
+//   }
+// }
+// In the above example, by the end of the loop, cursorStyle will only contain the last value assigned, which is not what you want.
+
+// Using a temporary array like newCursorStyles allows you to construct the entire new state based on the current conditions before updating the state all at once. This is more efficient and helps avoid issues related to stale closures or state overwrites.
+  //   const cursorClass = hintRequested 
+  // ? (inputValues[index] === '' 
+  //     ? 'cursor-pointer' 
+  //     : inputValues[index] === unguessedWordLettersArrayRef.current[index] 
+  //       ? 'cursor-not-allowed' 
+  //       : 'cursor-pointer')
+  // : 'bg-yellow-300 cursor-text';
+
+
+
+
+//       GOOD TO KNOW
+
+// In React, the order of function definitions matters primarily for readability and organization, but JavaScript will still work correctly as long as the functions are defined before they're called in the same execution context.
+
+// Function Hoisting
+// JavaScript functions defined using function declarations are hoisted, meaning you can call them before their definition in the code. However, arrow functions and regular variable assignments (like with const) are not hoisted in the same way, so those need to be defined before they're used.

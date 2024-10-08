@@ -11,6 +11,7 @@ const handleHintRequest = () => {
 const handleCancel = () => {
   setHintRequested(false);
   setCancelHintRequest(true);
+  console.log(cancelHintRequest);
 };
 
   return (
@@ -21,7 +22,7 @@ const handleCancel = () => {
         onClick={hintRequested ? handleCancel : handleHintRequest}
       >
         {hintRequested ? 
-          <p className="block box-border text-sm hover:bg-green-600">Cancel</p>
+          <p className="block box-border text-sm hover:bg-green-600">Cancel Hint Request</p>
           :
           <p className="block box-border mr-2 -mb-[1px] text-sm ml-1">Request a Hint</p>
         }

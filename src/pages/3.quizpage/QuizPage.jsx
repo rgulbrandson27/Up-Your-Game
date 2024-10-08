@@ -22,6 +22,8 @@ const [currentCorrectGuess, setCurrentCorrectGuess] = useState('');
 
 const firstUnguessedWordRef = useRef(null);
 
+
+
  useEffect(() => {
   console.log("selectedWordList has passed to quizpage:", selectedWordList);
   // console.log(firstUnguessedWordRef.current);
@@ -189,6 +191,8 @@ const handleNavigateToUserDashboard = () => {
             <WordDisplay selectedWordList={selectedWordList} letterInputBoxes={letterInputBoxes} hintRequested={hintRequested} setHintRequested={setHintRequested} correctlyGuessedWords={correctlyGuessedWords} 
             firstUnguessedWordRef={firstUnguessedWordRef}
             evaluateGuessWord={evaluateGuessWord} 
+            cancelHintRequest = {cancelHintRequest}
+            setCancelHintRequest = {setCancelHintRequest}
             />
         </div>
 
