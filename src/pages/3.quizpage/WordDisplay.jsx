@@ -2,7 +2,7 @@ import React from 'react';
 import {useEffect, useState, useRef} from 'react';
 import 'tailwindcss/tailwind.css';
 
-const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHintRequested, cancelHintRequest, setCancelHintRequest, correctlyGuessedWords }) => {
+const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHintRequested, cancelHintRequest, setCancelHintRequest, correctlyGuessedWords, hintsRemaining, setHintsRemaining, cancelHintsRemaining }) => {
 
     const displayLength = selectedWordList.length || 7;
     const lastBox = displayLength - 1;
@@ -13,16 +13,15 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
     const [guessCount, setGuessCount] = useState(1);
     const [cursorStyle, setCursorStyle] = useState(Array(displayLength).fill('cursor-text'));
     const [backgroundColor, setBackgroundColor] = useState(Array(displayLength).fill('bg-yellow-300'));
-    
+    const [letterRevealed, setLetterRevealed] = useState(Array(displayLength).fill('false'));
+
+
     const inputRefs = useRef(Array( displayLength ).fill(null));   
     const priorLettersEntered = useRef(false);  
     const allLettersEntered = useRef(false);
     const currentGuess = useRef('');
     const firstUnguessedWordRef = useRef(null);
     const unguessedWordLettersArrayRef = useRef([]);
-
-
- 
 
       // }
       // }
@@ -59,6 +58,30 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
     }
   }, [hintRequested]);
   
+
+  function handleRevealLetter(index) {
+    const letterToReveal = unguessedWordLettersArrayRef.current[index];
+    console.log(letterToReveal);
+
+    if (letterToReveal) {
+      const newInputValues = [...inputValues];
+      newInputValues[index] = letterToReveal; // Update the input value to the revealed letter
+      setInputValues(newInputValues);
+      // setLetterRevealed(true)
+
+      const newLetterRevealed = [...letterRevealed];
+      newLetterRevealed[index] = true;
+      setLetterRevealed(newLetterRevealed);
+      
+      const newBackgroundColor = [...backgroundColor];
+      newBackgroundColor[index] = 'bg-yellow-400'; // Optional: change background color on reveal
+      setBackgroundColor(newBackgroundColor);
+
+      const newHintsRemaining = (hintsRemaining -1);
+      setHintsRemaining(newHintsRemaining);
+
+  }
+}
 
     function evaluateGuessedLetters(firstUnguessedWordRef, inputRefs) {
       if (firstUnguessedWordRef.current) {
@@ -115,11 +138,11 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
       }
     }
 
-    const handleInputClick = (index) => {
-      if (inputRefs.current[index]) {
-        inputRefs.current[index].focus();
-      }
-    }
+    // const handleInputClick = (index) => {
+    //   if (inputRefs.current[index]) {
+    //     inputRefs.current[index].focus();
+    //   }
+    // }
 
     const handleInputChange = (e, index) => {
         let value = e.target.value;
@@ -228,7 +251,8 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
         <div className="wordDisplay border-2 bg-yellow-100 border-blue-500 p-3 rounded-md relative">
           <div className="flex justify-center gap-1 md:gap-2">
           {[...Array(displayLength)].map((_, index) => (
-            <div key={index} className="flex items-center">     
+            <div key={index} className="flex items-center">  
+               
               <input
                 ref={(el) => (inputRefs.current[index] = el)}
                 type="text"
@@ -236,7 +260,8 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
                 className={`letter-box input text-center aspect-square rounded-md 
                           overflow-hidden input-secondary max-w-xs w-[calc(100%-2px)] 
                           h-[calc(100%-2px)] top-[1px] left-[1px] border-2 text-4xl md:text-5xl border-gray-600
-                          ${backgroundColor[index]} ${cursorStyle[index]}`}
+                          ${backgroundColor[index]} ${cursorStyle[index]}
+                          ${hintRequested ? 'caret-transparent' : ''}`}
                
                 maxLength={1}
                 // onChange={(e) => handleInputChange(e, index)}
@@ -245,8 +270,12 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
                 onChange={hintRequested ? undefined : (e) => handleInputChange(e, index)}
                 onKeyDown={hintRequested ? undefined : (e) => handleKeyDown(e, index)}
                 // cursor={hintRequested ? cursor-pointer : cursor-default}
-                onClick={hintRequested ? () => handleInputClick(index) : undefined} 
-                disabled={hintRequested}
+                // onClick={hintRequested ? () => handleInputClick(index) : undefined} 
+                // onClick={hintRequested ? () => handleRevealLetter(index) : undefined} 
+                // disabled={hintRequested}
+                onClick={hintRequested ? () => handleRevealLetter(index) : undefined}  
+                disabled={backgroundColor[index] === 'bg-green-600'} // Disable if green
+
               />
             </div>
           ))}
@@ -267,7 +296,6 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
           </button>
           </div>
         </div>
-      
     );
 }
 export default WordDisplay;

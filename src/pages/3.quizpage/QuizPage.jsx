@@ -11,7 +11,7 @@ import IncorrectGuessAlert from './IncorrectGuessAlert';
 const QuizPage = ({ selectedWordList, currentUser, addToMastered, setNavigateTo, updateDateToToday }) => {
 
 const [letterInputBoxes, setLetterInputBoxes] = useState([]);
-const [hintsRemaining, setHintsRemaining] = useState([10]);
+const [hintsRemaining, setHintsRemaining] = useState(10);
 const [hintRequested, setHintRequested] = useState(false);
 const [cancelHintRequest, setCancelHintRequest] = useState(false);
 const [incorrectGuessCount, setIncorrectGuessCount] = useState(0);
@@ -21,8 +21,6 @@ const [displayAlreadyMasteredModal, setDisplayAlreadyMasteredModal] = useState(f
 const [currentCorrectGuess, setCurrentCorrectGuess] = useState('');
 
 const firstUnguessedWordRef = useRef(null);
-
-
 
  useEffect(() => {
   console.log("selectedWordList has passed to quizpage:", selectedWordList);
@@ -74,19 +72,14 @@ const evaluateGuessWord = (guessWord) => {
 };
 
 
-
-
-
 const checkIfMastered = () => {
   if (correctlyGuessedWords.length === selectedWordList.words.length) {
-    
     const isDuplicateMasteredWord = currentUser.mastered.some(
       masteredItem => masteredItem.word === selectedWordList.listName
       );
       if (isDuplicateMasteredWord) {
         setDisplayAlreadyMasteredModal(true);
       } else
-
     setDisplayMasteredModal(true);
   }
 }; 
@@ -98,7 +91,6 @@ const handleAddToMastered = async () => {
     hints: 0,
     date: new Date().toLocaleDateString()
   }];
-
   await addToMastered(masteredListUpdate);
   setDisplayMasteredModal(false);
   setNavigateTo('/userdashboard');
@@ -183,7 +175,7 @@ const handleNavigateToUserDashboard = () => {
         </div>
         <div className="grid col-span-12 items-start row-start-3 -m-2 text-sm text-center
         lg:row-start-7 lg:row-span-1 lg:col-start-5 lg:col-span-2 lg:text-lg lg:-mt-0">
-          <p className=""> Hints Remaining --- 10</p>
+          <p className=""> Hints Remaining --- {hintsRemaining}</p>
         </div>
         
         <div className="grid row-start-4 row-span-1 col-start-2 col-span-10 -mt-8 sm:mb-10  md:col-start-3 md:col-span-8
@@ -193,6 +185,8 @@ const handleNavigateToUserDashboard = () => {
             evaluateGuessWord={evaluateGuessWord} 
             cancelHintRequest = {cancelHintRequest}
             setCancelHintRequest = {setCancelHintRequest}
+            hintsRemaining = {hintsRemaining}
+            setHintsRemaining = {setHintsRemaining}
             />
         </div>
 
@@ -205,10 +199,12 @@ const handleNavigateToUserDashboard = () => {
         </div>
       </div>
 
-          <div className="z-10 col-span-12 -mt-40">
+          {/* <div className="z-10 col-span-12 -mt-40">
           <IncorrectGuessAlert incorrectGuessCount={incorrectGuessCount} handleRestart={handleRestart}/>
-          </div>
+          </div> */}
 
+            <IncorrectGuessAlert incorrectGuessCount={incorrectGuessCount} handleRestart={handleRestart} />
+          
           <div className="z-10 absolute mt-20 flex justify-self-center">
           {displayMasteredModal && 
             (
