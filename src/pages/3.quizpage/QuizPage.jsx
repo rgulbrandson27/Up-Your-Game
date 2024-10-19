@@ -20,6 +20,7 @@ const [displayMasteredModal, setDisplayMasteredModal] = useState(false);
 const [displayAlreadyMasteredModal, setDisplayAlreadyMasteredModal] = useState(false);
 // const [displayNoHintsRemaining, setDisplayNoHintsRemaining] = useState(false);
 const [currentCorrectGuess, setCurrentCorrectGuess] = useState('');
+const [displayIncorrectAlert, setDisplayIncorrectAlert] = useState(false);
 
 const firstUnguessedWordRef = useRef(null);
 
@@ -42,9 +43,12 @@ useEffect(() => {
 //   }
 // }, [addToMastered]);
 
-const displayIncorrectAlert = () => {
+const alertIncorrect = () => {
   setIncorrectGuessCount(prevCount => prevCount + 1);
-  console.log("incorrect", incorrectGuessCount);
+  setDisplayIncorrectAlert(true);
+  setTimeout(() => {
+    setDisplayIncorrectAlert(false);
+  }, 2000);
 };
 
 const displayNoHintsRemaining = () => {
@@ -78,7 +82,7 @@ const evaluateGuessWord = (guessWord) => {
     //Incorrect guess.
       default:
         console.log("Incorrect guess");
-      displayIncorrectAlert();
+      alertIncorrect();
       break;
   }
 };
@@ -191,9 +195,9 @@ const handleNavigateToUserDashboard = () => {
         
         <div className="grid row-start-4 row-span-1 col-start-2 col-span-10 -mt-8 sm:mb-10  md:col-start-3 md:col-span-8
         lg:row-start-4 lg:row-span-1 lg:col-start-2 lg:col-span-6">
-            <WordDisplay selectedWordList={selectedWordList} letterInputBoxes={letterInputBoxes} hintRequested={hintRequested} setHintRequested={setHintRequested} correctlyGuessedWords={correctlyGuessedWords} 
-            firstUnguessedWordRef={firstUnguessedWordRef}
-            evaluateGuessWord={evaluateGuessWord} 
+            <WordDisplay selectedWordList = {selectedWordList} letterInputBoxes = {letterInputBoxes} hintRequested = {hintRequested} setHintRequested = {setHintRequested} correctlyGuessedWords = {correctlyGuessedWords} 
+            firstUnguessedWordRef = {firstUnguessedWordRef}
+            evaluateGuessWord = {evaluateGuessWord} 
             cancelHintRequest = {cancelHintRequest}
             setCancelHintRequest = {setCancelHintRequest}
             hintsRemaining = {hintsRemaining}
@@ -210,11 +214,21 @@ const handleNavigateToUserDashboard = () => {
         </div>
       </div>
 
-       
 
-            <IncorrectGuessAlert incorrectGuessCount={incorrectGuessCount} handleRestart={handleRestart} />
+  
+            {/* <IncorrectGuessAlert 
+                incorrectGuessCount={incorrectGuessCount} 
+                handleRestart={handleRestart}/>
+    */}
           
           <div className="z-10 absolute mt-20 flex justify-self-center">
+          {displayIncorrectAlert && 
+            (
+              <IncorrectGuessAlert 
+                incorrectGuessCount={incorrectGuessCount} 
+                handleRestart={handleRestart}
+             />
+            )}
           {displayMasteredModal && 
             (
             <div className="w-96 h-[40%] bg-white border-black border-2 flex flex-col rounded-lg p-6 space-y-4">
@@ -222,9 +236,9 @@ const handleNavigateToUserDashboard = () => {
               <button className="btn bg-green-400 hover:bg-green-600 border-2 border-green-800 rounded-lg p-2"
                 onClick={() => handleAddToMastered()}
                 >Add to Mastered List</button>
-              <button className="btn bg-pink-400 hover:bg-pink-600 border-2 border-pink-800 rounded-lg p-2"
+              <button className="btn bg-pink-300 hover:bg-pink-400 border-2 border-pink-800 rounded-lg p-2"
               onClick={() => handleRestart()}
-                >Not yet, I want to practice again, I'd like to try again first.</button>
+                >I would rather practice again first.</button>
             </div>
             )}
 
@@ -232,9 +246,9 @@ const handleNavigateToUserDashboard = () => {
             (
                <div className="w-96 h-[40%] bg-white border-black border-2 flex flex-col rounded-lg p-6">
                  <h3 className="font-bold rounded-lg border-2 border-pink-400 text-center text-xl my-2">Congratulations!  You have once again mastered this stem word with
-                 <span className="text-pink-500"> {hintsUsed}</span> hints used.</h3>
+                 <span className="text-pink-500"> {hintsUsed}</span> hints used:</h3>
                   <h4 className="font-bold text-lg text-center">Previously mastered on: {getPreviousDate()}</h4>
-                  <h6 className="font-bold text-lg text-center mb-4">Previous hints used:  {getPreviousHintCount()}</h6>
+                  <h6 className="font-bold text-lg text-center mb-4">Previous hints used:  {getPreviousHintsUsed()}</h6>
 
                  <button className="btn bg-green-400 hover:bg-green-600 border-2 border-green-800 rounded-lg p-2 my-2"
                    onClick={() => handleChangeDate()}

@@ -3,7 +3,21 @@ import {useEffect, useState, useRef} from 'react';
 import tailwindConfig from '../../../tailwind.config';
 
 const IncorrectGuessAlert = ({ incorrectGuessCount, handleRestart }) => {
+  // const [isVisible, setIsVisible] = useState(false);
 
+  // useEffect(() => {
+  //   if (incorrectGuessCount > 0) {
+  //     setIsVisible(true);
+
+  //     // Set a timeout to make the alert invisible after 5 seconds
+  //     const timer = setTimeout(() => {
+  //       setIsVisible(false);
+  //     }, 5000); // 5000 milliseconds = 5 seconds
+
+  //     // Cleanup function to clear the timeout if the component unmounts
+  //     return () => clearTimeout(timer);
+  //   }
+  // }, [incorrectGuessCount]);
 
     return (
         <div className="flex justify-center items-center">
