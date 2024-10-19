@@ -18,6 +18,7 @@ const [incorrectGuessCount, setIncorrectGuessCount] = useState(0);
 const [correctlyGuessedWords, setCorrectlyGuessedWords] = useState([]);
 const [displayMasteredModal, setDisplayMasteredModal] = useState(false);
 const [displayAlreadyMasteredModal, setDisplayAlreadyMasteredModal] = useState(false);
+// const [displayNoHintsRemaining, setDisplayNoHintsRemaining] = useState(false);
 const [currentCorrectGuess, setCurrentCorrectGuess] = useState('');
 
 const firstUnguessedWordRef = useRef(null);
@@ -33,7 +34,7 @@ useEffect(() => {
   checkIfMastered();
 }, [correctlyGuessedWords])
 
-const hintsUsed = 10 - hintsRemaining;
+// const hintsUsed = 10 - hintsRemaining;
 
 // useEffect(() => {
 //   if (addToMastered()) {
@@ -45,6 +46,17 @@ const displayIncorrectAlert = () => {
   setIncorrectGuessCount(prevCount => prevCount + 1);
   console.log("incorrect", incorrectGuessCount);
 };
+
+const displayNoHintsRemaining = () => {
+  if (hintsRemaining < 1) {
+    return (
+      <div className="p-4 bg-red-500 text-white rounded-md">
+        <h2 className="text-lg font-bold">No Hints Remaining!</h2>
+        <p>You must try again!</p>
+      </div>
+    )
+  }
+}
 
 // const handleHintRequest = () => {
 //   console.log("hint requested");
@@ -103,12 +115,11 @@ const getPreviousDate = () => {
   return masteredItem ? masteredItem.date : 'Date not available';
 };
 
-const getPreviousHintCount = () => {
-  const prevHintsRequested = currentUser.mastered.find(
+const getPreviousHintsUsed = () => {   //  for mastered list only
+  const prevHintsUsed = currentUser.mastered.find(
     item => item.word === selectedWordList.listName
   );
-  return prevHintsRequested ? prevHintsRequested.hints : 'Hint Not Available';
-
+  return prevHintsUsed ? prevHintsUsed.hints : 'Hint Not Available';
 };
 
 
@@ -199,9 +210,7 @@ const handleNavigateToUserDashboard = () => {
         </div>
       </div>
 
-          {/* <div className="z-10 col-span-12 -mt-40">
-          <IncorrectGuessAlert incorrectGuessCount={incorrectGuessCount} handleRestart={handleRestart}/>
-          </div> */}
+       
 
             <IncorrectGuessAlert incorrectGuessCount={incorrectGuessCount} handleRestart={handleRestart} />
           
@@ -235,8 +244,18 @@ const handleNavigateToUserDashboard = () => {
                    >Keep the original date.</button>
                </div>
                )}
-    </div>
+
+            {hintsRemaining < 1 && (
+                  <div className="p-4 bg-red-500 text-white rounded-md">
+                    <h2 className="text-lg font-bold">No Hints Remaining!</h2>
+                        <p>Please try to guess the word without hints.</p>
+                         <p>Good luck!</p>
+                  </div>
+               )}
           </div>
+
+    </div>
+          
         
     );
   };
