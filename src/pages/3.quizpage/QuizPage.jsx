@@ -10,8 +10,7 @@ import IncorrectGuessAlert from './IncorrectGuessAlert';
 
 const QuizPage = ({ selectedWordList, currentUser, addToMastered, setNavigateTo, updateDateToToday }) => {
 
-const [letterInputBoxes, setLetterInputBoxes] = useState([]);
-const [hintsRemaining, setHintsRemaining] = useState(10);
+const [hintsRemaining, setHintsRemaining] = useState(2);
 const [hintRequested, setHintRequested] = useState(false);
 const [cancelHintRequest, setCancelHintRequest] = useState(false);
 const [incorrectGuessCount, setIncorrectGuessCount] = useState(0);
@@ -21,10 +20,14 @@ const [displayAlreadyMasteredModal, setDisplayAlreadyMasteredModal] = useState(f
 // const [displayNoHintsRemaining, setDisplayNoHintsRemaining] = useState(false);
 const [currentCorrectGuess, setCurrentCorrectGuess] = useState('');
 const [displayIncorrectAlert, setDisplayIncorrectAlert] = useState(false);
+const [displayNoHintsRemaining, setDisplayNoHintsRemaining] = useState(false);
+const [isDisabled, setIsDisabled] = useState(false); 
+const [resetInputValues, setResetInputValues] = useState(false);
+
 
 const firstUnguessedWordRef = useRef(null);
 
- useEffect(() => {
+useEffect(() => {
   console.log("selectedWordList has passed to quizpage:", selectedWordList);
   // console.log(firstUnguessedWordRef.current);
   // setLetterInputBoxes(selectedWordList.listName.split(""));
@@ -34,6 +37,10 @@ const firstUnguessedWordRef = useRef(null);
 useEffect(() => {
   checkIfMastered();
 }, [correctlyGuessedWords])
+
+useEffect(() => {
+  alertNoHintsRemaining();
+}, [hintsRemaining])
 
 // const hintsUsed = 10 - hintsRemaining;
 
@@ -51,16 +58,21 @@ const alertIncorrect = () => {
   }, 2000);
 };
 
-const displayNoHintsRemaining = () => {
-  if (hintsRemaining < 1) {
-    return (
-      <div className="p-4 bg-red-500 text-white rounded-md">
-        <h2 className="text-lg font-bold">No Hints Remaining!</h2>
-        <p>You must try again!</p>
-      </div>
-    )
-  }
+const alertNoHintsRemaining = () => {
+  if (hintsRemaining < 1)
+  setDisplayNoHintsRemaining(true);
 }
+
+// const displayNoHintsRemaining = () => {
+//   if (hintsRemaining < 1) {
+//     return (
+//       <div className="p-4 bg-red-500 text-white rounded-md">
+//         <h2 className="text-lg font-bold">No Hints Remaining!</h2>
+//         <p>You must try again!</p>
+//       </div>
+//     )
+//   }
+// }
 
 // const handleHintRequest = () => {
 //   console.log("hint requested");
@@ -87,6 +99,9 @@ const evaluateGuessWord = (guessWord) => {
   }
 };
 
+const handleClose = ()  => {
+  setDisplayNoHintsRemaining(false);
+}
 
 const checkIfMastered = () => {
   if (correctlyGuessedWords.length === selectedWordList.words.length) {
@@ -150,6 +165,8 @@ const handleRestart = () => {
   setIncorrectGuessCount(0); // Reset incorrect guess count
   setCorrectlyGuessedWords([]); // Reset correctly guessed words
   setDisplayMasteredModal(false); // Reset mastered modal display
+  setDisplayNoHintsRemaining(false);
+  setResetInputValues(true);
     console.log("restart game");
 }
 
@@ -179,29 +196,34 @@ const handleNavigateToUserDashboard = () => {
         <h1 className="col-span-12 text-center text-2xl lg:text-3xl mt-3">{selectedWordList.listName} ({selectedWordList.id})
         </h1>
         <div className="grid col-span-4 col-start-5 row-start-2 row-span-1 py-1
-        lg:col-span-2 lg:col-start-3 lg:row-start-7 lg:row-span-1">
+        lg:col-span-2 lg:col-start-3 lg:row-start-7 lg:row-span-1 disabled">
+                  {/* {`hover:bg-green-600 bg-green-300 h-3/4 flex justify-center items-center p-[5px] border-black border-2 rounded-md ${hintsRemaining < 1 ? 'cursor-not-allowed' : 'cursor-pointer'}`}  */}
+
           < Hints 
               hintRequested = {hintRequested}
               setHintRequested = {setHintRequested}
               cancelHintRequest = {cancelHintRequest}
               setCancelHintRequest = {setCancelHintRequest}
-              className=""
+              hintsRemaining = {hintsRemaining}
+              isDisabled={hintsRemaining < 1} // prop passes only if condition met
             />
         </div>
         <div className="grid col-span-12 items-start row-start-3 -m-2 text-sm text-center
         lg:row-start-7 lg:row-span-1 lg:col-start-5 lg:col-span-2 lg:text-lg lg:-mt-0">
-          <p className=""> Hints Remaining --- {hintsRemaining}</p>
+          <p> Hints Remaining --- {hintsRemaining}</p>
         </div>
         
         <div className="grid row-start-4 row-span-1 col-start-2 col-span-10 -mt-8 sm:mb-10  md:col-start-3 md:col-span-8
         lg:row-start-4 lg:row-span-1 lg:col-start-2 lg:col-span-6">
-            <WordDisplay selectedWordList = {selectedWordList} letterInputBoxes = {letterInputBoxes} hintRequested = {hintRequested} setHintRequested = {setHintRequested} correctlyGuessedWords = {correctlyGuessedWords} 
+            <WordDisplay selectedWordList = {selectedWordList} hintRequested = {hintRequested} setHintRequested = {setHintRequested} correctlyGuessedWords = {correctlyGuessedWords} 
             firstUnguessedWordRef = {firstUnguessedWordRef}
             evaluateGuessWord = {evaluateGuessWord} 
             cancelHintRequest = {cancelHintRequest}
             setCancelHintRequest = {setCancelHintRequest}
             hintsRemaining = {hintsRemaining}
             setHintsRemaining = {setHintsRemaining}
+            resetInputValues = {resetInputValues}
+            setResetInputValues = {setResetInputValues}
             />
         </div>
 
@@ -209,7 +231,7 @@ const handleNavigateToUserDashboard = () => {
             <div className="correct-word-list w-1/2 md:-mx-8 md:mt-6 grid row-start-6 row-span-7 overflow-scroll -mt-2 sm:mt-4 
              justify-items-center
              lg:row-start-2 lg:row-span-10 lg:col-start-7 lg:col-span-4">
-            < CorrectWordList selectedWordList={selectedWordList} letterInputBoxes={letterInputBoxes} correctlyGuessedWords={correctlyGuessedWords}
+            < CorrectWordList selectedWordList={selectedWordList}  correctlyGuessedWords={correctlyGuessedWords}
               currentCorrectGuess={currentCorrectGuess}/>
         </div>
       </div>
@@ -259,11 +281,17 @@ const handleNavigateToUserDashboard = () => {
                </div>
                )}
 
-            {hintsRemaining < 1 && (
-                  <div className="p-4 bg-red-500 text-white rounded-md">
-                    <h2 className="text-lg font-bold">No Hints Remaining!</h2>
-                        <p>Please try to guess the word without hints.</p>
-                         <p>Good luck!</p>
+ 
+              {displayNoHintsRemaining && (
+                  <div className="flex flex-col items-center p-4 bg-gray-800 text-white rounded-md">
+               
+                    <h2 className="text-2xl font-bold">You have used all of your hints!</h2>
+                    <button className="flex justify-center text-lg font-bold border-blue-400 border-2 rounded-lg p-2 mt-4 text-blue-400 hover:bg-blue-600 hover:text-white" 
+                    onClick={()=> handleClose() }>Keep playing without hints.</button>
+                         <button className="flex justify-center text-lg font-bold border-2 rounded-lg p-2 my-4 border-blue-400 text-blue-400 hover:bg-blue-600 hover:text-white" 
+                    onClick={()=> handleRestart() }>Start Over</button>
+                        
+                         <p className="font-bold">GOOD LUCK!</p>
                   </div>
                )}
           </div>

@@ -2,7 +2,7 @@ import { joinPaths } from '@remix-run/router';
 import React from 'react'
 import { TbHexagonNumber1, TbHexagonNumber2, TbHexagonNumber3, TbHexagonNumber4, TbHexagonNumber5 } from "react-icons/tb";
 
-const Hints = ({ selectedWordList, hintsRemaining, hintRequested, cancelHintRequest, setCancelHintRequest, setHintRequested}) => {
+const Hints = ({ hintsRemaining, hintRequested, cancelHintRequest, setCancelHintRequest, setHintRequested, isDisabled}) => {
 
 const handleHintRequest = () => {
   setHintRequested(true);
@@ -17,15 +17,19 @@ const handleCancel = () => {
   return (
     
     <button 
-        className='hover:bg-green-600 bg-green-300 h-3/4 flex justify-center items-center p-[5px] border-black border-2 rounded-md'
+        disabled={isDisabled}
+        className={`${isDisabled ? 'cursor-not-allowed hover:bg-green-300' : ''} hover:bg-green-600 bg-green-300 h-3/4 flex justify-center items-center p-[5px] border-black border-2 rounded-md'`}
         aria-label="Hint"
         onClick={hintRequested ? handleCancel : handleHintRequest}
+
+
       >
         {hintRequested ? 
           <p className="block box-border text-sm hover:bg-green-600">Cancel Hint Request</p>
           :
           <p className="block box-border mr-2 -mb-[1px] text-sm ml-1">Request a Hint</p>
         }
+        
       </button>
     
   )

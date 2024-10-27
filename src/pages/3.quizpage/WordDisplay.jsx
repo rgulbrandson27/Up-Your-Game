@@ -2,7 +2,7 @@ import React from 'react';
 import {useEffect, useState, useRef} from 'react';
 import 'tailwindcss/tailwind.css';
 
-const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHintRequested, cancelHintRequest, setCancelHintRequest, correctlyGuessedWords, hintsRemaining, setHintsRemaining, cancelHintsRemaining }) => {
+const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHintRequested, resetInputValues, setResetInputValues, correctlyGuessedWords, hintsRemaining, setHintsRemaining, cancelHintsRemaining }) => {
 
     const displayLength = selectedWordList.length || 7;
     const lastBox = displayLength - 1;
@@ -61,7 +61,16 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
     }
   }, [hintRequested]);
   
+  useEffect(() => {
+    resetInputValuesForNewGame(resetInputValues);
+    setResetInputValues(false);
+  }, [resetInputValues])
   
+  function resetInputValuesForNewGame(resetInputValues) {
+    if (resetInputValues) {
+    setInputValues(Array(displayLength).fill(''));
+    }
+  }
 
   function handleRevealLetter(index) {
     const letterToReveal = unguessedWordLettersArrayRef.current[index];
@@ -81,6 +90,7 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
 
       if (hintsRemaining > 0) {
         setHintsRemaining(prev => prev - 1);
+        console.log(hintsRemaining)
       }
       setHintRequested(false);
     }

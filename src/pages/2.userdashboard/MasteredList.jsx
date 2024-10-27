@@ -27,16 +27,16 @@ return (
                 <li key={index} 
                 className="p-1 grid my-2 h-12 place-items-center border border-black grid-cols-5 font-bold text-gray-900 rounded-lg bg-gray-200 hover:bg-gray-100 group dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white word-list-group">
                     
-                    <div className="col-start-1 col-span-1 border-1 border-black bg-green-200 h-full flex items-center justify-center">
+                    <div className="col-start-1 col-span-1 border-1 border-black h-full flex items-center justify-center">
                         <div className="bg-black text-pink-300 z-10 flex justify-center items-center text-sm rounded-full w-6 h-6">{item.hints}
                         </div>
                     </div>
                     
-                    <div className="bg-pink-200 col-start-2 col-span-3 border-1 border-black h-full flex items-center justify-center w-full">
+                    <div className="bg-pink-200 shadow-xl rounded-lg col-start-2 col-span-3 border-1 border-black h-full flex items-center justify-center w-full">
                         <div className="text-2xl">{item.word}</div>
                     </div> 
                         
-                    <div className="bg-blue-400 col-start-5 col-span-1 border-1 border-black h-full flex items-center justify-center">
+                    <div className="col-start-5 col-span-1 border-1 border-black h-full flex items-center justify-center mx-1">
                     <DateIcon date={item.date} />
                     </div>
 
