@@ -4,7 +4,8 @@ import ProgressList from "./ProgressList"
 import MasteredList from "./MasteredList"
 import DateIcon from "./DateIcon"
 
-const UserDashboard = ({currentUser, addToMastered}) => {
+const UserDashboard = ({currentUser, addToMastered, removeFromMastered}) => {
+
 
   return (
     <div className="grid grid-cols-12 grid-rows-12 h-screen overflow-scroll">
@@ -14,7 +15,7 @@ const UserDashboard = ({currentUser, addToMastered}) => {
             <ProgressList currentUser={currentUser}/>
           </div> */}
           <div className="lg:row-start-2 lg:row-span-9 row-start-2 row-span-9 col-start-4 col-span-6 lg:col-start-7 lg:col-span-4 lg:mx-6">
-          <MasteredList currentUser={currentUser} addToMastered={addToMastered}/>
+          <MasteredList currentUser={currentUser} addToMastered={addToMastered} removeFromMastered={removeFromMastered}/>
           </div>
       </div>
     </div>

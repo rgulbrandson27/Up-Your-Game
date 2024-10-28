@@ -54,18 +54,25 @@ useEffect(() => {
   // }
 
   fetchUser()
-}, []);         //[]=runs only on initial render
+  }, []);         //[]=runs only on initial render
 
 if (!currentUser) {
   return <div>Loading...</div>;
 }
 
-
-
 // useEffect(() => {
-//   updateUserInfo()
-// }, []);
-//dependency array will include, changes in all user lists
+//   removeFromMastered(index)
+//       const response = await fetch(url);
+//       const data = await response.json();
+
+//       setCurrentUser(data.find(user => user.id === "1") || null);
+
+//       console.log(data.find(user => user.id === "1")); // Logs the user with id 1 or null
+//     } catch (error) {
+//       console.error("Error fetching user data:", error);
+//     }
+//   };
+
 
 
 const addToMastered = async (updatedMasteredList) => {
@@ -106,6 +113,39 @@ const updateDateToToday = async () => {
   setMasteredList(updatedMasteredList);
 };
 
+const removeFromMastered = async (index) => {
+  if (!currentUser || !currentUser.mastered) return;
+
+  try {
+      // Create a new array excluding the item at the specified index
+      const updatedMasteredList = currentUser.mastered.filter((_, i) => i !== index);
+      
+      // Prepare the updated user data with the new mastered list
+      const updatedUser = {
+          ...currentUser,
+          mastered: updatedMasteredList
+      };
+      
+      // Send a PATCH request to update the user
+      const response = await fetch(`${url}/${currentUser.id}`, {
+          method: 'PATCH',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(updatedUser)
+      });
+      
+      if (!response.ok) {
+          throw new Error('Failed to update mastered list');
+      }
+      
+      const updatedUserData = await response.json();
+      setCurrentUser(updatedUserData);
+      console.log('Updated user:', updatedUserData);
+  } catch (error) {
+      console.error('Error removing from mastered list:', error);
+  }
+};
 
 // const updateDateToToday = async () => {
 //   if (!currentUser) return;
@@ -168,7 +208,7 @@ const handleSelectionClick = (wordListInfo) => {
                   currentUser={currentUser}/>
                   }/>
             <Route path='/userdashboard' element={<UserDashboard currentUser={currentUser} 
-            addToMastered={addToMastered}
+            addToMastered={addToMastered} removeFromMastered={removeFromMastered}
             />}/>
             <Route path='/quizpage' element={<QuizPage
             selectedWordList={selectedWordList} currentUser={currentUser} 

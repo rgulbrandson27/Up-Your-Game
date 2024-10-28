@@ -18,7 +18,7 @@ const handleCancel = () => {
     
     <button 
         disabled={isDisabled}
-        className={`${isDisabled ? 'cursor-not-allowed hover:bg-green-300' : ''} hover:bg-green-600 bg-green-300 h-3/4 flex justify-center items-center p-[5px] border-black border-2 rounded-md'`}
+        className={`${isDisabled ? 'cursor-not-allowed hover:bg-green-300' : 'hover:bg-green-600'} bg-green-300 h-3/4 flex justify-center items-center p-[5px] border-black border-2 rounded-md'`}
         aria-label="Hint"
         onClick={hintRequested ? handleCancel : handleHintRequest}
 
