@@ -33,7 +33,7 @@ return (
                 className="grid my-2 h-12 place-items-center border border-black grid-cols-6 font-bold text-gray-900 rounded-lg bg-gray-200 hover:bg-gray-100 group dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white word-list-group">
                     
                     <div className="col-start-1 col-span-1 border-1 border-black h-full flex items-center justify-center  ml-2 mr-1">
-                        <div className="bg-black text-pink-300 z-10 flex justify-center items-center text-sm rounded-full w-6 h-6">{item.hints}
+                        <div className="bg-black text-pink-300 z-10 flex justify-center items-center text-sm rounded-full w-6 h-6">{item.number}
                         </div>
                     </div>
                     

@@ -69,10 +69,10 @@ function extractExtraLetter(listWord, stemWord) {
             <div 
             ref={(el) => (wordRefs.current[index] = el)} 
               key={index}   
-              className="word-list-item grid grid-cols-5 md:grid-cols-6"
+              className="word-list-item grid grid-cols-5 md:grid-cols-6 lg:ml-2 lg:mr-6 xl:ml-0"
             >
               {displayExtraLetter ? (
-              <div className="extra-letter col-span-1 ml-10 text-xl font-medium text-center md:col-span-1">
+              <div className="extra-letter col-span-1 ml-12 text-xl font-medium text-center xl:mr-2 xl:pl-2 xl:ml-14">
                 {extraLetter}
               </div>
               ) : (
@@ -83,7 +83,7 @@ function extractExtraLetter(listWord, stemWord) {
               </div>
             
               <div  
-                className={`stem-word col-span-2 lg:me-4 lg:text-left text-center text-xl text-black bold tracking-[.1em] ml-2 lg:-ml-8 ${
+                className={`stem-word col-span-2 text-center text-xl text-black bold tracking-[.1em] ml-2 lg:ml-6 lg:mr-6 ${
                   isGuessed ? '' : 'invisible'
                   }`}
                   >

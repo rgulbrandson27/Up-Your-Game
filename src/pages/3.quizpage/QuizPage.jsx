@@ -227,17 +227,16 @@ const handleNavigateToUserDashboard = () => {
             />
         </div>
 
-        <div className="grid col-span-12 row-start-6 lg:row-start-2 row-span-7 lg:row-span-11 justify-items-center mb-4 lg:col-span-12 lg:col-start-8">
+        <div className="grid col-span-12 row-start-6 lg:row-start-2 row-span-7 lg:row-span-10 justify-items-center mb-4 lg:col-span-12 lg:col-start-6">
             <div className="correct-word-list w-1/2 md:-mx-8 md:mt-6 grid row-start-6 row-span-7 overflow-scroll -mt-2 sm:mt-4 
              justify-items-center
-             lg:row-start-2 lg:row-span-10 lg:col-start-7 lg:col-span-4">
+             lg:row-start-2 lg:row-span-9 lg:col-start-6 lg:col-span-6
+              xl:ml-10">
             < CorrectWordList selectedWordList={selectedWordList}  correctlyGuessedWords={correctlyGuessedWords}
               currentCorrectGuess={currentCorrectGuess}/>
         </div>
       </div>
 
-
-  
             {/* <IncorrectGuessAlert 
                 incorrectGuessCount={incorrectGuessCount} 
                 handleRestart={handleRestart}/>
