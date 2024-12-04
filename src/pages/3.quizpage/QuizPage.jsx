@@ -196,7 +196,7 @@ const handleNavigateToUserDashboard = () => {
         <h1 className="col-span-12 text-center text-2xl lg:text-3xl mt-3">{selectedWordList.listName} ({selectedWordList.id})
         </h1>
         <div className="grid col-span-4 col-start-5 row-start-2 row-span-1 py-1
-        lg:col-span-2 lg:col-start-3 lg:row-start-7 lg:row-span-1 disabled">
+        lg:col-span-2 lg:col-start-3 lg:row-start-7 lg:row-span-2 lg:my-4 disabled">
                   {/* {`hover:bg-green-600 bg-green-300 h-3/4 flex justify-center items-center p-[5px] border-black border-2 rounded-md ${hintsRemaining < 1 ? 'cursor-not-allowed' : 'cursor-pointer'}`}  */}
 
           < Hints 
@@ -209,7 +209,7 @@ const handleNavigateToUserDashboard = () => {
             />
         </div>
         <div className="grid col-span-12 items-start row-start-3 -m-2 text-sm text-center
-        lg:row-start-7 lg:row-span-1 lg:col-start-5 lg:col-span-2 lg:text-lg lg:-mt-0">
+        lg:row-start-7 lg:row-span-1 lg:col-start-5 lg:ml-4 lg:col-span-3 lg:text-lg lg:mt-8 xl:col-start-5 xl:-ml-6">
           <p> Hints Remaining --- {hintsRemaining}</p>
         </div>
         

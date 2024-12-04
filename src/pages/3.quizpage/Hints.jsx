@@ -25,9 +25,9 @@ const handleCancel = () => {
 
       >
         {hintRequested ? 
-          <p className="block box-border text-sm hover:bg-green-600">Cancel Hint Request</p>
+          <p className="block box-border text-sm hover:bg-green-600 lg:text-lg">Cancel Hint Request</p>
           :
-          <p className="block box-border mr-2 -mb-[1px] text-sm ml-1">Request a Hint</p>
+          <p className="block box-border mr-2 -mb-[1px] text-sm lg:text-lg ml-1">Request a Hint</p>
         }
         
       </button>

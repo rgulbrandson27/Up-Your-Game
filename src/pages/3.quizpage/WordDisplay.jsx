@@ -264,12 +264,12 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
           ))}
         </div>
       </div>
-        <div className="flex justify-center mt-2">
+        <div className="flex justify-center mt-2 xl:m-4">
           <button
             onKeyDown={handleSubmitGuess}
             onClick={handleSubmitGuess} 
             className={`bg-blue-400 border-2 border-black hover:bg-blue-700 text-white text-md px-1 h-1/2 rounded-md
-             sm:mt-2 md:w-20
+             sm:mt-2 md:w-20 xl:text-2xl xl:p-4 xl:w-28
            
               ${isSubmitButtonFocused ? 'focus:bg-blue-700' : ''}
               ${hintRequested ? 'cursor-not-allowed opacity-50' : ''}
