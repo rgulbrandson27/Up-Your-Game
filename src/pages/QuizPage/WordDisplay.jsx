@@ -258,13 +258,12 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
                 // disabled={hintRequested}
                 onClick={hintRequested ? () => handleRevealLetter(index) : undefined}  
                 disabled={backgroundColor[index] === 'bg-green-600' || letterRevealed[index] === true } // Disable if green
-
               />
             </div>
           ))}
         </div>
       </div>
-        <div className="flex justify-center mt-2 xl:m-4">
+        <div className="flex justify-center mt-4 xl:m-4">
           <button
             onKeyDown={handleSubmitGuess}
             onClick={handleSubmitGuess} 

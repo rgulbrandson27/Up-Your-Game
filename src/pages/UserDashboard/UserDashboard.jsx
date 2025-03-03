@@ -6,7 +6,7 @@ import DateIcon from "./DateIcon"
 
 const UserDashboard = ({currentUser, addToMastered, removeFromMastered}) => {
 
-
+console.log(currentUser);
   return (
     <div className="grid grid-cols-12 grid-rows-12 h-screen overflow-y-auto ">
       <h1 className="text-4xl tracking-wider col-span-12 row-start-1 row-span-1 text-center pt-8 font-medium">{currentUser.name}</h1>
@@ -16,10 +16,7 @@ const UserDashboard = ({currentUser, addToMastered, removeFromMastered}) => {
           </div> */}
           <div className="flex flex-col md:flex-row row-start-2 row-span-9 col-start-4 col-span-6 
           lg:col-start-7 lg:col-span-4 lg:mx-6">
-          {/* <MasteredList currentUser={currentUser} addToMastered={addToMastered} removeFromMastered={removeFromMastered}/> */}
-          <MasteredList currentUser={currentUser} addToMastered={addToMastered} removeFromMastered={removeFromMastered}/>
-          {/* <MasteredList currentUser={currentUser} addToMastered={addToMastered} removeFromMastered={removeFromMastered}/> */}
-
+          <MasteredList currentUser={currentUser} addToMastered={addToMastered} removeFromMastered={removeFromMastered}/> 
           </div>
       </div>
     </div>

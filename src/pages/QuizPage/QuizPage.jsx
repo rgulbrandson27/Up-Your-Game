@@ -1,37 +1,31 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import CorrectWordList from './CorrectWordList';
-import Keyboard from './Keyboard';
 import WordDisplay from './WordDisplay';
 import Hints from './Hints';
-import Mneumonic from './Mneumonic';
+// import Mneumonic from './Mneumonic';
 import IncorrectGuessAlert from './IncorrectGuessAlert';
 
 const QuizPage = ({ selectedWordList, currentUser, addToMastered, setNavigateTo, updateDateToToday }) => {
 
-const [hintsRemaining, setHintsRemaining] = useState(2);
+const [hintsRemaining, setHintsRemaining] = useState(10);
 const [hintRequested, setHintRequested] = useState(false);
 const [cancelHintRequest, setCancelHintRequest] = useState(false);
 const [incorrectGuessCount, setIncorrectGuessCount] = useState(0);
 const [correctlyGuessedWords, setCorrectlyGuessedWords] = useState([]);
 const [displayMasteredModal, setDisplayMasteredModal] = useState(false);
 const [displayAlreadyMasteredModal, setDisplayAlreadyMasteredModal] = useState(false);
-// const [displayNoHintsRemaining, setDisplayNoHintsRemaining] = useState(false);
 const [currentCorrectGuess, setCurrentCorrectGuess] = useState('');
 const [displayIncorrectAlert, setDisplayIncorrectAlert] = useState(false);
 const [displayNoHintsRemaining, setDisplayNoHintsRemaining] = useState(false);
 const [isDisabled, setIsDisabled] = useState(false); 
 const [resetInputValues, setResetInputValues] = useState(false);
 
-
 const firstUnguessedWordRef = useRef(null);
 
 useEffect(() => {
   console.log("selectedWordList has passed to quizpage:", selectedWordList);
-  // console.log(firstUnguessedWordRef.current);
   // setLetterInputBoxes(selectedWordList.listName.split(""));
-  // console.log(letterInputBoxes);
 }, [selectedWordList]);
 
 useEffect(() => {
@@ -42,14 +36,6 @@ useEffect(() => {
   alertNoHintsRemaining();
 }, [hintsRemaining])
 
-// const hintsUsed = 10 - hintsRemaining;
-
-// useEffect(() => {
-//   if (addToMastered()) {
-//     setDisplayMasteredModal(false);
-//   }
-// }, [addToMastered]);
-
 const alertIncorrect = () => {
   setIncorrectGuessCount(prevCount => prevCount + 1);
   setDisplayIncorrectAlert(true);
@@ -58,26 +44,12 @@ const alertIncorrect = () => {
   }, 2000);
 };
 
+const hintsUsed = 10 - hintsRemaining;
+
 const alertNoHintsRemaining = () => {
   if (hintsRemaining < 1)
   setDisplayNoHintsRemaining(true);
 }
-
-// const displayNoHintsRemaining = () => {
-//   if (hintsRemaining < 1) {
-//     return (
-//       <div className="p-4 bg-red-500 text-white rounded-md">
-//         <h2 className="text-lg font-bold">No Hints Remaining!</h2>
-//         <p>You must try again!</p>
-//       </div>
-//     )
-//   }
-// }
-
-// const handleHintRequest = () => {
-//   console.log("hint requested");
-// }
-
 
 const evaluateGuessWord = (guessWord) => {
   switch(true) {
@@ -118,7 +90,7 @@ const checkIfMastered = () => {
 const handleAddToMastered = async () => {
   const masteredListUpdate = [...currentUser.mastered, {
     number: currentUser.mastered.length + 1,
-    word: selectedWordList.listName, // Example: listName as the mastered word
+    word: selectedWordList.listName, 
     hints: 0,
     date: new Date().toLocaleDateString()
   }];
@@ -140,7 +112,6 @@ const getPreviousHintsUsed = () => {   //  for mastered list only
   );
   return prevHintsUsed ? prevHintsUsed.hints : 'Hint Not Available';
 };
-
 
 const handleChangeDate = async () => {
   const updatedMasteredList = currentUser.mastered.map((item) =>
@@ -172,7 +143,7 @@ const handleRestart = () => {
 
 const handleNavigateToUserDashboard = () => {
   setDisplayAlreadyMasteredModal(false);
-    setNavigateTo('/userdashboard');
+    navigate('/userdashboard');
 }
 
 // const declareAsMastered = () => {
@@ -200,11 +171,11 @@ const handleNavigateToUserDashboard = () => {
                   {/* {`hover:bg-green-600 bg-green-300 h-3/4 flex justify-center items-center p-[5px] border-black border-2 rounded-md ${hintsRemaining < 1 ? 'cursor-not-allowed' : 'cursor-pointer'}`}  */}
 
           < Hints 
-              hintRequested = {hintRequested}
-              setHintRequested = {setHintRequested}
-              cancelHintRequest = {cancelHintRequest}
-              setCancelHintRequest = {setCancelHintRequest}
-              hintsRemaining = {hintsRemaining}
+              hintRequested={hintRequested}
+              setHintRequested={setHintRequested}
+              cancelHintRequest={cancelHintRequest}
+              setCancelHintRequest={setCancelHintRequest}
+              hintsRemaining={hintsRemaining}
               isDisabled={hintsRemaining < 1} // prop passes only if condition met
             />
         </div>
@@ -213,7 +184,7 @@ const handleNavigateToUserDashboard = () => {
           <p> Hints Remaining --- {hintsRemaining}</p>
         </div>
         
-        <div className="grid row-start-4 row-span-1 col-start-2 col-span-10 -mt-8 sm:mb-10  md:col-start-3 md:col-span-8
+        <div className="grid row-start-4 row-span-1 col-start-2 col-span-10 -mt-6 sm:mb-10  md:col-start-3 md:col-span-8
         lg:row-start-4 lg:row-span-1 lg:col-start-2 lg:col-span-6">
             <WordDisplay selectedWordList = {selectedWordList} hintRequested = {hintRequested} setHintRequested = {setHintRequested} correctlyGuessedWords = {correctlyGuessedWords} 
             firstUnguessedWordRef = {firstUnguessedWordRef}
@@ -228,7 +199,7 @@ const handleNavigateToUserDashboard = () => {
         </div>
 
         <div className="grid col-span-12 row-start-6 lg:row-start-2 row-span-7 lg:row-span-10 justify-items-center mb-4 lg:col-span-12 lg:col-start-6">
-            <div className="correct-word-list w-1/2 md:-mx-8 md:mt-6 grid row-start-6 row-span-7 overflow-scroll -mt-2 sm:mt-4 
+            <div className="correct-word-list w-1/2 md:-mx-8 grid row-start-6 row-span-5 overflow-scroll -mt-2 sm:mt-4 
              justify-items-center
              lg:row-start-2 lg:row-span-9 lg:col-start-6 lg:col-span-6
               xl:ml-10">
@@ -236,12 +207,10 @@ const handleNavigateToUserDashboard = () => {
               currentCorrectGuess={currentCorrectGuess}/>
         </div>
       </div>
-
             {/* <IncorrectGuessAlert 
                 incorrectGuessCount={incorrectGuessCount} 
                 handleRestart={handleRestart}/>
     */}
-          
           <div className="z-10 absolute mt-20 flex justify-self-center">
           {displayIncorrectAlert && 
             (
@@ -259,7 +228,7 @@ const handleNavigateToUserDashboard = () => {
                 >Add to Mastered List</button>
               <button className="btn bg-pink-300 hover:bg-pink-400 border-2 border-pink-800 rounded-lg p-2"
               onClick={() => handleRestart()}
-                >I would rather practice again first.</button>
+                >I'd better practice a bit more.</button>
             </div>
             )}
 
@@ -280,7 +249,6 @@ const handleNavigateToUserDashboard = () => {
                </div>
                )}
 
- 
               {displayNoHintsRemaining && (
                   <div className="flex flex-col items-center p-4 bg-gray-800 text-white rounded-md">
                
@@ -294,10 +262,7 @@ const handleNavigateToUserDashboard = () => {
                   </div>
                )}
           </div>
-
     </div>
-          
-        
     );
   };
   
