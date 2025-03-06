@@ -1,10 +1,15 @@
 import React from "react"
-import { useState, useEffect }from "react"
-import ProgressList from "./ProgressList"
-import MasteredList from "./MasteredList"
-import DateIcon from "./DateIcon"
+import { useState, useEffect, useContext } from "react"
+import ProgressList from "./ProgressList";
+import MasteredList from "./MasteredList";
+import DateIcon from "./DateIcon";
+import {DataContext} from '../../App.jsx';
 
-const UserDashboard = ({currentUser, addToMastered, removeFromMastered}) => {
+
+const UserDashboard = () => {
+
+const {currentUser, addToMastered, removeFromMastered } = useContext(DataContext);
+
 
 console.log(currentUser);
   return (

@@ -49,7 +49,7 @@ function extractExtraLetter(listWord, stemWord) {
 }
 
   return (
-    <div className="correctWordList bg-violet-200 border-2 border-black rounded-md relative lg:mt-6 xl:ml-8">
+    <div className="w-screencorrectWordList bg-violet-200 border-2 border-black rounded-md relative lg:mt-6 xl:ml-8">
       <h1 className="word-list-name text-center text-xl font-bold tracking-widest bg-black text-white sticky">
         {selectedWordList.listName}
       </h1>
@@ -69,16 +69,16 @@ function extractExtraLetter(listWord, stemWord) {
             <div 
             ref={(el) => (wordRefs.current[index] = el)} 
               key={index}   
-              className="word-list-item grid grid-cols-5 md:grid-cols-6 lg:ml-2 lg:mr-6 xl:ml-0"
+              className="word-list-item grid grid-cols-5 md:grid-cols-6 lg:ml-3 lg:-mr-2 xl:ml-0"
             >
               {displayExtraLetter ? (
-              <div className="extra-letter col-span-1 ml-12 text-xl font-medium text-center xl:ml-24 xl:pl-2">
+              <div className="extra-letter col-span-1 ml-12 text-xl lg:mt-1 font-medium text-center xl:ml-24 xl:pl-2">
                 {extraLetter}
               </div>
               ) : (
               <div></div>
               )}
-              <div  className="item-number text-sm col-span-1 text-center mt-1 md:-ml-0 md:mt-1.5 lg:-ml-16 lg:mt-1 xl:-ml-2 xl:text-start">
+              <div  className="item-number text-md col-span-1 text-center mt-0.5 md:-ml-0 lg:-ml-16 lg:text-xl lg:mt-1 xl:-ml-2  xl:text-start">
                 {index + 1} 
               </div>
             

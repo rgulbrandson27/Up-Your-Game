@@ -1,8 +1,13 @@
 import React from 'react';
+import {DataContext} from '../../App.jsx';
 import sixLetterStems from '../../data/bingoStems';
+import { useContext } from 'react';
 
 
-const Home = ({handleSelectionClick}) => {
+const Home = () => {
+
+  const { handleSelectionClick } = useContext(DataContext);
+
 
   return (
     <>

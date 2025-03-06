@@ -1,16 +1,16 @@
-import {Routes, Route, useNavigate} from 'react-router-dom'
-import {useState, useEffect, useRef} from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
+import { useState, useEffect, createContext } from 'react'
 import Navbar from './components/header/Navbar';
-// import Footer from './componenets/footer';
-import Home from './pages/Home/Home';
-import UserDashboard from './pages/UserDashboard/UserDashboard';
-import QuizPage from './pages/QuizPage/QuizPage';
+// import Home from './pages/Home/Home';
+// import UserDashboard from './pages/UserDashboard/UserDashboard';
+// import QuizPage from './pages/QuizPage/QuizPage';
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import './index.css';
-import { Outlet } from "react-router-dom";
+
 
 const url = "https://66232cb33e17a3ac846eba2b.mockapi.io/users";
+
+ export const DataContext = createContext();
 
 const App =() => {
 
@@ -21,8 +21,8 @@ const [selectedWordList, setSelectedWordList] = useState(
   words: 
   ["ENTASIA", "TAENIAS", "BANTIES", "BASINET", "ACETINS", "CINEAST", "DESTAIN", "DETAINS", "INSTEAD", "NIDATES", "SAINTED", "SATINED", "STAINED", "ETESIAN", "FAINEST", "EASTING", "EATINGS", "GENISTA", "INGATES", "INGESTA", "SEATING", "TAGINES", "TEASING", "SHEITAN", "STHENIA", "ISATINE", "TAJINES", "INTAKES", "ELASTIN", "ENTAILS", "NAILSET", "SALIENT", "SALTINE", "SLAINTE", "TENAILS", "ETAMINS", "INMATES", "TAMEINS", "INANEST", "STANINE", "ATONIES", "PANTIES", "PATINES", "SAPIENT", "SPINATE", "ANESTRI", "ANTSIER", "NASTIER", "RATINES", "RETAINS", "RETINAS", "RETSINA", "STAINER", "STEARIN", "ENTASIS", "NASTIES", "SEITANS", "SESTINA", "TANSIES", "TISANES", "INSTATE", "SATINET", "AUNTIES", "SINUATE", "NAIVEST", "NATIVES", "VAINEST", "TAWNIES", "WANIEST", "ANTISEX", "SEXTAIN", "ZANIEST", "ZEATINS"],    mnuemonic: "TUCKSHOP WIZ FIXES MEDICINAL BEVERAGE JUICE",
   length: 7})
-  // {id:99, listName:"SAMPLE", words:["one", "two"], mnuemonic: "ABCDEFG" });
-// const [navigateTo, setNavigateTo] = useState(null);
+
+
 const [currentUser, setCurrentUser] = useState(null);
 
 const navigate = useNavigate();
@@ -120,7 +120,6 @@ const updateDateToToday = async () => {
   setMasteredList(updatedMasteredList);
 };
 
-
 const removeFromMastered = async (index) => {
   if (!currentUser || !currentUser.mastered) return;
   try {
@@ -153,46 +152,75 @@ const removeFromMastered = async (index) => {
       }
     }; 
 
-
-return (
-  <div className="bg-sky-300">
-    <Navbar />
-      <Routes>
-        <Route 
-            path="/home" 
-            element={
-              <Home 
-                selectedWordList={selectedWordList}
-                setSelectedWordList={setSelectedWordList}
-                handleSelectionClick={handleSelectionClick}
-                currentUser={currentUser} />} 
-              />
-        <Route 
-            path="/userDashboard" 
-            element={
-              <UserDashboard 
-                currentUser={currentUser} 
-                addToMastered={addToMastered} 
-                removeFromMastered={removeFromMastered} />} 
-              />
-        <Route 
-            path="/quizpage" 
-            element={
-              <QuizPage 
-                selectedWordList={selectedWordList} 
-                currentUser={currentUser} 
-                addToMastered={addToMastered} 
-                // setNavigateTo={setNavigateTo} 
-                updateDateToToday={updateDateToToday} />} 
-              />
-      </Routes>
-    </div>
+    return (
+        <DataContext.Provider value={{ currentUser, selectedWordList, setSelectedWordList, handleSelectionClick, addToMastered, removeFromMastered, updateDateToToday }}>
+          <div className="App bg-sky-300">
+            <Navbar />
+            <Outlet /> {/* This will render child routes */}
+          </div>
+        </DataContext.Provider> 
   );
 };
 export default App
 
 
+// return (
+//   <div className="bg-sky-300">
+//     <Navbar />
+//     <Outlet 
+//         />
+    /* <Home
+        selectedWordList={selectedWordList}
+        setSelectedWordList={setSelectedWordList}
+        handleSelectionClick={handleSelectionClick}
+        currentUser={currentUser}
+      />
+    <UserDashboard 
+        currentUser={currentUser} 
+        addToMastered={addToMastered} 
+        removeFromMastered={removeFromMastered} 
+      />
+    <QuizPage 
+        selectedWordList={selectedWordList} 
+        currentUser={currentUser} 
+        addToMastered={addToMastered} 
 
+        updateDateToToday={updateDateToToday} 
+      /> */
+
+      
+    // </div>
+
+
+// <Routes>
+// <Route 
+//     path="/" 
+//     element={
+//       <Home 
+//         selectedWordList={selectedWordList}
+//         setSelectedWordList={setSelectedWordList}
+//         handleSelectionClick={handleSelectionClick}
+//         currentUser={currentUser} />} 
+//       />
+// <Route 
+//     path="/userDashboard" 
+//     element={
+//       <UserDashboard 
+//         currentUser={currentUser} 
+//         addToMastered={addToMastered} 
+//         removeFromMastered={removeFromMastered} />} 
+//       />
+// <Route 
+//     path="/quizpage" 
+//     element={
+//       <QuizPage 
+//         selectedWordList={selectedWordList} 
+//         currentUser={currentUser} 
+//         addToMastered={addToMastered} 
+//         // setNavigateTo={setNavigateTo} 
+//         updateDateToToday={updateDateToToday} />} 
+//       />
+// </Routes>
 // const updateDateToToday = async () => {
 //   if (!currentUser) return;
 //   try {

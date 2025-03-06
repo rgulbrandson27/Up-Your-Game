@@ -1,6 +1,6 @@
 import React from 'react'; 
 import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
 import App from './App.jsx';
 import './index.css';
 import Home from './pages/Home/Home.jsx';
@@ -9,25 +9,35 @@ import QuizPage from './pages/QuizPage/QuizPage.jsx';
 
 const router = createBrowserRouter([
       {
-        path: "*",
+        path: "/",
         element: <App />,
         children: [
           { 
-            path: "home",
+            path: "/",
+            element: < Home />
+          },
+          { 
+            path: "/home",
             element: < Home />
           },
           {
-            path: "userdashboard",
-            element: <UserDashboard />,
+            path: "/userdashboard",
+            element: <UserDashboard />
           },
           {
-            path: "quizpage",
-            element: <QuizPage />,
-          },
+            path: "/quizpage",
+            element: 
+              <QuizPage 
+              // electedWordList={selectedWordList} 
+              // currentUser={currentUser} 
+              // addToMastered={addToMastered} 
+              // updateDateToToday={updateDateToToday}
+              />
+            },
+          { path: "*", element: <Navigate to="/home" /> }
         ],
       },
     ]);
-
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -47,33 +57,10 @@ root.render(
 //                   <Outlet/>
 //             </>
 // }
-
-
       // createRoutesFromElements(
       //       <Route path="/" element ={<Root />}>
       //             <Route index element={} />
       //       </Route>
       // )
- 
-
-// ReactDOM.render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-//   document.getElementById('root')
-// );
-// export default main;
-// ReactDOM.createRoot(document.getElementById('root')).render(
-//   <React.StrictMode>
-//     <App />
-//   </React.StrictMode>
-// );
-
-// function AppWithCallbackAfterRender() {
-//       useEffect(() => {
-//         console.log('rendered');
-
-
-
 
 

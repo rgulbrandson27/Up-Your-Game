@@ -1,12 +1,17 @@
 import React from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
 import CorrectWordList from './CorrectWordList';
 import WordDisplay from './WordDisplay';
 import Hints from './Hints';
 // import Mneumonic from './Mneumonic';
 import IncorrectGuessAlert from './IncorrectGuessAlert';
+import {DataContext} from '../../App.jsx';
 
-const QuizPage = ({ selectedWordList, currentUser, addToMastered, setNavigateTo, updateDateToToday }) => {
+const QuizPage = (
+  // { selectedWordList, currentUser, addToMastered, setNavigateTo, updateDateToToday }
+) => {
+
+const { currentUser, selectedWordList, addToMastered, setNavigateTo, updateDateToToday } = useContext(DataContext);
 
 const [hintsRemaining, setHintsRemaining] = useState(10);
 const [hintRequested, setHintRequested] = useState(false);
@@ -47,7 +52,7 @@ const alertIncorrect = () => {
 const hintsUsed = 10 - hintsRemaining;
 
 const alertNoHintsRemaining = () => {
-  if (hintsRemaining < 1)
+  if (hintsRemaining < 0)
   setDisplayNoHintsRemaining(true);
 }
 
@@ -164,7 +169,7 @@ const handleNavigateToUserDashboard = () => {
     </div> */}
 {/* 
       <div className="grid grid-cols-12 grid-rows-12 w-screen h-screen flex-grow-0"> */}
-        <h1 className="col-span-12 text-center text-2xl lg:text-3xl mt-3">{selectedWordList.listName} ({selectedWordList.id})
+        <h1 className="col-span-12 text-center text-3xl lg:text-3xl mt-3">{selectedWordList.listName} ({selectedWordList.id})
         </h1>
         <div className="grid col-span-4 col-start-5 row-start-2 row-span-1 py-1
         lg:col-span-2 lg:col-start-3 lg:row-start-7 lg:row-span-2 lg:my-4 disabled">
@@ -179,7 +184,7 @@ const handleNavigateToUserDashboard = () => {
               isDisabled={hintsRemaining < 1} // prop passes only if condition met
             />
         </div>
-        <div className="grid col-span-12 items-start row-start-3 -m-2 text-sm text-center
+        <div className="grid col-span-12 items-start row-start-3 -m-2 text-lg text-center
         lg:row-start-7 lg:row-span-1 lg:col-start-5 lg:ml-4 lg:col-span-3 lg:text-lg lg:mt-8 xl:col-start-5 xl:-ml-6">
           <p> Hints Remaining --- {hintsRemaining}</p>
         </div>

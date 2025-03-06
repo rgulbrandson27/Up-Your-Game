@@ -267,7 +267,7 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
           <button
             onKeyDown={handleSubmitGuess}
             onClick={handleSubmitGuess} 
-            className={`bg-blue-400 border-2 border-black hover:bg-blue-700 text-white text-md px-1 h-1/2 rounded-md
+            className={`bg-blue-500 border-2 border-black hover:bg-blue-700 text-white text-lg px-2 h-1/2 rounded-md
              sm:mt-2 md:w-20 xl:text-2xl xl:p-4 xl:w-28
            
               ${isSubmitButtonFocused ? 'focus:bg-blue-700' : ''}

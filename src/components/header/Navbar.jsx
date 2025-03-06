@@ -1,15 +1,17 @@
 
 import { Disclosure, DisclosurePanel, DisclosureButton} from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+
 
 
 
 const Navbar = ({ handleSelectionClick }) => {
 
+
   return (
     <Disclosure as="nav" className="bg-gray-800">
-      {({ open }) => (
+      {({ open, close }) => (
         <>
           <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
             <div className="relative flex items-center justify-between h-16">
@@ -18,7 +20,7 @@ const Navbar = ({ handleSelectionClick }) => {
                   {open ? (
                     <XMarkIcon className="block h-6 w-6" />
                   ) : (
-                    <Bars3Icon className="block h-6 w-6" />
+                    <Bars3Icon className="block h-10 w-10" />
                   )}
                 </DisclosureButton>
               </div>
@@ -28,6 +30,7 @@ const Navbar = ({ handleSelectionClick }) => {
                     <NavLink
                       to="/home"
                       className={({ isActive }) => isActive ? 'text-blue-500' : 'text-gray-400 hover:text-blue-500'}
+                      onClick={() => close()}
                     >
                       Home
                     </NavLink>
@@ -36,6 +39,7 @@ const Navbar = ({ handleSelectionClick }) => {
                     <NavLink
                       to="/userdashboard"
                       className={({ isActive }) => isActive ? 'text-blue-500' : 'text-gray-400 hover:text-blue-500'}
+                      onClick={() => close()}
                     >
                       Dashboard
                     </NavLink>
@@ -44,6 +48,7 @@ const Navbar = ({ handleSelectionClick }) => {
                     <NavLink
                       to="/quizpage"
                       className={({ isActive }) => isActive ? 'text-blue-500' : 'text-gray-400 hover:text-blue-500'}
+                      onClick={() => close()}
                     >
                       Quiz Page
                     </NavLink>
@@ -56,8 +61,9 @@ const Navbar = ({ handleSelectionClick }) => {
             <ul className="space-y-1 px-2 pb-3 pt-2">
               <li>
                 <NavLink
-                  to="/home"
+                  to="/"
                   className={({ isActive }) => isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700'}
+                  onClick={() => close()}
                 >
                   Home
                 </NavLink>
@@ -66,6 +72,7 @@ const Navbar = ({ handleSelectionClick }) => {
                 <NavLink
                   to="/userdashboard"
                   className={({ isActive }) => isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700'}
+                  onClick={() => close()}
                 >
                   Dashboard
                 </NavLink>
@@ -74,6 +81,7 @@ const Navbar = ({ handleSelectionClick }) => {
                 <NavLink
                   to="/quizpage"
                   className={({ isActive }) => isActive ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700'}
+                  onClick={() => close()}
                 >
                   Quiz Page
                 </NavLink>
