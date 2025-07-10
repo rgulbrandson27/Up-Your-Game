@@ -23,6 +23,13 @@ useEffect(() => {
 }, [currentCorrectGuess]);
 
 
+
+
+
+// className="text-xl tracking-wider border-2 hover:border-3 border-blue-800 rounded-md flex place-content-center shadow-none transition-shadow duration-300 ease-in-out 
+//           hover:shadow-lg hover:shadow-black/30 hover:bg-pink-300 hover:cursor-pointer p-.5 relative group
+//           bg-gradient-to-r from-pink-200 via-pink-300 to-pink-200 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800"    
+//           onClick={() => handleSelectionClick(wordListInfo)}>
 //  useEffect(() => {
 //   scrollRef.current?.scrollIntoView({
 //     behavior: "smooth",
@@ -48,8 +55,15 @@ function extractExtraLetter(listWord, stemWord) {
   return listWord.charAt(0);
 }
 
+  // bg-violet-200 
+
   return (
-    <div className="w-screencorrectWordList bg-violet-200 border-2 border-black rounded-md relative lg:mt-6 xl:ml-8">
+    <div className="w-screencorrectWordList
+    
+    bg-gradient-to-br from-pink-300 via-pink-200 to-pink-300 
+    
+  
+    border-2 border-black rounded-md relative lg:mt-6 xl:ml-8">
       <h1 className="word-list-name text-center text-xl font-bold tracking-widest bg-black text-white sticky">
         {selectedWordList.listName}
       </h1>

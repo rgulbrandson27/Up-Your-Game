@@ -18,6 +18,9 @@ const Home = () => {
         <p className="text-center text-2xl m-1">
           Top 25 Six-Letter-Stems
         </p>
+        <p className="text-center text-lg">
+          -Ordered By Probability-
+        </p>
         <div className="word-list-group grid grid-cols-3 lg:grid-cols-5 gap-3 lg:gap-5 grid-rows-auto tracking-wide mt-8
         ">
         {sixLetterStems.map((wordListInfo) => (

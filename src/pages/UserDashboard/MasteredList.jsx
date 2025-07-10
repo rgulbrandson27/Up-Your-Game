@@ -7,21 +7,16 @@ import prizeIcon from './images/prize-icon.png'
 
 const MasteredList = ({ currentUser, removeFromMastered }) => {
 
-    // const handleDelete = (index) => {
-    //     removeFromMastered(index);
-    // };
-
-
 return (
     <div className="px-5 w-full border-4 pb-4 border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         {/* HEADING */}
             <div className="flex space place-content-center py-3">  
-                <img className="h-8 w-8" src={prizeIcon} alt="trophy icon" />
+                <img className="h-8 w-8 mt-1" src={prizeIcon} alt="trophy icon" />
 
-                <h5 className="text-2xl font-semibold text-gray-900 md:text-3xl
+                <h5 className="text-3xl font-semibold text-gray-900 md:text-4xl
                     mx-4">Mastered
                 </h5>
-                <img className="h-8 w-8" src={prizeIcon} alt="trophy" />
+                <img className="h-8 w-8 mt-1" src={prizeIcon} alt="trophy" />
             </div>   
 
         {/* WORD LIST */}
