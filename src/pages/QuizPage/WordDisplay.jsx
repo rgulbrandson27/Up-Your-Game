@@ -14,9 +14,6 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
     const [cursorStyle, setCursorStyle] = useState(Array(displayLength).fill('cursor-text'));
     const [backgroundColor, setBackgroundColor] = useState(Array(displayLength).fill('bg-yellow-300'));
     const [letterRevealed, setLetterRevealed] = useState(Array(displayLength).fill('false'));
-    // const [isFilled, setIsFilled] = useState(Array(displayLength).fill(false));
-
-
 
     const inputRefs = useRef(Array( displayLength ).fill(false));   
     const priorLettersEntered = useRef(false);  
@@ -25,19 +22,6 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
     const currentGuess = useRef('');
     const firstUnguessedWordRef = useRef(null);
     const unguessedWordLettersArrayRef = useRef([]);
-
-    
-
-
-
-    // useEffect(() => {
-      // const displayHintAnimation = () => {
-      //   setAnimatedBorders(true);
-      // };
-      // if (hintRequested) {
-      // displayHintAnimation();
-      // }
-    // }, [hintRequested]);
     
     firstUnguessedWordRef.current =  (selectedWordList.words.find(word => !correctlyGuessedWords.includes(word)));
 
@@ -46,11 +30,6 @@ const WordDisplay = ({ selectedWordList, hintRequested, evaluateGuessWord, setHi
       // Cursor defaults to first input box.
       inputRefs.current[0]?.focus();
     }, []);
-
-    // useEffect(() => {
-    //   resetAfterCancel();
-    // }, [cancelHintRequest])
-
     
     useEffect(() => {
       if (hintRequested) {

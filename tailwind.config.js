@@ -23,12 +23,16 @@ export default {
           '0%': { opacity: '0', transform: 'scale(1.0)' }, // Start invisible and scaled down
           '100%': { opacity: '1', transform: 'scale(1.3)' }, // Fully visible and normal scale
         },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        }
       },
       animation: {
         'border-spin': 'border-spin 7s linear infinite',
         'color-change': 'colorChange 2s forwards',
         'fade-in-out': 'fadeInOut 2s forwards',
-        'fade-in': 'fadeOut 1s forwards'
+        'fade-in': 'fadeIn 1s forwards'
       },
   },
 },

@@ -44,9 +44,9 @@ useEffect(() => {
 const alertIncorrect = () => {
   setIncorrectGuessCount(prevCount => prevCount + 1);
   setDisplayIncorrectAlert(true);
-  setTimeout(() => {
-    setDisplayIncorrectAlert(false);
-  }, 2000);
+  // setTimeout(() => {
+  //   setDisplayIncorrectAlert(false);
+  // }, 2000);
 };
 
 const hintsUsed = 10 - hintsRemaining;
@@ -151,30 +151,19 @@ const handleNavigateToUserDashboard = () => {
     navigate('/userdashboard');
 }
 
-// const declareAsMastered = () => {
-//   if (checkIfMastered(true))  {
-//   setDisplayMasteredModal(true);
-//   }}
-
-// declareAsMastered();
-
-  return (
+return (
     <div className="grid grid-cols-12 grid-rows-12 w-screen h-screen">
-{/* DON'T DELETE */}
+{/* DON'T DELETE  - animated border code */}
     {/* <div className="relative">
       <div className="bg-[purple] h-[300px] w-[300px] absolute overflow-hidden">
         <div className="absolute conic-background h-[500px] w-[500px] animate-spin top-[-35%] right-[-35%]" style={{ animationDuration: '8s' }}></div>
         </div>
       <div className="bg-blue-300 h-[280px] w-[280px] ml-[10px] mt-[10px] relative"></div>
     </div> */}
-{/* 
-      <div className="grid grid-cols-12 grid-rows-12 w-screen h-screen flex-grow-0"> */}
+
         <h1 className="col-span-12 text-center text-3xl lg:text-3xl mt-3">{selectedWordList.listName} ({selectedWordList.id})
         </h1>
-        <div className="grid col-span-4 col-start-5 row-start-2 row-span-1 py-1
-        lg:col-span-2 lg:col-start-3 lg:row-start-7 lg:row-span-2 lg:my-4 disabled">
-                  {/* {`hover:bg-green-600 bg-green-300 h-3/4 flex justify-center items-center p-[5px] border-black border-2 rounded-md ${hintsRemaining < 1 ? 'cursor-not-allowed' : 'cursor-pointer'}`}  */}
-
+        <div className="grid col-span-4 col-start-5 row-start-2 row-span-1 py-1 lg:col-span-2 lg:col-start-3 lg:row-start-7 lg:row-span-2 lg:my-4 disabled">
           < Hints 
               hintRequested={hintRequested}
               setHintRequested={setHintRequested}
