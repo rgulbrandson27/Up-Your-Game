@@ -23,9 +23,12 @@ return (
         <div className="w-full overflow-y-scroll"> 
         {currentUser.mastered && currentUser.mastered.length > 0 ? (
             <ul>
-            {currentUser.mastered.map((item, index) => (
+            {currentUser.mastered
+                .slice() // Make a shallow copy so you don't mutate the original array
+                .sort((a, b) => new Date(a.date) - new Date(b.date)) // Sort ascending by date
+                .map((item, index) => (
                 <li key={index} 
-                className="grid my-2 h-12 place-items-center border border-black grid-cols-6 font-bold text-gray-900 rounded-lg bg-gray-200 hover:bg-gray-100 group dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white word-list-group">
+                    className="grid my-2 h-12 place-items-center border border-black grid-cols-6 font-bold text-gray-900 rounded-lg bg-gray-200 hover:bg-gray-100 group dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white word-list-group">
                     
                     <div className="col-start-1 col-span-1 border-1 border-black h-full flex items-center justify-center  ml-2 mr-1">
                         <div className="bg-black text-pink-300 z-10 flex justify-center items-center text-sm rounded-full w-6 h-6">{item.number}
